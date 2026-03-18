@@ -289,27 +289,35 @@ async function loadData() {
 }
 
 function checkExisting() {
-  const date = document.getElementById('f-date').value;
-  const rec  = allSales.find(s => s.Date === date);
+  const date  = document.getElementById('f-date').value;
+  const rec   = allSales.find(s => s.Date === date);
   const badge = document.getElementById('existingBadge');
+  const expEl = document.getElementById('f-export');
+  const locEl = document.getElementById('f-local');
+
   if (rec) {
     badge.classList.add('show');
-    document.getElementById('f-export').value = rec.ExportSales || '';
-    document.getElementById('f-local').value  = rec.LocalSales  || '';
+    // Use String conversion to avoid 0 being treated as falsy
+    const expVal = parseFloat(rec.ExportSales);
+    const locVal = parseFloat(rec.LocalSales);
+    expEl.value = !isNaN(expVal) && expVal !== 0 ? expVal : '';
+    locEl.value = !isNaN(locVal) && locVal !== 0 ? locVal : '';
   } else {
     badge.classList.remove('show');
-    document.getElementById('f-export').value = '';
-    document.getElementById('f-local').value  = '';
+    expEl.value = '';
+    locEl.value = '';
   }
 }
 
 async function saveSales() {
-  const date   = document.getElementById('f-date').value;
-  const expAmt = parseFloat(document.getElementById('f-export').value) || 0;
-  const locAmt = parseFloat(document.getElementById('f-local').value)  || 0;
+  const date    = document.getElementById('f-date').value;
+  const expRaw  = document.getElementById('f-export').value.trim();
+  const locRaw  = document.getElementById('f-local').value.trim();
+  const expAmt  = expRaw !== '' ? parseFloat(expRaw) : 0;
+  const locAmt  = locRaw !== '' ? parseFloat(locRaw) : 0;
 
   if (!date) { showToast('Please select a date','warning'); return; }
-  if (expAmt === 0 && locAmt === 0) {
+  if (expRaw === '' && locRaw === '') {
     showToast('Please enter at least one amount','warning'); return;
   }
 
