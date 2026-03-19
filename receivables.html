@@ -197,6 +197,26 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 .form-grid.single{grid-template-columns:1fr}
 .form-group{display:flex;flex-direction:column;gap:5px}
 .form-group.span2{grid-column:span 2}
+.hist-row td{padding:0!important;border:none!important}
+.hist-panel{background:var(--bg-secondary,#f8fafc);border-top:2px solid var(--primary,#2563eb);border-bottom:2px solid var(--primary,#2563eb);overflow:hidden;transition:max-height 0.3s ease}
+.hist-panel.collapsed{max-height:0}
+.hist-panel.expanded{max-height:600px}
+.hist-inner{padding:16px 20px}
+.hist-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.hist-title{font-size:0.85rem;font-weight:700;color:var(--primary,#2563eb);text-transform:uppercase;letter-spacing:0.05em}
+.hist-table{width:100%;border-collapse:collapse;font-size:0.85rem}
+.hist-table th{padding:7px 12px;text-align:left;font-size:0.72rem;font-weight:700;color:var(--text-secondary,#64748b);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border,#e2e8f0)}
+.hist-table td{padding:8px 12px;border-bottom:1px solid var(--border,#e2e8f0)}
+.hist-table tr:last-child td{border-bottom:none}
+.hist-table tr:hover td{background:rgba(37,99,235,0.04)}
+.hist-empty{text-align:center;color:var(--text-muted,#94a3b8);padding:20px;font-size:0.85rem}
+.trend-up{color:var(--danger,#ef4444)}
+.trend-down{color:var(--success,#22c55e)}
+.trend-same{color:var(--text-muted,#94a3b8)}
+tr.row-active td{background:rgba(37,99,235,0.04)}
+tr.clickable-row{cursor:pointer}
+tr.clickable-row:hover td{background:rgba(37,99,235,0.03)}
+.edit-mode .hide-in-edit{display:none!important}
 .form-group label{font-size:0.72rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em}
 .form-control{background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 10px;color:var(--text-primary);font-size:0.85rem;outline:none;font-family:'IBM Plex Sans',sans-serif;transition:border-color 0.14s,box-shadow 0.14s}
 .form-control:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(29,78,216,0.09);background:#fff}
@@ -533,7 +553,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="page-header-right">
       <button class="btn btn-secondary" onclick="loadData()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><polyline points="23 4 23 10 17 10"/><path d="M20.5 15a9 9 0 1 1-2.7-7.3L23 10"/></svg>Refresh</button>
       <button class="btn btn-secondary" onclick="doPrint('Total Receivable')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Print</button>
-      <button class="btn btn-primary" onclick="openAdd()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Receivable</button>
+      <button class="btn btn-primary" onclick="openAdd()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Customer</button>
     </div>
   </div>
 
@@ -555,13 +575,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <!-- Filter bar -->
     <div class="filter-bar">
-      <select id="f-status" onchange="applyFilter()">
-        <option value="">All Status</option>
-        <option value="Pending">Pending</option>
-        <option value="Partial">Partial</option>
-        <option value="Paid">Paid</option>
-        <option value="Overdue">Overdue</option>
-      </select>
       <div class="search-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" id="f-search" placeholder="Search customer…" oninput="applyFilter()">
@@ -574,19 +587,16 @@ document.addEventListener('DOMContentLoaded', () => {
       <table class="data-table">
         <thead>
           <tr>
-            <th>#</th><th>Customer</th><th>Region</th><th>Invoice No</th>
-            <th>Invoice Date</th><th>Due Date</th><th>Total</th>
-            <th>Paid</th><th>Outstanding</th><th>Status</th><th>Actions</th>
+            <th>#</th><th>Customer</th><th>Region</th><th>Outstanding</th><th></th>
           </tr>
         </thead>
         <tbody id="recBody"></tbody>
         <tfoot>
           <tr>
-            <td colspan="6" style="text-align:right">Shown Total:</td>
-            <td id="ft-total" class="fw700">—</td>
-            <td id="ft-paid" class="fw700 text-success">—</td>
+            <td colspan="3" style="text-align:right;font-weight:700">Total Outstanding:</td>
             <td id="ft-outstanding" class="fw700 text-danger">—</td>
-            <td colspan="2"></td>
+            <td id="ft-total" style="display:none">—</td>
+            <td></td>
           </tr>
         </tfoot>
       </table>
@@ -598,17 +608,20 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="modal-overlay" id="recModal">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <h3 id="recModalTitle">Add Receivable</h3>
+      <h3 id="recModalTitle">Add Customer</h3>
       <button class="modal-close" onclick="closeModal('recModal')">&times;</button>
     </div>
     <div class="modal-body">
       <input type="hidden" id="r-id">
+      <div id="edit-mode-hint" style="display:none;margin-bottom:12px;padding:8px 12px;background:#fffbeb;border:1px solid #f59e0b;border-radius:7px;font-size:0.8rem;color:#92400e;">
+        ✏️ Enter today's outstanding balance for this customer.
+      </div>
       <div class="form-grid">
-        <div class="form-group">
+        <div class="form-group hide-in-edit">
           <label>Customer Name *</label>
           <input type="text" id="r-cust" class="form-control" placeholder="Customer name">
         </div>
-        <div class="form-group">
+        <div class="form-group hide-in-edit">
           <label>Region *</label>
           <select id="r-region" class="form-control">
             <option value="Local">🇱🇰 Local</option>
@@ -616,47 +629,22 @@ document.addEventListener('DOMContentLoaded', () => {
             <option value="Maldives">🇲🇻 Maldives</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Invoice No</label>
-          <input type="text" id="r-inv" class="form-control" placeholder="INV-001">
-        </div>
-        <div class="form-group">
+        <div class="form-group hide-in-edit">
           <label>Currency</label>
           <select id="r-cur" class="form-control">
             <option value="LKR">LKR</option>
             <option value="USD">USD</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Invoice Date</label>
-          <input type="date" id="r-idate" class="form-control">
-        </div>
-        <div class="form-group">
-          <label>Due Date</label>
-          <input type="date" id="r-ddate" class="form-control">
-        </div>
-        <div class="form-group">
+        <div class="form-group hide-in-edit">
           <label>Total Amount *</label>
-          <input type="number" id="r-total" class="form-control" placeholder="0.00" step="0.01" oninput="calcOutstanding()">
+          <input type="number" id="r-total" class="form-control" placeholder="0.00" step="0.01" >
         </div>
         <div class="form-group">
-          <label>Amount Paid</label>
-          <input type="number" id="r-paid" class="form-control" placeholder="0.00" step="0.01" value="0" oninput="calcOutstanding()">
-        </div>
-        <div class="form-group">
-          <label>Outstanding (auto)</label>
+          <label id="outstanding-label">Outstanding (auto)</label>
           <input type="number" id="r-outstanding" class="form-control" placeholder="0.00" step="0.01" readonly style="opacity:0.7">
         </div>
-        <div class="form-group">
-          <label>Status</label>
-          <select id="r-status" class="form-control">
-            <option value="Pending">Pending</option>
-            <option value="Partial">Partial</option>
-            <option value="Paid">Paid</option>
-            <option value="Overdue">Overdue</option>
-          </select>
-        </div>
-        <div class="form-group span2">
+        <div class="form-group span2 hide-in-edit">
           <label>Notes</label>
           <textarea id="r-notes" class="form-control"></textarea>
         </div>
@@ -673,18 +661,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
-let allRecs = [], curTab = 'All', editId = null;
 
-function calcOutstanding() {
-  const t = parseFloat(document.getElementById('r-total').value)||0;
-  const p = parseFloat(document.getElementById('r-paid').value)||0;
-  document.getElementById('r-outstanding').value = Math.max(0,t-p).toFixed(2);
+// allCustomers  = one row per customer (Customers sheet)
+// allHistory    = every daily entry    (History sheet)
+// latestRecs    = computed: one row per customer with latest outstanding
+let allCustomers = [], allHistory = [], latestRecs = [], curTab = 'All', editId = null;
+
+// ── Compute latest outstanding per customer ──────────────────
+function buildLatest() {
+  latestRecs = allCustomers.map(c => {
+    const entries = allHistory
+      .filter(h => h.CustomerID === c.ID)
+      .sort((a,b) => b.Date.localeCompare(a.Date));
+    const latest = entries[0] || {};
+    return {
+      ID:           c.ID,
+      CustomerName: c.CustomerName,
+      Region:       c.Region,
+      Currency:     c.Currency,
+      Outstanding:  latest.Outstanding || 0,
+      LastUpdated:  latest.Date || '—',
+    };
+  });
 }
 
+// ── Load both sheets in parallel ─────────────────────────────
 async function loadData() {
   showLoading(true);
   try {
-    allRecs = await apiGet({ action:'getAll', sheet:'Receivables' });
+    [allCustomers, allHistory] = await Promise.all([
+      apiGet({ action:'getAll', sheet:'Customers' }),
+      apiGet({ action:'getAll', sheet:'History'   }),
+    ]);
+    buildLatest();
     updateSummary();
     applyFilter();
   } catch(e) { showToast(e.message,'error'); }
@@ -693,24 +702,22 @@ async function loadData() {
 
 function updateSummary() {
   const sum = (arr,k) => arr.reduce((t,x)=>t+(parseFloat(x[k])||0),0);
-  const local = allRecs.filter(r=>r.Region==='Local');
-  const sey   = allRecs.filter(r=>r.Region==='Seychelles');
-  const mal   = allRecs.filter(r=>r.Region==='Maldives');
-  const paid  = allRecs.filter(r=>r.Status==='Paid');
-  const overdue = allRecs.filter(r=>isOverdue(r.DueDate)&&r.Status!=='Paid');
+  const local = latestRecs.filter(r=>r.Region==='Local');
+  const sey   = latestRecs.filter(r=>r.Region==='Seychelles');
+  const mal   = latestRecs.filter(r=>r.Region==='Maldives');
 
-  document.getElementById('s-total').textContent = fmtLKR(sum(allRecs,'Outstanding'));
-  document.getElementById('s-count').textContent = allRecs.length+' invoices';
-  document.getElementById('s-local').textContent = fmtLKR(sum(local,'Outstanding'));
-  document.getElementById('s-local-c').textContent = local.length+' invoices';
-  document.getElementById('s-sey').textContent = fmtLKR(sum(sey,'Outstanding'));
-  document.getElementById('s-sey-c').textContent = sey.length+' invoices';
-  document.getElementById('s-mal').textContent = fmtLKR(sum(mal,'Outstanding'));
-  document.getElementById('s-mal-c').textContent = mal.length+' invoices';
-  document.getElementById('s-overdue').textContent = fmtLKR(sum(overdue,'Outstanding'));
-  document.getElementById('s-overdue-c').textContent = overdue.length+' overdue';
-  document.getElementById('s-paid').textContent = fmtLKR(sum(paid,'TotalAmount'));
-  document.getElementById('s-paid-c').textContent = paid.length+' fully paid';
+  document.getElementById('s-total').textContent     = fmtLKR(sum(latestRecs,'Outstanding'));
+  document.getElementById('s-count').textContent     = latestRecs.length+' customers';
+  document.getElementById('s-local').textContent     = fmtLKR(sum(local,'Outstanding'));
+  document.getElementById('s-local-c').textContent   = local.length+' customers';
+  document.getElementById('s-sey').textContent       = fmtLKR(sum(sey,'Outstanding'));
+  document.getElementById('s-sey-c').textContent     = sey.length+' customers';
+  document.getElementById('s-mal').textContent       = fmtLKR(sum(mal,'Outstanding'));
+  document.getElementById('s-mal-c').textContent     = mal.length+' customers';
+  document.getElementById('s-overdue').textContent   = '—';
+  document.getElementById('s-overdue-c').textContent = '';
+  document.getElementById('s-paid').textContent      = '—';
+  document.getElementById('s-paid-c').textContent    = '';
 }
 
 function setTab(tab, el) {
@@ -721,11 +728,9 @@ function setTab(tab, el) {
 }
 
 function applyFilter() {
-  const status = document.getElementById('f-status').value;
-  const search = document.getElementById('f-search').value.toLowerCase();
-  let rows = allRecs.filter(r=>{
+  const search = (document.getElementById('f-search')||{}).value?.toLowerCase()||'';
+  let rows = latestRecs.filter(r=>{
     if (curTab !== 'All' && r.Region !== curTab) return false;
-    if (status && r.Status !== status) return false;
     if (search && !(r.CustomerName||'').toLowerCase().includes(search)) return false;
     return true;
   });
@@ -733,122 +738,231 @@ function applyFilter() {
 }
 
 function clearFilters() {
-  document.getElementById('f-status').value='';
-  document.getElementById('f-search').value='';
+  const s = document.getElementById('f-search'); if(s) s.value='';
   applyFilter();
 }
 
 function renderTable(rows) {
   const sum = (k) => rows.reduce((t,r)=>t+(parseFloat(r[k])||0),0);
-  document.getElementById('ft-total').textContent = fmtLKR(sum('TotalAmount'));
-  document.getElementById('ft-paid').textContent = fmtLKR(sum('PaidAmount'));
+  document.getElementById('ft-total').textContent       = '—';
   document.getElementById('ft-outstanding').textContent = fmtLKR(sum('Outstanding'));
 
   const tb = document.getElementById('recBody');
   if (!rows.length) {
-    tb.innerHTML = `<tr><td colspan="11"><div class="empty-state"><p>No receivables found</p></div></td></tr>`;
+    tb.innerHTML = `<tr><td colspan="6"><div class="empty-state"><p>No customers found</p></div></td></tr>`;
     return;
   }
   tb.innerHTML = rows.map((r,i)=>{
-    const over = isOverdue(r.DueDate)&&r.Status!=='Paid';
-    return `<tr ${over?'style="background:rgba(239,68,68,0.04)"':''}>
+    const lastUpd = r.LastUpdated && r.LastUpdated!=='—'
+      ? '<span style="font-size:0.7rem;color:var(--text-muted,#94a3b8);margin-left:6px">'+formatHistDate(r.LastUpdated)+'</span>'
+      : '';
+    return `<tr class="clickable-row" id="main-row-${r.ID}" onclick="toggleHistory('${r.ID}', event)">
       <td class="muted">${i+1}</td>
-      <td><strong>${r.CustomerName||'—'}</strong></td>
+      <td><strong>${r.CustomerName||'—'}</strong>${lastUpd} <span style="font-size:0.7rem;color:var(--text-muted,#94a3b8);margin-left:4px">▼</span></td>
       <td>${regionBadge(r.Region)}</td>
-      <td class="muted">${r.InvoiceNo||'—'}</td>
-      <td>${fmtDate(r.InvoiceDate)}</td>
-      <td class="${over?'text-danger':''}">${fmtDate(r.DueDate)}${over?' ⚠️':''}</td>
-      <td>${fmtMoney(r.TotalAmount,r.Currency)}</td>
-      <td class="text-success">${fmtMoney(r.PaidAmount,r.Currency)}</td>
       <td class="fw700 ${parseFloat(r.Outstanding)>0?'text-danger':'text-success'}">${fmtMoney(r.Outstanding,r.Currency)}</td>
-      <td>${statusBadge(r.Status)}</td>
       <td>
         <div class="actions">
-          <button class="btn btn-secondary btn-icon btn-sm" onclick="openEdit('${r.ID}')" title="Edit">✏️</button>
-          <button class="btn btn-danger btn-icon btn-sm" onclick="deleteRec('${r.ID}')" title="Delete">🗑️</button>
+          <button class="btn btn-secondary btn-icon btn-sm" onclick="openEdit('${r.ID}')" title="Update today's outstanding">✏️</button>
+          <button class="btn btn-danger btn-icon btn-sm" onclick="deleteCustomer('${r.ID}')" title="Delete customer">🗑️</button>
         </div>
+      </td>
+    </tr>
+    <tr class="hist-row" id="hist-row-${r.ID}">
+      <td colspan="5">
+        <div class="hist-panel collapsed" id="hist-panel-${r.ID}"></div>
       </td>
     </tr>`;
   }).join('');
 }
 
+// ── Edit lock (update mode = only outstanding) ───────────────
+function setEditLock(locked) {
+  const grid = document.querySelector('#recModal .form-grid');
+  if (grid) {
+    if (locked) grid.classList.add('edit-mode');
+    else grid.classList.remove('edit-mode');
+  }
+  ['r-cust','r-region','r-cur'].forEach(id => {
+    const el = document.getElementById(id); if(!el) return;
+    if (locked) el.setAttribute('disabled', true);
+    else el.removeAttribute('disabled');
+  });
+  const os = document.getElementById('r-outstanding');
+  const lbl = document.getElementById('outstanding-label');
+  if (os) {
+    if (locked) {
+      os.removeAttribute('readonly'); os.style.opacity=''; os.style.cursor=''; os.style.background='';
+      os.placeholder = "Enter today's outstanding"; os.value='';
+      if (lbl) lbl.textContent = "Today's Outstanding *";
+    } else {
+      os.setAttribute('readonly',true); os.style.opacity='0.7';
+      os.placeholder='0.00';
+      if (lbl) lbl.textContent='Outstanding (auto)';
+    }
+  }
+  const hint = document.getElementById('edit-mode-hint');
+  if (hint) hint.style.display = locked ? 'block' : 'none';
+}
+
+// ── Add new customer (one-time) ──────────────────────────────
 function openAdd() {
   editId = null;
-  document.getElementById('recModalTitle').textContent = 'Add Receivable';
+  document.getElementById('recModalTitle').textContent = 'Add Customer';
   document.getElementById('r-id').value='';
-  ['r-cust','r-inv','r-notes'].forEach(id=>document.getElementById(id).value='');
+  ['r-cust','r-notes'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   document.getElementById('r-region').value='Local';
   document.getElementById('r-cur').value='LKR';
-  document.getElementById('r-idate').value=todayISO();
-  document.getElementById('r-ddate').value='';
-  document.getElementById('r-total').value='';
-  document.getElementById('r-paid').value='0';
   document.getElementById('r-outstanding').value='';
-  document.getElementById('r-status').value='Pending';
+  setEditLock(false);
   openModal('recModal');
 }
 
+// ── Daily update ─────────────────────────────────────────────
 function openEdit(id) {
-  const r = allRecs.find(x=>x.ID===id); if(!r) return;
+  const c = allCustomers.find(x=>x.ID===id); if(!c) return;
   editId = id;
-  document.getElementById('recModalTitle').textContent = 'Edit Receivable';
+  document.getElementById('recModalTitle').textContent = 'Update Outstanding — '+c.CustomerName;
   document.getElementById('r-id').value=id;
-  document.getElementById('r-cust').value=r.CustomerName||'';
-  document.getElementById('r-region').value=r.Region||'Local';
-  document.getElementById('r-inv').value=r.InvoiceNo||'';
-  document.getElementById('r-cur').value=r.Currency||'LKR';
-  document.getElementById('r-idate').value=fmtDateInput(r.InvoiceDate);
-  document.getElementById('r-ddate').value=fmtDateInput(r.DueDate);
-  document.getElementById('r-total').value=r.TotalAmount||'';
-  document.getElementById('r-paid').value=r.PaidAmount||'0';
-  document.getElementById('r-outstanding').value=r.Outstanding||'';
-  document.getElementById('r-status').value=r.Status||'Pending';
-  document.getElementById('r-notes').value=r.Notes||'';
+  document.getElementById('r-cust').value=c.CustomerName||'';
+  document.getElementById('r-region').value=c.Region||'Local';
+  document.getElementById('r-cur').value=c.Currency||'LKR';
+  setEditLock(true);
   openModal('recModal');
 }
 
 async function saveRec() {
-  const total = parseFloat(document.getElementById('r-total').value)||0;
-  const paid  = parseFloat(document.getElementById('r-paid').value)||0;
-  const data = {
-    CustomerName: document.getElementById('r-cust').value.trim(),
-    Region:       document.getElementById('r-region').value,
-    InvoiceNo:    document.getElementById('r-inv').value.trim(),
-    Currency:     document.getElementById('r-cur').value,
-    InvoiceDate:  document.getElementById('r-idate').value,
-    DueDate:      document.getElementById('r-ddate').value,
-    TotalAmount:  total,
-    PaidAmount:   paid,
-    Outstanding:  Math.max(0,total-paid),
-    Status:       document.getElementById('r-status').value,
-    Notes:        document.getElementById('r-notes').value,
-  };
-  if (!data.CustomerName) { showToast('Customer Name is required','warning'); return; }
+  const id = document.getElementById('r-id').value;
+  const isEdit = !!id;
+
+  if (isEdit) {
+    // Daily update → add new History row
+    const outstanding = parseFloat(document.getElementById('r-outstanding').value);
+    if (isNaN(outstanding) || outstanding < 0) { showToast('Enter a valid outstanding amount','warning'); return; }
+    const c = allCustomers.find(x=>x.ID===id);
+    const today = new Date().toISOString().slice(0,10);
+    const histData = {
+      CustomerID:   id,
+      CustomerName: c ? c.CustomerName : '',
+      Region:       c ? c.Region : '',
+      Currency:     c ? c.Currency : 'LKR',
+      Date:         today,
+      Outstanding:  outstanding,
+    };
+    showLoading(true);
+    try {
+      await apiPost({ action:'add', sheet:'History', data: histData });
+      showToast('Outstanding updated for '+formatHistDate(today));
+      closeModal('recModal');
+      await loadData();
+    } catch(e) { showToast(e.message,'error'); }
+    showLoading(false);
+  } else {
+    // New customer → add to Customers sheet
+    const name = document.getElementById('r-cust').value.trim();
+    if (!name) { showToast('Customer Name is required','warning'); return; }
+    const custData = {
+      CustomerName: name,
+      Region:       document.getElementById('r-region').value,
+      Currency:     document.getElementById('r-cur').value,
+      Notes:        (document.getElementById('r-notes')||{}).value||'',
+    };
+    showLoading(true);
+    try {
+      await apiPost({ action:'add', sheet:'Customers', data: custData });
+      showToast('Customer added');
+      closeModal('recModal');
+      await loadData();
+    } catch(e) { showToast(e.message,'error'); }
+    showLoading(false);
+  }
+}
+
+async function deleteCustomer(id) {
+  if (!await confirmDel('Delete this customer and ALL their history?')) return;
   showLoading(true);
   try {
-    const id = document.getElementById('r-id').value;
-    if (id) {
-      await apiPost({ action:'update', sheet:'Receivables', id, data });
-      showToast('Receivable updated');
-    } else {
-      await apiPost({ action:'add', sheet:'Receivables', data });
-      showToast('Receivable added');
+    await apiPost({ action:'delete', sheet:'Customers', id });
+    // Also delete all history for this customer
+    const histIds = allHistory.filter(h=>h.CustomerID===id).map(h=>h.ID);
+    for (const hid of histIds) {
+      await apiPost({ action:'delete', sheet:'History', id: hid });
     }
-    closeModal('recModal');
+    showToast('Customer deleted');
     await loadData();
   } catch(e) { showToast(e.message,'error'); }
   showLoading(false);
 }
 
-async function deleteRec(id) {
-  if (!await confirmDel('Delete this receivable record?')) return;
-  showLoading(true);
-  try {
-    await apiPost({ action:'delete', sheet:'Receivables', id });
-    showToast('Receivable deleted');
-    await loadData();
-  } catch(e) { showToast(e.message,'error'); }
-  showLoading(false);
+// ── History expand ────────────────────────────────────────────
+function toggleHistory(id, e) {
+  if (e && e.target.closest('.actions')) return;
+  const panel = document.getElementById('hist-panel-' + id);
+  const mainRow = document.getElementById('main-row-' + id);
+  if (!panel) return;
+  const isOpen = panel.classList.contains('expanded');
+  document.querySelectorAll('.hist-panel.expanded').forEach(p=>p.classList.replace('expanded','collapsed'));
+  document.querySelectorAll('tr.row-active').forEach(r=>r.classList.remove('row-active'));
+  if (!isOpen) {
+    renderHistory(id);
+    panel.classList.replace('collapsed','expanded');
+    if (mainRow) mainRow.classList.add('row-active');
+  }
+}
+
+function renderHistory(id) {
+  const panel = document.getElementById('hist-panel-' + id);
+  if (!panel) return;
+  const c = allCustomers.find(x=>x.ID===id);
+  const name = c ? c.CustomerName : id;
+  const currency = c ? c.Currency : 'LKR';
+
+  const entries = allHistory
+    .filter(h=>h.CustomerID===id)
+    .sort((a,b)=>b.Date.localeCompare(a.Date))
+    .slice(0,7);
+
+  if (!entries.length) {
+    panel.innerHTML = `<div class="hist-inner"><div class="hist-header"><span class="hist-title">📋 ${name} — Daily History</span></div><div class="hist-empty">No updates yet. Press ✏️ to enter today's outstanding.</div></div>`;
+    return;
+  }
+
+  const rows = entries.map((h,i)=>{
+    const prev = entries[i+1];
+    let trend = '<span class="trend-same">—</span>';
+    if (prev) {
+      const diff = parseFloat(h.Outstanding) - parseFloat(prev.Outstanding);
+      if (diff < 0)      trend = `<span class="trend-down">▼ ${fmtMoney(Math.abs(diff),currency)} less</span>`;
+      else if (diff > 0) trend = `<span class="trend-up">▲ ${fmtMoney(diff,currency)} more</span>`;
+      else               trend = '<span class="trend-same">No change</span>';
+    }
+    return `<tr>
+      <td>${formatHistDate(h.Date)}</td>
+      <td class="fw700 ${parseFloat(h.Outstanding)>0?'text-danger':'text-success'}">${fmtMoney(h.Outstanding,currency)}</td>
+      <td>${trend}</td>
+    </tr>`;
+  }).join('');
+
+  panel.innerHTML = `<div class="hist-inner">
+    <div class="hist-header">
+      <span class="hist-title">📋 ${name} — Last ${entries.length} Day${entries.length>1?'s':''}</span>
+      <span style="font-size:0.75rem;color:var(--text-muted,#94a3b8)">Most recent first</span>
+    </div>
+    <table class="hist-table">
+      <thead><tr><th>Date</th><th>Outstanding</th><th>Change</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
+}
+
+function formatHistDate(dateStr) {
+  if (!dateStr || dateStr==='—') return '—';
+  const d = new Date(dateStr + 'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const yesterday = new Date(today); yesterday.setDate(today.getDate()-1);
+  if (d.getTime()===today.getTime())     return '<strong style="color:var(--accent,#1d4ed8)">Today</strong>';
+  if (d.getTime()===yesterday.getTime()) return 'Yesterday';
+  return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
 }
 
 window.addEventListener('load', loadData);
