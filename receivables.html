@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Receivables — Bark Ornament</title>
+<title>Bark Ornament — Receivables</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -390,7 +390,7 @@ async function saveAll(){
       const data={...Object.fromEntries(Object.entries(r).filter(([k])=>k!=='_row')),
         Outstanding:outNew,DueAmount:dueNew,
         LastUpdated:new Date().toISOString().slice(0,10)};
-      await apiPost({action:'update',sheet:'',id:r.ID,data});
+      await apiPost({action:'update',sheet:'Receivables',id:r.ID,data});
       // Show tick
       const rst=document.getElementById('rst-'+r.ID);
       if(rst){rst.textContent='✅';rst.classList.add('show');setTimeout(()=>rst.classList.remove('show'),2500);}
