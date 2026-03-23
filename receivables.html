@@ -470,6 +470,75 @@ document.addEventListener('keydown',e=>{
 });
 window.addEventListener('load',loadData);
 </script>
+
+<!-- ── SMART CACHE ── -->
+<script>
+(function(){
+  const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+  // Wrap fetch to use cache
+  window.__cache = {
+    get: function(key) {
+      try {
+        const raw = sessionStorage.getItem('bork_cache_' + key);
+        if (!raw) return null;
+        const obj = JSON.parse(raw);
+        if (Date.now() - obj.ts > CACHE_TTL) { sessionStorage.removeItem('bork_cache_' + key); return null; }
+        return obj.data;
+      } catch(e) { return null; }
+    },
+    set: function(key, data) {
+      try { sessionStorage.setItem('bork_cache_' + key, JSON.stringify({ts: Date.now(), data})); } catch(e) {}
+    },
+    clear: function() {
+      try {
+        Object.keys(sessionStorage).filter(k => k.startsWith('bork_cache_')).forEach(k => sessionStorage.removeItem(k));
+      } catch(e) {}
+    }
+  };
+
+  // Patch fetch to cache GET requests to the Apps Script
+  const _origFetch = window.fetch;
+  window.fetch = async function(url, opts) {
+    const isGet = !opts || !opts.method || opts.method === 'GET';
+    const isScript = typeof url === 'string' && url.includes('script.google.com');
+
+    if (isGet && isScript) {
+      const cacheKey = url.toString().replace(/.*\?/, '');
+      const cached = window.__cache.get(cacheKey);
+
+      if (cached) {
+        // Return cached instantly
+        const blob = new Blob([JSON.stringify(cached)], {type:'application/json'});
+        const resp = new Response(blob, {status:200, headers:{'Content-Type':'application/json'}});
+
+        // Silently refresh in background
+        setTimeout(() => {
+          _origFetch(url, opts).then(r => r.json()).then(fresh => {
+            window.__cache.set(cacheKey, fresh);
+          }).catch(() => {});
+        }, 200);
+
+        return resp;
+      } else {
+        // No cache — fetch normally and cache the result
+        const resp = await _origFetch(url, opts);
+        const clone = resp.clone();
+        clone.json().then(data => window.__cache.set(cacheKey, data)).catch(() => {});
+        return resp;
+      }
+    }
+
+    // POST (save/delete) — clear cache so next load is fresh
+    if (!isGet && isScript) {
+      window.__cache.clear();
+    }
+
+    return _origFetch(url, opts);
+  };
+})();
+</script>
+
 </head>
 <body>
 
@@ -484,31 +553,31 @@ window.addEventListener('load',loadData);
   </div>
   <nav class="sb-nav">
     <div class="sb-lbl">Navigation</div>
-    <a class="sb-link" href="#">
+    <a class="sb-link" href="index__4_.html">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       Dashboard
     </a>
-    <a class="sb-link" href="#">
+    <a class="sb-link" href="sales__3_.html">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
       Sales Details
     </a>
-    <a class="sb-link" href="#">
+    <a class="sb-link" href="bank.html">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
       Bank
     </a>
-    <a class="sb-link" href="#">
+    <a class="sb-link" href="cash__1_.html">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
       Cash Details
     </a>
-    <a class="sb-link" href="#">
+    <a class="sb-link" href="petty-cash.html">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 9V7a5 5 0 0 0-10 0v2"/><rect x="3" y="9" width="18" height="13" rx="2"/></svg>
       Petty Cash
     </a>
-    <a class="sb-link active" href="#">
+    <a class="sb-link active" href="receivables_simple.html">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       Receivables
     </a>
-    <a class="sb-link" href="#">
+    <a class="sb-link" href="payables.html">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       Payables
     </a>
