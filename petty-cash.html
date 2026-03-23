@@ -22,19 +22,19 @@
 body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
 
 /* ── SIDEBAR ── */
-.sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--sidebar);display:flex;flex-direction:column;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:100}
-.sidebar-brand{padding:22px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.07)}
-.brand-row{display:flex;align-items:center;gap:10px}
-.logo-box{width:40px;height:40px;background:#fff1;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0}
-.brand-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;line-height:1.2}
-.brand-sub{font-size:0.67rem;color:rgba(255,255,255,0.4);margin-top:2px}
-.nav-section{padding:18px 12px 8px}
-.nav-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.3);padding:0 8px;margin-bottom:6px}
-.nav-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;color:rgba(255,255,255,0.6);font-size:0.82rem;font-weight:500;text-decoration:none;cursor:pointer;transition:all 0.15s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left}
-.nav-item:hover{background:rgba(255,255,255,0.08);color:#fff}
-.nav-item.active{background:rgba(255,255,255,0.14);color:#fff;font-weight:600}
-.nav-item .nav-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
-.sidebar-footer{margin-top:auto;padding:14px 16px;border-top:1px solid rgba(255,255,255,0.07);font-size:0.65rem;color:rgba(255,255,255,0.25);text-align:center}
+.sidebar{width:220px;min-height:100vh;background:#1a2d6b;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:3px 0 16px rgba(0,0,0,0.18)}
+.sb-logo{padding:18px 14px 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px}
+.sb-logo-img{width:44px;height:44px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.78rem;color:#1a2d6b;flex-shrink:0}
+.sb-company{font-weight:700;font-size:0.8rem;color:#fff;line-height:1.35}
+.sb-addr{font-size:0.62rem;color:rgba(255,255,255,0.4);margin-top:2px;line-height:1.4}
+.sb-nav{flex:1;padding:10px 0;overflow-y:auto}
+.sb-lbl{font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.28);padding:10px 16px 4px}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 16px;color:rgba(255,255,255,0.58);text-decoration:none;font-size:0.81rem;font-weight:500;cursor:pointer;border-left:3px solid transparent;transition:all 0.13s;user-select:none}
+.sb-link:hover{background:rgba(255,255,255,0.08);color:#fff}
+.sb-link.active{background:rgba(255,255,255,0.11);color:#fff;border-left-color:#f97316;font-weight:700}
+.sb-link svg{width:15px;height:15px;flex-shrink:0;opacity:0.65}
+.sb-link.active svg{opacity:1}
+.sb-footer{padding:11px 16px;border-top:1px solid rgba(255,255,255,0.07);font-size:0.62rem;color:rgba(255,255,255,0.22);line-height:1.6}
 
 /* ── MAIN ── */
 .main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh}
@@ -156,6 +156,75 @@ tfoot td{background:#f8fafc;font-weight:700;padding:9px 14px;border-top:2px soli
   .field-group.full{grid-column:span 1}
 }
 </style>
+
+<!-- ── SMART CACHE ── -->
+<script>
+(function(){
+  const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+  // Wrap fetch to use cache
+  window.__cache = {
+    get: function(key) {
+      try {
+        const raw = sessionStorage.getItem('bork_cache_' + key);
+        if (!raw) return null;
+        const obj = JSON.parse(raw);
+        if (Date.now() - obj.ts > CACHE_TTL) { sessionStorage.removeItem('bork_cache_' + key); return null; }
+        return obj.data;
+      } catch(e) { return null; }
+    },
+    set: function(key, data) {
+      try { sessionStorage.setItem('bork_cache_' + key, JSON.stringify({ts: Date.now(), data})); } catch(e) {}
+    },
+    clear: function() {
+      try {
+        Object.keys(sessionStorage).filter(k => k.startsWith('bork_cache_')).forEach(k => sessionStorage.removeItem(k));
+      } catch(e) {}
+    }
+  };
+
+  // Patch fetch to cache GET requests to the Apps Script
+  const _origFetch = window.fetch;
+  window.fetch = async function(url, opts) {
+    const isGet = !opts || !opts.method || opts.method === 'GET';
+    const isScript = typeof url === 'string' && url.includes('script.google.com');
+
+    if (isGet && isScript) {
+      const cacheKey = url.toString().replace(/.*\?/, '');
+      const cached = window.__cache.get(cacheKey);
+
+      if (cached) {
+        // Return cached instantly
+        const blob = new Blob([JSON.stringify(cached)], {type:'application/json'});
+        const resp = new Response(blob, {status:200, headers:{'Content-Type':'application/json'}});
+
+        // Silently refresh in background
+        setTimeout(() => {
+          _origFetch(url, opts).then(r => r.json()).then(fresh => {
+            window.__cache.set(cacheKey, fresh);
+          }).catch(() => {});
+        }, 200);
+
+        return resp;
+      } else {
+        // No cache — fetch normally and cache the result
+        const resp = await _origFetch(url, opts);
+        const clone = resp.clone();
+        clone.json().then(data => window.__cache.set(cacheKey, data)).catch(() => {});
+        return resp;
+      }
+    }
+
+    // POST (save/delete) — clear cache so next load is fresh
+    if (!isGet && isScript) {
+      window.__cache.clear();
+    }
+
+    return _origFetch(url, opts);
+  };
+})();
+</script>
+
 </head>
 <body>
 
@@ -173,12 +242,12 @@ tfoot td{background:#f8fafc;font-weight:700;padding:9px 14px;border-top:2px soli
 
   <div class="nav-section">
     <div class="nav-label">Navigation</div>
-    <a href="index.html" class="nav-item"><span class="nav-icon">📊</span><span>Dashboard</span></a>
-    <a href="sales.html" class="nav-item"><span class="nav-icon">📈</span><span>Sales Details</span></a>
+    <a href="index__4_.html" class="nav-item"><span class="nav-icon">📊</span><span>Dashboard</span></a>
+    <a href="#" class="nav-item"><span class="nav-icon">📈</span><span>Sales Details</span></a>
     <a href="bank.html" class="nav-item"><span class="nav-icon">🏦</span><span>Bank</span></a>
     <a href="cash-closing.html" class="nav-item"><span class="nav-icon">💵</span><span>Cash Details</span></a>
     <a href="petty-cash.html" class="nav-item active"><span class="nav-icon">🪙</span><span>Petty Cash</span></a>
-    <a href="receivables.html" class="nav-item"><span class="nav-icon">📥</span><span>Receivables</span></a>
+    <a href="receivables_simple.html" class="nav-item"><span class="nav-icon">📥</span><span>Receivables</span></a>
     <a href="payables.html" class="nav-item"><span class="nav-icon">📤</span><span>Payables</span></a>
   </div>
 
@@ -508,7 +577,7 @@ function hideStatus() { document.getElementById('statusBox').className = 'status
 // ── API ───────────────────────────────────────────────────
 async function apiGet(params) {
   const qs  = Object.entries(params).map(([k,v]) => encodeURIComponent(k)+'='+encodeURIComponent(v)).join('&');
-  const res = await fetch(SCRIPT_URL+'?'+qs, {method:'GET',redirect:'follow',cache:'no-cache'});
+  const res = await fetch(SCRIPT_URL+'?'+qs, {method:'GET',redirect:'follow',cache:'default'});
   if (!res.ok) throw new Error('HTTP '+res.status);
   const j = await res.json();
   if (!j.success) throw new Error(j.error||'Server error');
