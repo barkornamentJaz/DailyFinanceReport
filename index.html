@@ -690,7 +690,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <h3>📈 Sales Summary</h3>
       <div class="print-summary-grid" id="pr-sales-cards"></div>
       <table class="print-table">
-        <thead><tr><th>Date</th><th>Type</th><th>Currency</th><th class="text-right">Amount</th></tr></thead>
+        <thead><tr><th>Date</th><th class="text-right">Export Sales (LKR)</th><th class="text-right">Local Sales (LKR)</th><th class="text-right">Total (LKR)</th></tr></thead>
         <tbody id="pr-sales-body"></tbody>
         <tfoot>
           <tr><td colspan="3" class="text-right">Export Sales Total:</td><td id="pr-exp-total" class="c-orange text-right">—</td></tr>
@@ -741,7 +741,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="print-section">
       <h3>📤 Total Payable — Supplier Wise</h3>
       <table class="print-table">
-        <thead><tr><th>Supplier</th><th>Invoice No</th><th>Due Date</th><th class="text-right">Total Amount</th><th class="text-right">Paid</th><th class="text-right">Outstanding</th><th>Status</th></tr></thead>
+        <thead><tr><th>Supplier</th><th class="text-right">Outstanding</th><th class="text-right">Due Amount</th></tr></thead>
         <tbody id="pr-pay-body"></tbody>
         <tfoot>
           <tr><td colspan="3" class="text-right">Grand Total Outstanding:</td><td id="pr-pay-total-amt" class="c-blue text-right">—</td><td id="pr-pay-paid-amt" class="c-green text-right">—</td><td id="pr-pay-out-amt" class="c-red text-right">—</td><td></td></tr>
@@ -779,18 +779,18 @@ function renderScreen() {
   const {sales,accs,recs,pays,cash,petty} = _data;
   const today = new Date(); today.setHours(0,0,0,0);
   const sum = (arr,k) => arr.reduce((t,x)=>t+(parseFloat(x[k])||0),0);
+  // Sales sheet has columns: Date, ExportSales, LocalSales (one row per date)
   const todaySales = sales.filter(s=>{const d=new Date(s.Date);d.setHours(0,0,0,0);return+d===+today;});
-  const expToday = todaySales.filter(s=>s.SaleType==='Export');
-  const locToday = todaySales.filter(s=>s.SaleType==='Local');
+  const expAmt = sum(todaySales,'ExportSales');
+  const locAmt = sum(todaySales,'LocalSales');
 
   // Sales cards
-  const expAmt = sum(expToday,'Amount'), locAmt = sum(locToday,'Amount');
   document.getElementById('sc-exp').textContent = fmtLKR(expAmt);
-  document.getElementById('sc-exp-c').textContent = expToday.length+' entries';
+  document.getElementById('sc-exp-c').textContent = todaySales.length+' entr'+(todaySales.length===1?'y':'ies');
   document.getElementById('sc-loc').textContent = fmtLKR(locAmt);
-  document.getElementById('sc-loc-c').textContent = locToday.length+' entries';
+  document.getElementById('sc-loc-c').textContent = todaySales.length+' entr'+(todaySales.length===1?'y':'ies');
   document.getElementById('sc-total-sales').textContent = fmtLKR(expAmt+locAmt);
-  document.getElementById('sc-total-sales-c').textContent = todaySales.length+' total entries';
+  document.getElementById('sc-total-sales-c').textContent = todaySales.length+' total entr'+(todaySales.length===1?'y':'ies');
 
   // Bank cards — one card per account + total per currency
   const lkrAccs = accs.filter(a=>a.Currency==='LKR');
@@ -847,24 +847,24 @@ function renderPrint() {
   const m = today.getMonth(), y = today.getFullYear();
   const monSales = sales.filter(s=>{const d=new Date(s.Date);return d.getMonth()===m&&d.getFullYear()===y;});
 
-  // ── SALES ──
-  const expAll = monSales.filter(s=>s.SaleType==='Export');
-  const locAll = monSales.filter(s=>s.SaleType==='Local');
+  // ── SALES ── (Sheet columns: Date, ExportSales, LocalSales)
   const todayS = sales.filter(s=>{const d=new Date(s.Date);d.setHours(0,0,0,0);return+d===+today;});
-  const expToday = sum(todayS.filter(s=>s.SaleType==='Export'),'Amount');
-  const locToday = sum(todayS.filter(s=>s.SaleType==='Local'),'Amount');
+  const expToday = sum(todayS,'ExportSales');
+  const locToday = sum(todayS,'LocalSales');
+  const expMonth = sum(monSales,'ExportSales');
+  const locMonth = sum(monSales,'LocalSales');
   document.getElementById('pr-sales-cards').innerHTML = `
     <div class="print-summary-card"><div class="ps-label">Export Sales (Today)</div><div class="ps-val c-orange">${fmtLKR(expToday)}</div></div>
     <div class="print-summary-card"><div class="ps-label">Local Sales (Today)</div><div class="ps-val c-blue">${fmtLKR(locToday)}</div></div>
     <div class="print-summary-card"><div class="ps-label">Total Sales (Today)</div><div class="ps-val c-green">${fmtLKR(expToday+locToday)}</div></div>
-    <div class="print-summary-card"><div class="ps-label">Export Sales (Month)</div><div class="ps-val c-orange">${fmtLKR(sum(expAll,'Amount'))}</div></div>
-    <div class="print-summary-card"><div class="ps-label">Local Sales (Month)</div><div class="ps-val c-blue">${fmtLKR(sum(locAll,'Amount'))}</div></div>
-    <div class="print-summary-card"><div class="ps-label">Total Sales (Month)</div><div class="ps-val c-green">${fmtLKR(sum(monSales,'Amount'))}</div></div>`;
+    <div class="print-summary-card"><div class="ps-label">Export Sales (Month)</div><div class="ps-val c-orange">${fmtLKR(expMonth)}</div></div>
+    <div class="print-summary-card"><div class="ps-label">Local Sales (Month)</div><div class="ps-val c-blue">${fmtLKR(locMonth)}</div></div>
+    <div class="print-summary-card"><div class="ps-label">Total Sales (Month)</div><div class="ps-val c-green">${fmtLKR(expMonth+locMonth)}</div></div>`;
   const sortedSales = [...todayS].sort((a,b)=>new Date(a.Date)-new Date(b.Date));
   document.getElementById('pr-sales-body').innerHTML = sortedSales.length
-    ? sortedSales.map(s=>`<tr><td>${fmtDate(s.Date)}</td><td>${s.SaleType}</td><td>${s.Currency}</td><td class="text-right ${s.SaleType==='Export'?'c-orange':'c-blue'}">${fmtMoney(s.Amount,s.Currency)}</td></tr>`).join('')
+    ? sortedSales.map(s=>`<tr><td>${fmtDate(s.Date)}</td><td class="c-orange text-right">${fmtLKR(s.ExportSales||0)}</td><td class="c-blue text-right">${fmtLKR(s.LocalSales||0)}</td><td class="c-green text-right">${fmtLKR((parseFloat(s.ExportSales)||0)+(parseFloat(s.LocalSales)||0))}</td></tr>`).join('')
     : '<tr><td colspan="4" style="text-align:center;color:#999">No sales today</td></tr>';
-  document.getElementById('pr-exp-total').textContent = fmtLKR(sum(expAll.filter(s=>{const d=new Date(s.Date);d.setHours(0,0,0,0);return+d===+today;}),'Amount'));
+  document.getElementById('pr-exp-total').textContent = fmtLKR(expToday);
   document.getElementById('pr-loc-total').textContent = fmtLKR(locToday);
   document.getElementById('pr-sales-grand').textContent = fmtLKR(expToday+locToday);
 
@@ -917,22 +917,18 @@ function renderPrint() {
   document.getElementById('pr-rec-paid-amt').textContent = fmtLKR(sum(allRecs,'PaidAmount'));
   document.getElementById('pr-rec-out-amt').textContent = fmtLKR(sum(allRecs,'Outstanding'));
 
-  // ── PAYABLES ──
+  // ── PAYABLES ── (Sheet columns: SupplierName, Outstanding, DueAmount)
   const allPays = [...pays].sort((a,b)=>(a.SupplierName||'').localeCompare(b.SupplierName||''));
   document.getElementById('pr-pay-body').innerHTML = allPays.length
     ? allPays.map(p=>`<tr>
         <td><strong>${p.SupplierName||'—'}</strong></td>
-        <td>${p.InvoiceNo||'—'}</td>
-        <td class="${isOverdue(p.DueDate)&&p.Status!=='Paid'?'c-red':''}">${fmtDate(p.DueDate)}</td>
-        <td class="text-right">${fmtMoney(p.TotalAmount,p.Currency)}</td>
-        <td class="c-green text-right">${fmtMoney(p.PaidAmount,p.Currency)}</td>
-        <td class="${parseFloat(p.Outstanding)>0?'c-red':'c-green'} text-right">${fmtMoney(p.Outstanding,p.Currency)}</td>
-        <td>${p.Status||'—'}</td>
+        <td class="${parseFloat(p.Outstanding)>0?'c-red':'c-green'} text-right">${fmtLKR(p.Outstanding||0)}</td>
+        <td class="c-orange text-right">${fmtLKR(p.DueAmount||0)}</td>
       </tr>`).join('')
-    : '<tr><td colspan="7" style="text-align:center;color:#999">No payables</td></tr>';
-  document.getElementById('pr-pay-total-amt').textContent = fmtLKR(sum(allPays,'TotalAmount'));
-  document.getElementById('pr-pay-paid-amt').textContent = fmtLKR(sum(allPays,'PaidAmount'));
-  document.getElementById('pr-pay-out-amt').textContent = fmtLKR(sum(allPays,'Outstanding'));
+    : '<tr><td colspan="3" style="text-align:center;color:#999">No payables</td></tr>';
+  document.getElementById('pr-pay-total-amt').textContent = fmtLKR(sum(allPays,'Outstanding'));
+  document.getElementById('pr-pay-paid-amt').textContent = '—';
+  document.getElementById('pr-pay-out-amt').textContent = fmtLKR(sum(allPays,'DueAmount'));
 }
 
 async function printReport() {
