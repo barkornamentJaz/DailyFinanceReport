@@ -588,19 +588,17 @@ function hideStatus() { document.getElementById('statusBox').className = 'status
 
 // ── API ───────────────────────────────────────────────────
 async function apiGet(params) {
-  const qs  = Object.entries(params).map(([k,v]) => encodeURIComponent(k)+'='+encodeURIComponent(v)).join('&');
-  const res = await fetch(SCRIPT_URL+'?'+qs, {method:'GET',redirect:'follow',cache:'default'});
-  if (!res.ok) throw new Error('HTTP '+res.status);
-  const j = await res.json();
-  if (!j.success) throw new Error(j.error||'Server error');
-  return j.data;
+  const qs  = new URLSearchParams(params).toString();
+  const res = await fetch(SCRIPT_URL + '?' + qs);
+  const j   = await res.json();
+  if (j.error) throw new Error(j.error);
+  return j.data ?? j;
 }
 async function apiPost(body) {
-  const res = await fetch(SCRIPT_URL, {method:'POST',redirect:'follow',body:JSON.stringify(body)});
-  if (!res.ok) throw new Error('HTTP '+res.status);
-  const j = await res.json();
-  if (!j.success) throw new Error(j.error||'Server error');
-  return j.data;
+  const res = await fetch(SCRIPT_URL, {method:'POST', body:JSON.stringify(body)});
+  const j   = await res.json();
+  if (j.error) throw new Error(j.error);
+  return j;
 }
 
 // ── FORMAT ────────────────────────────────────────────────
