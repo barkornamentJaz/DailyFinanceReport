@@ -197,7 +197,8 @@ function setCard(id,arr,cur){
   const out=sumF(arr,'Outstanding'),due=sumF(arr,'DueAmount');
   document.getElementById('s-'+id+'-o').textContent=out?fmtNum(out,cur):'—';
   document.getElementById('s-'+id+'-d').textContent=due?fmtNum(due,cur):'—';
-  document.getElementById('s-'+id+'-c').textContent=arr.length+' supplier'+(arr.length!==1?'s':'');
+  const cnt=document.getElementById('s-'+id+'-c');
+  if(cnt) cnt.textContent=arr.length+' supplier'+(arr.length!==1?'s':'');
 }
 
 function renderTable(tbodyId,rows){
@@ -394,7 +395,6 @@ async function loadData(){
 // ── Add Supplier ──────────────────────────────────────────────
 function openAdd(){
   document.getElementById('m-name').value='';
-  document.getElementById('m-region').value='Local';
   document.getElementById('m-cur').value='LKR';
   document.getElementById('overlay').classList.add('open');
   setTimeout(()=>document.getElementById('m-name').focus(),120);
@@ -403,7 +403,7 @@ function closeModal(){document.getElementById('overlay').classList.remove('open'
 async function addSupplier(){
   const name=document.getElementById('m-name').value.trim();
   if(!name){toast('Supplier name required','warning');return;}
-  const data={SupplierName:name,Region:document.getElementById('m-region').value,
+  const data={SupplierName:name,Region:'Local',
     Currency:document.getElementById('m-cur').value,Outstanding:0,DueAmount:0};
   showLoading(true);
   try{await apiPost({action:'add',sheet:'Payables',data});toast('Supplier added ✓');closeModal();await loadData();}
@@ -525,38 +525,31 @@ window.addEventListener('load',loadData);
 
   <div class="content">
 
-    <!-- Summary Cards -->
-    <div class="summary-row">
-      <div class="sum-card local">
-        <div class="sum-flag">🇱🇰</div>
-        <div class="sum-region">Local</div>
-        <div class="sum-out" id="s-local-o">—</div>
-        <div class="sum-due"><span class="lbl">Due: </span><span id="s-local-d">—</span></div>
-        <div class="sum-cnt" id="s-local-c"></div>
+    <!-- hidden anchors for JS -->
+    <span id="s-local-c" style="display:none"></span>
+    <span id="s-sey-o"   style="display:none"></span>
+    <span id="s-sey-d"   style="display:none"></span>
+    <span id="s-mal-o"   style="display:none"></span>
+    <span id="s-mal-d"   style="display:none"></span>
+
+    <!-- Total Boxes -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+      <div style="background:#fff;border-radius:12px;padding:18px 22px;box-shadow:0 1px 6px rgba(0,0,0,0.07);border-top:3px solid #ef4444">
+        <div style="font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:#64748b;margin-bottom:6px">Total Outstanding</div>
+        <div id="s-local-o" style="font-size:1.45rem;font-weight:800;color:#0f172a;line-height:1.1">—</div>
       </div>
-      <div class="sum-card sey">
-        <div class="sum-flag">🇸🇨</div>
-        <div class="sum-region">Seychelles</div>
-        <div class="sum-out" id="s-sey-o">—</div>
-        <div class="sum-due"><span class="lbl">Due: </span><span id="s-sey-d">—</span></div>
-        <div class="sum-cnt" id="s-sey-c"></div>
-      </div>
-      <div class="sum-card mal">
-        <div class="sum-flag">🇲🇻</div>
-        <div class="sum-region">Maldives</div>
-        <div class="sum-out" id="s-mal-o">—</div>
-        <div class="sum-due"><span class="lbl">Due: </span><span id="s-mal-d">—</span></div>
-        <div class="sum-cnt" id="s-mal-c"></div>
+      <div style="background:#fff;border-radius:12px;padding:18px 22px;box-shadow:0 1px 6px rgba(0,0,0,0.07);border-top:3px solid #f97316">
+        <div style="font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:#64748b;margin-bottom:6px">Total Due</div>
+        <div id="s-local-d" style="font-size:1.45rem;font-weight:800;color:#ef4444;line-height:1.1">—</div>
       </div>
     </div>
 
-    <!-- Local Suppliers -->
+    <!-- Suppliers -->
     <div class="section">
       <div class="sec-head">
         <div class="sec-head-left">
           <div class="dot"></div>
-          <span style="font-size:1.1rem">🇱🇰</span>
-          <span class="sec-name">Local Suppliers</span>
+          <span class="sec-name">Suppliers</span>
         </div>
       </div>
       <table>
@@ -568,48 +561,6 @@ window.addEventListener('load',loadData);
         </tr></thead>
         <tbody id="tb-local"></tbody>
         <tfoot><tr id="tf-local"></tr></tfoot>
-      </table>
-    </div>
-
-    <!-- Seychelles Suppliers -->
-    <div class="section">
-      <div class="sec-head">
-        <div class="sec-head-left">
-          <div class="dot g"></div>
-          <span style="font-size:1.1rem">🇸🇨</span>
-          <span class="sec-name">Seychelles Suppliers</span>
-        </div>
-      </div>
-      <table>
-        <thead><tr>
-          <th>Supplier</th>
-          <th class="r">Outstanding Amount</th>
-          <th class="r">Due Amount</th>
-          <th class="c"></th>
-        </tr></thead>
-        <tbody id="tb-sey"></tbody>
-        <tfoot><tr id="tf-sey"></tr></tfoot>
-      </table>
-    </div>
-
-    <!-- Maldives Suppliers -->
-    <div class="section">
-      <div class="sec-head">
-        <div class="sec-head-left">
-          <div class="dot y"></div>
-          <span style="font-size:1.1rem">🇲🇻</span>
-          <span class="sec-name">Maldives Suppliers</span>
-        </div>
-      </div>
-      <table>
-        <thead><tr>
-          <th>Supplier</th>
-          <th class="r">Outstanding Amount</th>
-          <th class="r">Due Amount</th>
-          <th class="c"></th>
-        </tr></thead>
-        <tbody id="tb-mal"></tbody>
-        <tfoot><tr id="tf-mal"></tr></tfoot>
       </table>
     </div>
 
@@ -641,17 +592,8 @@ window.addEventListener('load',loadData);
     </div>
     <div class="mbody">
       <div class="field"><label>Supplier Name *</label><input type="text" id="m-name" placeholder="Enter supplier name"></div>
-      <div class="twocol">
-        <div class="field"><label>Region</label>
-          <select id="m-region">
-            <option value="Local">🇱🇰 Local</option>
-            <option value="Seychelles">🇸🇨 Seychelles</option>
-            <option value="Maldives">🇲🇻 Maldives</option>
-          </select>
-        </div>
-        <div class="field"><label>Currency</label>
-          <select id="m-cur"><option value="LKR">LKR</option><option value="USD">USD</option></select>
-        </div>
+      <div class="field"><label>Currency</label>
+        <select id="m-cur"><option value="LKR">LKR</option><option value="USD">USD</option></select>
       </div>
     </div>
     <div class="mftr">
