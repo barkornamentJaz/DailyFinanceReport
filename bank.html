@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Bark Ornament — Bank</title>
 
 <style>
@@ -12,31 +15,25 @@
   --bg-card:    #ffffff;
   --bg-card2:   #f8fafc;
   --bg-input:   #f1f5f9;
-
   --sidebar-bg:     #0f2167;
   --sidebar-border: rgba(255,255,255,0.08);
   --sidebar-text:   rgba(255,255,255,0.62);
   --sidebar-active-bg: rgba(255,255,255,0.12);
   --sidebar-accent: #f97316;
-
   --accent:      #1d4ed8;
   --accent-hov:  #1e40af;
   --accent-light:#3b82f6;
   --accent-soft: rgba(29,78,216,0.07);
-
   --border:      #e2e8f0;
   --border-dark: #cbd5e1;
-
   --text-primary:   #0f172a;
   --text-secondary: #475569;
   --text-muted:     #94a3b8;
-
   --success:   #16a34a; --success-bg: rgba(22,163,74,0.09);
   --warning:   #d97706; --warning-bg: rgba(217,119,6,0.09);
   --danger:    #dc2626; --danger-bg:  rgba(220,38,38,0.09);
   --info:      #0284c7; --info-bg:    rgba(2,132,199,0.09);
   --orange:    #ea580c; --orange-bg:  rgba(234,88,12,0.09);
-
   --sidebar-w: 240px;
   --hdr-h: 64px;
   --radius: 12px; --radius-sm: 7px;
@@ -52,22 +49,11 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 ::-webkit-scrollbar-track{background:var(--bg-page)}
 ::-webkit-scrollbar-thumb{background:var(--border-dark);border-radius:3px}
 
-/* SIDEBAR */
 .sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--sidebar-bg);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:4px 0 20px rgba(0,0,0,0.14)}
-
 .sidebar-logo img{width:52px;height:52px;object-fit:contain;border-radius:8px;background:#fff;padding:3px;margin-bottom:9px}
 .sidebar-logo .company{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.86rem;color:#fff;line-height:1.3}
 .sidebar-logo .subtitle{font-size:0.68rem;color:var(--sidebar-text);margin-top:3px;line-height:1.4}
 
-
-
-
-
-
-
-
-
-/* MAIN */
 .main{margin-left:220px;flex:1;min-height:100vh;display:flex;flex-direction:column}
 .page-header{background:var(--bg-card);border-bottom:1px solid var(--border);padding:0 26px;height:var(--hdr-h);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm)}
 .page-header-left h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1.15rem;color:var(--text-primary)}
@@ -75,7 +61,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 .page-header-right{display:flex;gap:8px;align-items:center}
 .content{padding:20px 26px;flex:1}
 
-/* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 15px;border-radius:var(--radius-sm);font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:all 0.15s;white-space:nowrap}
 .btn svg{width:14px;height:14px}
 .btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
@@ -93,12 +78,10 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 .btn-icon{padding:6px 8px}
 .btn-sm{padding:5px 10px;font-size:0.77rem}
 
-/* CARDS */
 .card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow-card)}
 .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .card-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.9rem;color:var(--text-primary)}
 
-/* SUMMARY CARDS */
 .summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:13px;margin-bottom:20px}
 .summary-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow-card);position:relative;overflow:hidden;transition:transform 0.16s,box-shadow 0.16s}
 .summary-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
@@ -113,7 +96,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 .sc-value.small{font-size:1.05rem}
 .sc-sub{font-size:0.71rem;color:var(--text-secondary);margin-top:4px}
 
-/* TOOLBAR/FILTER */
 .toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:13px}
 .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:13px;align-items:center}
 .filter-bar label{font-size:0.74rem;color:var(--text-muted);font-weight:600}
@@ -124,13 +106,11 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 .search-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(29,78,216,0.08)}
 .search-box svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text-muted)}
 
-/* TABS */
 .tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:16px}
 .tab{padding:8px 18px;font-size:0.83rem;font-weight:600;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.15s}
 .tab:hover{color:var(--text-primary)}
 .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
 
-/* SECTION HEADER */
 .section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
 .section-hdr h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.93rem;color:var(--text-primary);display:flex;align-items:center;gap:7px}
 .section-hdr h2 .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block}
@@ -139,7 +119,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 .section-hdr h2 .dot.orange{background:var(--orange)}
 .section-hdr h2 .dot.red{background:var(--danger)}
 
-/* TABLE */
 .table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
 .data-table{width:100%;border-collapse:collapse;font-size:0.83rem}
 .data-table thead th{background:#f1f5f9;padding:9px 12px;text-align:left;font-weight:700;font-size:0.69rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);border-bottom:2px solid var(--border);white-space:nowrap}
@@ -151,7 +130,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 .data-table tfoot td{background:#f8fafc;font-weight:700;padding:9px 12px;border-top:2px solid var(--border);font-size:0.85rem}
 .actions{display:flex;gap:4px;align-items:center}
 
-/* BADGES */
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:0.69rem;font-weight:700}
 .badge-success{background:var(--success-bg);color:var(--success)}
 .badge-warning{background:var(--warning-bg);color:var(--warning)}
@@ -164,10 +142,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 .region-maldives{background:var(--warning-bg);color:var(--warning)}
 .cur-lkr{background:var(--info-bg);color:var(--info);font-size:0.67rem}
 .cur-usd{background:var(--success-bg);color:var(--success);font-size:0.67rem}
-.type-export{background:var(--orange-bg);color:var(--orange)}
-.type-local{background:var(--accent-soft);color:var(--accent)}
 
-/* ACCOUNT CARDS */
 .acc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:13px;margin-bottom:18px}
 .acc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow-card);position:relative;transition:box-shadow 0.16s}
 .acc-card:hover{box-shadow:var(--shadow)}
@@ -179,7 +154,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 .acc-balance.usd{color:var(--success)}
 .acc-actions{display:flex;gap:6px;margin-top:11px}
 
-/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.4);backdrop-filter:blur(3px);z-index:1000;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.open{display:flex}
 .modal{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 20px 60px rgba(15,23,42,0.16);width:100%;max-width:520px;max-height:90vh;display:flex;flex-direction:column;animation:slideUp 0.18s ease}
@@ -192,7 +166,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 .modal-body{padding:16px 20px;overflow-y:auto;flex:1}
 .modal-footer{padding:13px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
 
-/* FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .form-grid.single{grid-template-columns:1fr}
 .form-group{display:flex;flex-direction:column;gap:5px}
@@ -203,20 +176,17 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 .form-control option{background:#fff}
 textarea.form-control{resize:vertical;min-height:62px}
 
-/* MISC */
 .divider{height:1px;background:var(--border);margin:18px 0}
 .text-success{color:var(--success)}.text-danger{color:var(--danger)}.text-warning{color:var(--warning)}.text-info{color:var(--info)}.text-muted{color:var(--text-muted)}.text-orange{color:var(--orange)}
 .fw700{font-weight:700;font-family:'Plus Jakarta Sans',sans-serif}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
 @media(max-width:900px){.two-col{grid-template-columns:1fr}}
 
-/* LOADING */
 #loading{display:none;position:fixed;inset:0;background:rgba(255,255,255,0.72);backdrop-filter:blur(2px);z-index:2000;align-items:center;justify-content:center;flex-direction:column;gap:12px}
 .spinner{width:36px;height:36px;border-radius:50%;border:3px solid var(--border-dark);border-top-color:var(--accent);animation:spin 0.68s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-size:0.82rem;color:var(--text-secondary);font-weight:600}
 
-/* TOAST */
 .toast{position:fixed;bottom:20px;right:20px;z-index:9999;background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:11px 17px;font-size:0.84rem;color:var(--text-primary);box-shadow:var(--shadow);max-width:310px;transform:translateY(14px);opacity:0;transition:all 0.26s}
 .toast.show{transform:none;opacity:1}
 .toast-success{border-left:4px solid var(--success)}
@@ -224,16 +194,15 @@ textarea.form-control{resize:vertical;min-height:62px}
 .toast-warning{border-left:4px solid var(--warning)}
 .toast-info{border-left:4px solid var(--info)}
 
-/* EMPTY STATE */
 .empty-state{text-align:center;padding:34px 20px;color:var(--text-muted)}
 .empty-state p{font-size:0.86rem}
 
-/* PRINT */
 .print-company-header{display:none}
 @media print{
   body{background:#fff!important;color:#000!important}
   .sidebar,.page-header-right,.toolbar,.filter-bar,.btn,.actions,.modal-overlay,#loading,.toast,.tabs{display:none!important}
-  .main{margin-left:220px;align-items:center;gap:13px;padding-bottom:11px;border-bottom:2px solid #1d4ed8;margin-bottom:14px}
+  .main{margin-left:0}
+  .print-company-header{display:flex!important;align-items:center;gap:13px;padding-bottom:11px;border-bottom:2px solid #1d4ed8;margin-bottom:14px}
   .print-company-header img{width:54px;height:54px;object-fit:contain}
   .print-company-header .pch-name{font-size:13pt;font-weight:700;color:#1d4ed8}
   .print-company-header .pch-addr{font-size:8.5pt;color:#555;margin-top:2px}
@@ -248,7 +217,7 @@ textarea.form-control{resize:vertical;min-height:62px}
   @page{margin:14mm 12mm}
 }
 
-/* ── SIDEBAR ── */
+/* SIDEBAR */
 .sidebar{width:220px;min-height:100vh;background:#1a2d6b;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:3px 0 16px rgba(0,0,0,0.18)}
 .sb-logo{padding:18px 14px 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px}
 .sb-logo-img{width:44px;height:44px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.78rem;color:#1a2d6b;flex-shrink:0}
@@ -264,24 +233,12 @@ textarea.form-control{resize:vertical;min-height:62px}
 .sb-footer{padding:11px 16px;border-top:1px solid rgba(255,255,255,0.07);font-size:0.62rem;color:rgba(255,255,255,0.22);line-height:1.6}
 </style>
 <script>
-// ============================================================
-// config.js — Bark Ornament Daily Report System
-// ============================================================
-
 const CONFIG = {
   SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw4HSqqDmnhU5y49DDHaBzI7YbsXTFkUHZzKFRUBFmICh_fTPoFvyADgTboPgqcxTXr/exec',
   COMPANY_NAME:    'Bark Ornament Private Ltd',
   COMPANY_ADDRESS: 'No. 59 A Bekkegama, Panadura',
 };
 
-// ============================================================
-// common.js — Bark Ornament Daily Report System
-// Shared utilities, API helpers, formatters
-// ============================================================
-
-/* ─────────────────────────────────────────────────────────────
-   CONFIG VALIDATION
-───────────────────────────────────────────────────────────── */
 function isConfigured() {
   return CONFIG.SCRIPT_URL &&
          CONFIG.SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL' &&
@@ -292,214 +249,75 @@ function showConfigBanner() {
   if (document.getElementById('__configBanner')) return;
   const b = document.createElement('div');
   b.id = '__configBanner';
-  b.style.cssText = [
-    'position:fixed;top:0;left:0;right:0;z-index:99999',
-    'background:#fef3c7;border-bottom:2px solid #d97706',
-    'padding:11px 20px;display:flex;align-items:center;gap:10px',
-    "font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;color:#92400e",
-    'box-shadow:0 2px 8px rgba(0,0,0,0.1)'
-  ].join(';');
-  b.innerHTML = `
-    <span style="font-size:1.2rem">⚙️</span>
-    <div>
-      <strong>Setup needed:</strong>
-      Open <code style="background:#fde68a;padding:1px 5px;border-radius:3px">config.js</code>
-      on GitHub and replace <code style="background:#fde68a;padding:1px 5px;border-radius:3px">YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL</code>
-      with your deployed Apps Script URL.
-    </div>
-    <button onclick="this.parentElement.remove()"
-      style="margin-left:auto;background:none;border:none;font-size:1.3rem;cursor:pointer;color:#92400e;line-height:1">✕</button>
-  `;
+  b.style.cssText = ['position:fixed;top:0;left:0;right:0;z-index:99999','background:#fef3c7;border-bottom:2px solid #d97706','padding:11px 20px;display:flex;align-items:center;gap:10px',"font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;color:#92400e",'box-shadow:0 2px 8px rgba(0,0,0,0.1)'].join(';');
+  b.innerHTML = `<span style="font-size:1.2rem">⚙️</span><div><strong>Setup needed:</strong> Open <code style="background:#fde68a;padding:1px 5px;border-radius:3px">config.js</code> and replace the URL.</div><button onclick="this.parentElement.remove()" style="margin-left:auto;background:none;border:none;font-size:1.3rem;cursor:pointer;color:#92400e;line-height:1">✕</button>`;
   document.body.prepend(b);
   const main = document.querySelector('.main');
   if (main) main.style.marginTop = '50px';
 }
 
-/* ─────────────────────────────────────────────────────────────
-   API HELPERS
-   Uses Google Apps Script Web App URL.
-   GitHub Pages → Apps Script works via redirect:follow + JSON.
-───────────────────────────────────────────────────────────── */
 async function apiGet(params) {
-  if (!isConfigured()) {
-    showConfigBanner();
-    throw new Error('Apps Script URL not configured in config.js');
-  }
-
-  // Build URL with query params
+  if (!isConfigured()) { showConfigBanner(); throw new Error('Apps Script URL not configured'); }
   const base = CONFIG.SCRIPT_URL;
-  const qs   = Object.entries(params)
-    .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v))
-    .join('&');
+  const qs = Object.entries(params).map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(v)).join('&');
   const fullUrl = base + (base.includes('?') ? '&' : '?') + qs;
-
   let res;
-  try {
-    res = await fetch(fullUrl, {
-      method:   'GET',
-      redirect: 'follow',   // IMPORTANT — Apps Script issues a redirect
-      cache:    'no-cache',
-    });
-  } catch (networkErr) {
-    throw new Error('Network error — check your internet connection.\n' + networkErr.message);
-  }
-
+  try { res = await fetch(fullUrl, { method:'GET', redirect:'follow', cache:'no-cache' }); }
+  catch (networkErr) { throw new Error('Network error — ' + networkErr.message); }
   if (!res.ok) throw new Error('Server error: HTTP ' + res.status);
-
   let json;
-  try { json = await res.json(); }
-  catch (e) { throw new Error('Invalid response from Apps Script. Re-deploy and try again.'); }
-
+  try { json = await res.json(); } catch (e) { throw new Error('Invalid response from Apps Script.'); }
   if (!json.success) throw new Error(json.error || 'Unknown server error');
   return json.data;
 }
 
 async function apiPost(body) {
-  if (!isConfigured()) {
-    showConfigBanner();
-    throw new Error('Apps Script URL not configured in config.js');
-  }
-
+  if (!isConfigured()) { showConfigBanner(); throw new Error('Apps Script URL not configured'); }
   let res;
-  try {
-    res = await fetch(CONFIG.SCRIPT_URL, {
-      method:   'POST',
-      redirect: 'follow',   // IMPORTANT — Apps Script issues a redirect on POST too
-      // Note: no 'Content-Type' header — Apps Script handles plain text body better
-      // from cross-origin requests
-      body: JSON.stringify(body),
-    });
-  } catch (networkErr) {
-    throw new Error('Network error — check your internet connection.\n' + networkErr.message);
-  }
-
+  try { res = await fetch(CONFIG.SCRIPT_URL, { method:'POST', redirect:'follow', body: JSON.stringify(body) }); }
+  catch (networkErr) { throw new Error('Network error — ' + networkErr.message); }
   if (!res.ok) throw new Error('Server error: HTTP ' + res.status);
-
   let json;
-  try { json = await res.json(); }
-  catch (e) { throw new Error('Invalid response from Apps Script. Re-deploy and try again.'); }
-
+  try { json = await res.json(); } catch (e) { throw new Error('Invalid response from Apps Script.'); }
   if (!json.success) throw new Error(json.error || 'Unknown server error');
   return json.data;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   FORMATTERS
-───────────────────────────────────────────────────────────── */
-function fmtLKR(n) {
-  return 'Rs\u00A0' + parseFloat(n || 0)
-    .toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
-function fmtUSD(n) {
-  return '$\u00A0' + parseFloat(n || 0)
-    .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
-function fmtMoney(n, cur) { return cur === 'USD' ? fmtUSD(n) : fmtLKR(n); }
-
-function fmtDate(d) {
-  if (!d) return '—';
-  const dt = new Date(d);
-  if (isNaN(dt)) return String(d);
-  return dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-}
-function fmtDateInput(d) {
-  if (!d) return '';
-  const dt = new Date(d);
-  if (isNaN(dt)) return '';
-  return dt.toISOString().split('T')[0];
-}
+function fmtLKR(n) { return 'Rs\u00A0' + parseFloat(n||0).toLocaleString('en-LK',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtUSD(n) { return '$\u00A0' + parseFloat(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtMoney(n,cur) { return cur==='USD' ? fmtUSD(n) : fmtLKR(n); }
+function fmtDate(d) { if(!d)return '—'; const dt=new Date(d); if(isNaN(dt))return String(d); return dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+function fmtDateInput(d) { if(!d)return ''; const dt=new Date(d); if(isNaN(dt))return ''; return dt.toISOString().split('T')[0]; }
 function todayISO() { return new Date().toISOString().split('T')[0]; }
+function isOverdue(dueDate) { if(!dueDate)return false; const due=new Date(dueDate);due.setHours(0,0,0,0); const now=new Date();now.setHours(0,0,0,0); return due<now; }
 
-function isOverdue(dueDate) {
-  if (!dueDate) return false;
-  const due = new Date(dueDate); due.setHours(0, 0, 0, 0);
-  const now = new Date();         now.setHours(0, 0, 0, 0);
-  return due < now;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   BADGES
-───────────────────────────────────────────────────────────── */
-function statusBadge(s) {
-  const m = { Paid:'badge-success', Partial:'badge-warning', Pending:'badge-info', Overdue:'badge-danger' };
-  return `<span class="badge ${m[s]||'badge-secondary'}">${s||'—'}</span>`;
-}
-function regionBadge(r) {
-  const m = { Local:'region-local', Seychelles:'region-seychelles', Maldives:'region-maldives' };
-  return `<span class="badge ${m[r]||'badge-secondary'}">${r||'—'}</span>`;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   UI HELPERS
-───────────────────────────────────────────────────────────── */
-function showLoading(v) {
-  const el = document.getElementById('loading');
-  if (el) el.style.display = v ? 'flex' : 'none';
-}
+function showLoading(v) { const el=document.getElementById('loading'); if(el)el.style.display=v?'flex':'none'; }
 
 let _toastTimer;
-function showToast(msg, type = 'success') {
-  const old = document.getElementById('__toast');
-  if (old) old.remove();
-  clearTimeout(_toastTimer);
-  const t = document.createElement('div');
-  t.id = '__toast';
-  t.className = `toast toast-${type}`;
-  t.textContent = msg;
-  document.body.appendChild(t);
-  requestAnimationFrame(() => t.classList.add('show'));
-  _toastTimer = setTimeout(() => {
-    t.classList.remove('show');
-    setTimeout(() => t.remove(), 320);
-  }, 3500);
+function showToast(msg, type='success') {
+  const old=document.getElementById('__toast'); if(old)old.remove(); clearTimeout(_toastTimer);
+  const t=document.createElement('div'); t.id='__toast'; t.className=`toast toast-${type}`; t.textContent=msg;
+  document.body.appendChild(t); requestAnimationFrame(()=>t.classList.add('show'));
+  _toastTimer=setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),320);},3500);
 }
 
-function openModal(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.style.display = 'flex';
-  el.classList.add('open');
-}
-function closeModal(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.style.display = 'none';
-  el.classList.remove('open');
-}
-document.addEventListener('click', e => {
-  if (e.target.classList.contains('modal-overlay')) {
-    e.target.style.display = 'none';
-    e.target.classList.remove('open');
-  }
-});
+function openModal(id) { const el=document.getElementById(id); if(!el)return; el.style.display='flex'; el.classList.add('open'); }
+function closeModal(id) { const el=document.getElementById(id); if(!el)return; el.style.display='none'; el.classList.remove('open'); }
+document.addEventListener('click', e => { if(e.target.classList.contains('modal-overlay')){ e.target.style.display='none'; e.target.classList.remove('open'); } });
+async function confirmDel(msg='Delete this record? This cannot be undone.') { return window.confirm(msg); }
+function doPrint(title) { const orig=document.title; document.title=`${title} — ${CONFIG.COMPANY_NAME} — ${fmtDate(new Date())}`; window.print(); document.title=orig; }
 
-async function confirmDel(msg = 'Delete this record? This cannot be undone.') {
-  return window.confirm(msg);
-}
-
-function doPrint(title) {
-  const orig = document.title;
-  document.title = `${title} — ${CONFIG.COMPANY_NAME} — ${fmtDate(new Date())}`;
-  window.print();
-  document.title = orig;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   PAGE INIT
-───────────────────────────────────────────────────────────── */
 function setPageDate() {
-  const s = new Date().toLocaleDateString('en-GB', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-  });
-  const el = document.getElementById('pageDate');
-  if (el) el.textContent = s;
-  const ph = document.getElementById('printDateHdr');
-  if (ph) ph.innerHTML = 'Report Date:<br><strong>' + s + '</strong>';
+  const s=new Date().toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const el=document.getElementById('pageDate'); if(el)el.textContent=s;
+  const ph=document.getElementById('printDateHdr'); if(ph)ph.innerHTML='Report Date:<br><strong>'+s+'</strong>';
 }
 
 function setActiveNav() {
   const page = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll(');
+  document.querySelectorAll('.sb-link').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === page);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -509,73 +327,38 @@ document.addEventListener('DOMContentLoaded', () => {
   if (yr) yr.textContent = new Date().getFullYear();
   if (!isConfigured()) showConfigBanner();
 });
-
 </script>
 
-<!-- ── SMART CACHE ── -->
+<!-- SMART CACHE -->
 <script>
 (function(){
-  const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
-
-  // Wrap fetch to use cache
+  const CACHE_TTL = 5 * 60 * 1000;
   window.__cache = {
-    get: function(key) {
-      try {
-        const raw = sessionStorage.getItem('bork_cache_' + key);
-        if (!raw) return null;
-        const obj = JSON.parse(raw);
-        if (Date.now() - obj.ts > CACHE_TTL) { sessionStorage.removeItem('bork_cache_' + key); return null; }
-        return obj.data;
-      } catch(e) { return null; }
-    },
-    set: function(key, data) {
-      try { sessionStorage.setItem('bork_cache_' + key, JSON.stringify({ts: Date.now(), data})); } catch(e) {}
-    },
-    clear: function() {
-      try {
-        Object.keys(sessionStorage).filter(k => k.startsWith('bork_cache_')).forEach(k => sessionStorage.removeItem(k));
-      } catch(e) {}
-    }
+    get: function(key) { try { const raw=sessionStorage.getItem('bork_cache_'+key); if(!raw)return null; const obj=JSON.parse(raw); if(Date.now()-obj.ts>CACHE_TTL){sessionStorage.removeItem('bork_cache_'+key);return null;} return obj.data; } catch(e){return null;} },
+    set: function(key,data) { try{sessionStorage.setItem('bork_cache_'+key,JSON.stringify({ts:Date.now(),data}));}catch(e){} },
+    clear: function() { try{Object.keys(sessionStorage).filter(k=>k.startsWith('bork_cache_')).forEach(k=>sessionStorage.removeItem(k));}catch(e){} }
   };
-
-  // Patch fetch to cache GET requests to the Apps Script
   const _origFetch = window.fetch;
   window.fetch = async function(url, opts) {
-    const isGet = !opts || !opts.method || opts.method === 'GET';
-    const isScript = typeof url === 'string' && url.includes('script.google.com');
-
-    if (isGet && isScript) {
-      const cacheKey = url.toString().replace(/.*\?/, '');
-      const cached = window.__cache.get(cacheKey);
-
-      if (cached) {
-        // Return cached instantly
-        const blob = new Blob([JSON.stringify(cached)], {type:'application/json'});
-        const resp = new Response(blob, {status:200, headers:{'Content-Type':'application/json'}});
-
-        // Silently refresh in background
-        setTimeout(() => {
-          _origFetch(url, opts).then(r => r.json()).then(fresh => {
-            window.__cache.set(cacheKey, fresh);
-          }).catch(() => {});
-        }, 200);
-
+    const isGet = !opts||!opts.method||opts.method==='GET';
+    const isScript = typeof url==='string'&&url.includes('script.google.com');
+    if(isGet&&isScript){
+      const cacheKey=url.toString().replace(/.*\?/,'');
+      const cached=window.__cache.get(cacheKey);
+      if(cached){
+        const blob=new Blob([JSON.stringify(cached)],{type:'application/json'});
+        const resp=new Response(blob,{status:200,headers:{'Content-Type':'application/json'}});
+        setTimeout(()=>{_origFetch(url,opts).then(r=>r.json()).then(fresh=>{window.__cache.set(cacheKey,fresh);}).catch(()=>{});},200);
         return resp;
       } else {
-        // No cache — fetch normally and cache the result
-        const resp = await _origFetch(url, opts);
-        const clone = resp.clone();
-        clone.json().then(data => window.__cache.set(cacheKey, data)).catch(() => {});
+        const resp=await _origFetch(url,opts);
+        const clone=resp.clone();
+        clone.json().then(data=>window.__cache.set(cacheKey,data)).catch(()=>{});
         return resp;
       }
     }
-
-    // POST (save/delete) — clear cache so next load is fresh
-    if (!isGet && isScript) {
-      window.__cache.clear();
-    }
-
-    return _origFetch(url, opts);
+    if(!isGet&&isScript){window.__cache.clear();}
+    return _origFetch(url,opts);
   };
 })();
 </script>
@@ -627,7 +410,6 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <!-- MAIN -->
-
 <div id="loading"><div class="spinner"></div><div class="loading-text">Loading…</div></div>
 <div class="main">
   <div class="page-header">
@@ -677,6 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 </div>
+
 <!-- ADD ACCOUNT MODAL -->
 <div class="modal-overlay" id="accModal">
   <div class="modal">
@@ -697,6 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 </div>
+
 <!-- DAILY BALANCE MODAL -->
 <div class="modal-overlay" id="balModal">
   <div class="modal">
@@ -720,14 +504,19 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 document.getElementById('yr').textContent=new Date().getFullYear();
 let accounts=[],balLogs=[],editAccId=null,editBalId=null;
+
 async function loadData(){
   showLoading(true);
   try{
-    [accounts,balLogs]=await Promise.all([apiGet({action:'getAll',sheet:'BankAccounts'}),apiGet({action:'getAll',sheet:'BankDailyLog'})]);
+    [accounts,balLogs]=await Promise.all([
+      apiGet({action:'getAll',sheet:'BankAccounts'}),
+      apiGet({action:'getAll',sheet:'BankDailyLog'})
+    ]);
     renderAccounts();filterBalLog();populateAccDropdowns();
   }catch(e){showToast(e.message,'error');}
   showLoading(false);
 }
+
 function renderAccounts(){
   const lkr=accounts.filter(a=>a.Currency==='LKR'),usd=accounts.filter(a=>a.Currency==='USD');
   const sumLKR=lkr.reduce((t,a)=>t+(parseFloat(a.Balance)||0),0);
@@ -738,21 +527,22 @@ function renderAccounts(){
   document.getElementById('usdCount').textContent=usd.length+' account(s)';
   document.getElementById('lkrTotal').textContent=fmtLKR(sumLKR);
   document.getElementById('usdTotal').textContent=fmtUSD(sumUSD);
-  // Cards
   const cards=document.getElementById('accCards');
-  if(!accounts.length){cards.innerHTML='<div class="empty-state"><p>No accounts added yet. Click <strong>Add Account</strong>.</p></div>';}
-  else{cards.innerHTML=accounts.map(a=>`<div class="acc-card">
-    <div class="acc-currency"><span class="badge ${a.Currency==='USD'?'cur-usd':'cur-lkr'}">${a.Currency}</span></div>
-    <div class="acc-bank">${a.Bank||''}</div>
-    <div class="acc-name">${a.AccountName||'—'}</div>
-    <div class="acc-no">${a.AccountNo||'—'}</div>
-    <div class="acc-balance ${a.Currency==='USD'?'usd':''}">${fmtMoney(a.Balance,a.Currency)}</div>
-    <div class="acc-actions">
-      <button class="btn btn-primary btn-sm" onclick="openDailyBalanceFor('${a.ID}','${a.AccountName}')">💰 Update</button>
-      <button class="btn btn-secondary btn-sm" onclick="openEditAccount('${a.ID}')">✏️</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteAccount('${a.ID}')">🗑️</button>
-    </div></div>`).join('');}
-  // Table
+  if(!accounts.length){
+    cards.innerHTML='<div class="empty-state"><p>No accounts added yet. Click <strong>Add Account</strong>.</p></div>';
+  } else {
+    cards.innerHTML=accounts.map(a=>`<div class="acc-card">
+      <div class="acc-currency"><span class="badge ${a.Currency==='USD'?'cur-usd':'cur-lkr'}">${a.Currency}</span></div>
+      <div class="acc-bank">${a.Bank||''}</div>
+      <div class="acc-name">${a.AccountName||'—'}</div>
+      <div class="acc-no">${a.AccountNo||'—'}</div>
+      <div class="acc-balance ${a.Currency==='USD'?'usd':''}">${fmtMoney(a.Balance,a.Currency)}</div>
+      <div class="acc-actions">
+        <button class="btn btn-primary btn-sm" onclick="openDailyBalanceFor('${a.ID}','${a.AccountName}')">💰 Update</button>
+        <button class="btn btn-secondary btn-sm" onclick="openEditAccount('${a.ID}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteAccount('${a.ID}')">🗑️</button>
+      </div></div>`).join('');
+  }
   const tb=document.getElementById('accTable');
   tb.innerHTML=accounts.length?accounts.map((a,i)=>`<tr>
     <td class="muted">${i+1}</td><td><strong>${a.AccountName||'—'}</strong></td><td>${a.Bank||'—'}</td>
@@ -765,6 +555,7 @@ function renderAccounts(){
       <button class="btn btn-danger btn-icon btn-sm" onclick="deleteAccount('${a.ID}')" title="Delete">🗑️</button>
     </div></td></tr>`).join(''):'<tr><td colspan="7"><div class="empty-state"><p>No accounts</p></div></td></tr>';
 }
+
 function populateAccDropdowns(){
   const opts=accounts.map(a=>`<option value="${a.ID}">${a.AccountName} (${a.Currency})</option>`).join('');
   const blAcc=document.getElementById('bl-acc');
@@ -774,6 +565,7 @@ function populateAccDropdowns(){
   blAccount.innerHTML='<option value="">— Select —</option>'+opts;
   blAcc.value=curA;blAccount.value=curB;
 }
+
 function filterBalLog(){
   const from=document.getElementById('bl-from').value;
   const to=document.getElementById('bl-to').value;
@@ -787,8 +579,8 @@ function filterBalLog(){
   const tb=document.getElementById('balLogBody');
   if(!rows.length){tb.innerHTML='<tr><td colspan="7"><div class="empty-state"><p>No balance logs found</p></div></td></tr>';return;}
   tb.innerHTML=rows.map((b,i)=>{
-    const acc=accounts.find(a=>a.ID===b.AccountID)||{};
-    const cur=acc.Currency||b.Currency||'LKR';
+    const ac=accounts.find(a=>a.ID===b.AccountID)||{};
+    const cur=ac.Currency||b.Currency||'LKR';
     return `<tr><td class="muted">${i+1}</td><td>${fmtDate(b.Date)}</td><td><strong>${b.AccountName||'—'}</strong></td>
     <td><span class="badge ${cur==='USD'?'cur-usd':'cur-lkr'}">${cur}</span></td>
     <td class="fw700">${fmtMoney(b.Balance,cur)}</td>
@@ -799,7 +591,13 @@ function filterBalLog(){
     </div></td></tr>`;
   }).join('');
 }
-function clearBalFilter(){['bl-from','bl-to'].forEach(id=>document.getElementById(id).value='');document.getElementById('bl-acc').value='';filterBalLog();}
+
+function clearBalFilter(){
+  ['bl-from','bl-to'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('bl-acc').value='';
+  filterBalLog();
+}
+
 function openAddAccount(){
   editAccId=null;
   document.getElementById('accModalTitle').textContent='Add Bank Account';
@@ -809,6 +607,7 @@ function openAddAccount(){
   document.getElementById('a-balance').value='0';
   openModal('accModal');
 }
+
 function openEditAccount(id){
   const a=accounts.find(x=>x.ID===id);if(!a)return;
   editAccId=id;
@@ -821,8 +620,15 @@ function openEditAccount(id){
   document.getElementById('a-balance').value=a.Balance||'0';
   openModal('accModal');
 }
+
 async function saveAccount(){
-  const data={AccountName:document.getElementById('a-name').value.trim(),Bank:document.getElementById('a-bank').value.trim(),Currency:document.getElementById('a-currency').value,AccountNo:document.getElementById('a-accno').value.trim(),Balance:parseFloat(document.getElementById('a-balance').value)||0};
+  const data={
+    AccountName:document.getElementById('a-name').value.trim(),
+    Bank:document.getElementById('a-bank').value.trim(),
+    Currency:document.getElementById('a-currency').value,
+    AccountNo:document.getElementById('a-accno').value.trim(),
+    Balance:parseFloat(document.getElementById('a-balance').value)||0
+  };
   if(!data.AccountName||!data.Bank){showToast('Name & Bank required','warning');return;}
   showLoading(true);
   try{
@@ -833,6 +639,7 @@ async function saveAccount(){
   }catch(e){showToast(e.message,'error');}
   showLoading(false);
 }
+
 async function deleteAccount(id){
   if(!await confirmDel('Delete this account?'))return;
   showLoading(true);
@@ -840,6 +647,7 @@ async function deleteAccount(id){
   catch(e){showToast(e.message,'error');}
   showLoading(false);
 }
+
 function openDailyBalance(){
   editBalId=null;
   document.getElementById('balModalTitle').textContent='Add Daily Balance Log';
@@ -850,6 +658,7 @@ function openDailyBalance(){
   document.getElementById('bl-notes').value='';
   openModal('balModal');
 }
+
 function openDailyBalanceFor(accId,accName){
   editBalId=null;
   document.getElementById('balModalTitle').textContent='Update Balance — '+accName;
@@ -860,6 +669,7 @@ function openDailyBalanceFor(accId,accName){
   document.getElementById('bl-notes').value='';
   openModal('balModal');
 }
+
 function openEditBalLog(id){
   const b=balLogs.find(x=>x.ID===id);if(!b)return;
   editBalId=id;
@@ -871,20 +681,27 @@ function openEditBalLog(id){
   document.getElementById('bl-notes').value=b.Notes||'';
   openModal('balModal');
 }
+
 async function saveBalLog(){
   const accSel=document.getElementById('bl-account').value;
   const acc=accounts.find(a=>a.ID===accSel);
   if(!accSel||!acc){showToast('Please select an account','warning');return;}
   const bal=parseFloat(document.getElementById('bl-balance').value);
   if(isNaN(bal)){showToast('Enter a valid balance','warning');return;}
-  const data={Date:document.getElementById('bl-date').value,AccountID:acc.ID,AccountName:acc.AccountName,Currency:acc.Currency,Balance:bal,Notes:document.getElementById('bl-notes').value};
+  const data={
+    Date:document.getElementById('bl-date').value,
+    AccountID:acc.ID,
+    AccountName:acc.AccountName,
+    Currency:acc.Currency,
+    Balance:bal,
+    Notes:document.getElementById('bl-notes').value
+  };
   showLoading(true);
   try{
     const id=document.getElementById('bl-id').value;
     if(id){await apiPost({action:'update',sheet:'BankDailyLog',id,data});showToast('Updated');}
     else{
       await apiPost({action:'add',sheet:'BankDailyLog',data});
-      // Also update account current balance
       await apiPost({action:'update',sheet:'BankAccounts',id:acc.ID,data:{Balance:bal}});
       showToast('Balance logged & account updated');
     }
@@ -892,6 +709,7 @@ async function saveBalLog(){
   }catch(e){showToast(e.message,'error');}
   showLoading(false);
 }
+
 async function deleteBalLog(id){
   if(!await confirmDel('Delete this log entry?'))return;
   showLoading(true);
@@ -899,6 +717,7 @@ async function deleteBalLog(id){
   catch(e){showToast(e.message,'error');}
   showLoading(false);
 }
-window.addEventListener('load',loadData);
+
+window.addEventListener('load', loadData);
 </script>
 </body></html>
