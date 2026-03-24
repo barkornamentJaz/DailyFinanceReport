@@ -757,9 +757,9 @@ document.addEventListener('DOMContentLoaded', () => {
       <!-- QUICK TABLES -->
       <div class="two-col">
         <div class="card"><div class="card-header"><div class="card-title">All Receivables (Outstanding)</div><a href="receivables.html" class="btn btn-secondary btn-sm">View All</a></div>
-          <div class="table-wrap"><table class="data-table"><thead><tr><th>Customer</th><th>Region</th><th>Due Date</th><th>Outstanding</th></tr></thead>
+          <div class="table-wrap"><table class="data-table"><thead><tr><th>Customer</th><th>Region</th><th>Outstanding</th></tr></thead>
           <tbody id="recTable"></tbody>
-          <tfoot><tr><td colspan="3" style="text-align:right">Total:</td><td id="rec-total" class="fw700">—</td></tr></tfoot>
+          <tfoot><tr><td colspan="2" style="text-align:right">Total:</td><td id="rec-total" class="fw700">—</td></tr></tfoot>
           </table></div>
         </div>
         <div class="card"><div class="card-header"><div class="card-title">All Payables (Outstanding)</div><a href="payables.html" class="btn btn-secondary btn-sm">View All</a></div>
@@ -843,10 +843,10 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="print-section">
     <h3>Receivables — Customer Wise</h3>
     <table class="print-table">
-      <thead><tr><th>Customer</th><th>Region</th><th>Due Date</th><th class="text-right">Outstanding</th></tr></thead>
+      <thead><tr><th>Customer</th><th>Region</th><th class="text-right">Outstanding</th></tr></thead>
       <tbody id="pr-rec-body"></tbody>
       <tfoot>
-        <tr><td colspan="3" class="text-right">Total Outstanding:</td><td id="pr-rec-out-amt" class="c-red text-right">—</td></tr>
+        <tr><td colspan="2" class="text-right">Total Outstanding:</td><td id="pr-rec-out-amt" class="c-red text-right">—</td></tr>
       </tfoot>
     </table>
   </div>
@@ -1031,8 +1031,8 @@ function renderScreen() {
   // Rec table (all outstanding)
   const recRows = openRecs.sort((a,b)=>(a.CustomerName||'').localeCompare(b.CustomerName||''));
   document.getElementById('recTable').innerHTML = recRows.length
-    ? recRows.map(r=>`<tr><td><strong>${r.CustomerName||'—'}</strong></td><td>${regionBadge(r.Region)}</td><td class="${isOverdue(r.DueDate)?'text-danger':''}">${fmtDate(r.DueDate)}</td><td class="fw700 ${parseFloat(r.Outstanding)>0?'text-danger':'text-success'}">${fmtMoney(r.Outstanding,r.Currency)}</td></tr>`).join('')
-    : '<tr><td colspan="4" style="text-align:center;padding:16px;color:var(--success)">✓ No outstanding receivables</td></tr>';
+    ? recRows.map(r=>`<tr><td><strong>${r.CustomerName||'—'}</strong></td><td>${regionBadge(r.Region)}</td><td class="fw700 ${parseFloat(r.Outstanding)>0?'text-danger':'text-success'}">${fmtMoney(r.Outstanding,r.Currency)}</td></tr>`).join('')
+    : '<tr><td colspan="3" style="text-align:center;padding:16px;color:var(--success)">✓ No outstanding receivables</td></tr>';
   document.getElementById('rec-total').textContent = fmtLKR(sum(openRecs,'Outstanding'));
 
   // Pay table
@@ -1117,8 +1117,8 @@ function renderPrint() {
 
   // Receivables
   document.getElementById('pr-rec-body').innerHTML = d.allRecs.length
-    ? d.allRecs.map(r=>`<tr><td><strong>${r.CustomerName||'—'}</strong></td><td>${r.Region||'—'}</td><td class="${isOverdue(r.DueDate)&&r.Status!=='Paid'?'c-red':''}">${fmtDate(r.DueDate)}</td><td class="${parseFloat(r.Outstanding)>0?'c-red':'c-green'} text-right">${fmtMoney(r.Outstanding,r.Currency)}</td></tr>`).join('')
-    : '<tr><td colspan="4" style="text-align:center;color:#999">No receivables</td></tr>';
+    ? d.allRecs.map(r=>`<tr><td><strong>${r.CustomerName||'—'}</strong></td><td>${r.Region||'—'}</td><td class="${parseFloat(r.Outstanding)>0?'c-red':'c-green'} text-right">${fmtMoney(r.Outstanding,r.Currency)}</td></tr>`).join('')
+    : '<tr><td colspan="3" style="text-align:center;color:#999">No receivables</td></tr>';
   document.getElementById('pr-rec-out-amt').textContent   = fmtLKR(sum(d.allRecs,'Outstanding'));
 
   // Payables
