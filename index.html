@@ -354,66 +354,17 @@ function showConfigBanner() {
    GitHub Pages → Apps Script works via redirect:follow + JSON.
 ───────────────────────────────────────────────────────────── */
 async function apiGet(params) {
-  if (!isConfigured()) {
-    showConfigBanner();
-    throw new Error('Apps Script URL not configured in config.js');
-  }
-
-  // Build URL with query params
-  const base = CONFIG.SCRIPT_URL;
-  const qs   = Object.entries(params)
-    .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v))
-    .join('&');
-  const fullUrl = base + (base.includes('?') ? '&' : '?') + qs;
-
-  let res;
-  try {
-    res = await fetch(fullUrl, {
-      method:   'GET',
-      redirect: 'follow',   // IMPORTANT — Apps Script issues a redirect
-      cache:    'no-cache',
-    });
-  } catch (networkErr) {
-    throw new Error('Network error — check your internet connection.\n' + networkErr.message);
-  }
-
-  if (!res.ok) throw new Error('Server error: HTTP ' + res.status);
-
-  let json;
-  try { json = await res.json(); }
-  catch (e) { throw new Error('Invalid response from Apps Script. Re-deploy and try again.'); }
-
-  if (!json.success) throw new Error(json.error || 'Unknown server error');
-  return json.data;
+  const r = await fetch(CONFIG.SCRIPT_URL + '?' + new URLSearchParams(params));
+  const j = await r.json();
+  if (j.error) throw new Error(j.error);
+  return j.data ?? j;
 }
 
 async function apiPost(body) {
-  if (!isConfigured()) {
-    showConfigBanner();
-    throw new Error('Apps Script URL not configured in config.js');
-  }
-
-  let res;
-  try {
-    res = await fetch(CONFIG.SCRIPT_URL, {
-      method:   'POST',
-      redirect: 'follow',   // IMPORTANT — Apps Script issues a redirect on POST too
-      // Note: no 'Content-Type' header — Apps Script handles plain text body better
-      // from cross-origin requests
-      body: JSON.stringify(body),
-    });
-  } catch (networkErr) {
-    throw new Error('Network error — check your internet connection.\n' + networkErr.message);
-  }
-
-  if (!res.ok) throw new Error('Server error: HTTP ' + res.status);
-
-  let json;
-  try { json = await res.json(); }
-  catch (e) { throw new Error('Invalid response from Apps Script. Re-deploy and try again.'); }
-
-  if (!json.success) throw new Error(json.error || 'Unknown server error');
-  return json.data;
+  const r = await fetch(CONFIG.SCRIPT_URL, { method: 'POST', body: JSON.stringify(body) });
+  const j = await r.json();
+  if (j.error) throw new Error(j.error);
+  return j;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -532,7 +483,9 @@ function setPageDate() {
 
 function setActiveNav() {
   const page = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll(');
+  document.querySelectorAll('.sb-link').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === page);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -719,9 +672,9 @@ document.addEventListener('DOMContentLoaded', () => {
           </table></div>
         </div>
         <div class="card"><div class="card-header"><div class="card-title">All Payables (Outstanding)</div><a href="payables.html" class="btn btn-secondary btn-sm">View All</a></div>
-          <div class="table-wrap"><table class="data-table"><thead><tr><th>Supplier</th><th>Due Date</th><th>Outstanding</th><th>Status</th></tr></thead>
+          <div class="table-wrap"><table class="data-table"><thead><tr><th>Supplier</th><th>Outstanding</th><th>Due Amount</th></tr></thead>
           <tbody id="payTable"></tbody>
-          <tfoot><tr><td colspan="2" style="text-align:right">Total:</td><td id="pay-total" class="fw700">—</td><td></td></tr></tfoot>
+          <tfoot><tr><td style="text-align:right">Total:</td><td id="pay-total" class="fw700">—</td><td></td></tr></tfoot>
           </table></div>
         </div>
       </div>
@@ -868,11 +821,9 @@ function renderScreen() {
   document.getElementById('sc-rec-over').textContent = fmtLKR(sum(overdueRecs,'Outstanding'));
 
   // Payables
-  const openPays = pays.filter(p=>p.Status!=='Paid');
-  const overduePays = openPays.filter(p=>isOverdue(p.DueDate));
-  document.getElementById('sc-pay').textContent = fmtLKR(sum(openPays,'Outstanding'));
-  document.getElementById('sc-pay-c').textContent = openPays.length+' suppliers';
-  document.getElementById('sc-pay-over').textContent = fmtLKR(sum(overduePays,'Outstanding'));
+  document.getElementById('sc-pay').textContent = fmtLKR(sum(pays,'Outstanding'));
+  document.getElementById('sc-pay-c').textContent = pays.length+' suppliers';
+  document.getElementById('sc-pay-over').textContent = fmtLKR(sum(pays,'DueAmount'));
 
   // Rec table (all outstanding)
   const recRows = openRecs.sort((a,b)=>(a.CustomerName||'').localeCompare(b.CustomerName||''));
@@ -881,12 +832,12 @@ function renderScreen() {
     : '<tr><td colspan="4" style="text-align:center;padding:16px;color:var(--success)">✓ No outstanding receivables</td></tr>';
   document.getElementById('rec-total').textContent = fmtLKR(sum(openRecs,'Outstanding'));
 
-  // Pay table (all outstanding)
-  const payRows = openPays.sort((a,b)=>(a.SupplierName||'').localeCompare(b.SupplierName||''));
+  // Pay table
+  const payRows = [...pays].sort((a,b)=>(a.SupplierName||'').localeCompare(b.SupplierName||''));
   document.getElementById('payTable').innerHTML = payRows.length
-    ? payRows.map(p=>`<tr><td><strong>${p.SupplierName||'—'}</strong></td><td class="${isOverdue(p.DueDate)?'text-danger':''}">${fmtDate(p.DueDate)}</td><td class="fw700 ${parseFloat(p.Outstanding)>0?'text-danger':'text-success'}">${fmtMoney(p.Outstanding,p.Currency)}</td><td>${statusBadge(p.Status)}</td></tr>`).join('')
-    : '<tr><td colspan="4" style="text-align:center;padding:16px;color:var(--success)">✓ No outstanding payables</td></tr>';
-  document.getElementById('pay-total').textContent = fmtLKR(sum(openPays,'Outstanding'));
+    ? payRows.map(p=>`<tr><td><strong>${p.SupplierName||'—'}</strong></td><td class="fw700 ${parseFloat(p.Outstanding)>0?'text-danger':'text-success'}">${fmtLKR(p.Outstanding||0)}</td><td class="fw700 text-warning">${fmtLKR(p.DueAmount||0)}</td></tr>`).join('')
+    : '<tr><td colspan="3" style="text-align:center;padding:16px;color:var(--success)">✓ No payables</td></tr>';
+  document.getElementById('pay-total').textContent = fmtLKR(sum(pays,'Outstanding'));
 }
 
 function renderPrint() {
