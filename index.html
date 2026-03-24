@@ -7,27 +7,108 @@
 <style>
 /* ── Print-only detail sections ── */
 .print-section { display:none; }
+
+/* ── Register Modal ── */
+.reg-overlay { display:none; position:fixed; inset:0; background:rgba(10,20,50,0.55); backdrop-filter:blur(5px); z-index:2000; align-items:flex-start; justify-content:center; padding:20px; overflow-y:auto; }
+.reg-overlay.open { display:flex; }
+.reg-modal { background:#f0f4f8; border-radius:16px; width:100%; max-width:900px; box-shadow:0 24px 80px rgba(0,0,0,0.22); animation:slideUp 0.2s ease; margin:auto; }
+.reg-header { background:linear-gradient(135deg,#1a2d6b 0%,#1d4ed8 100%); border-radius:16px 16px 0 0; padding:22px 28px 18px; display:flex; align-items:center; justify-content:space-between; }
+.reg-header-left { display:flex; align-items:center; gap:14px; }
+.reg-header-left img { width:52px; height:52px; border-radius:10px; background:#fff; object-fit:cover; }
+.reg-header-logo-fallback { width:52px; height:52px; border-radius:10px; background:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.75rem; color:#1a2d6b; }
+.reg-company { color:#fff; }
+.reg-company h2 { font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:1.1rem; line-height:1.2; }
+.reg-company p { font-size:0.72rem; opacity:0.72; margin-top:3px; }
+.reg-title-center { flex:1; text-align:center; color:#fff; }
+.reg-title-center h1 { font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:1.25rem; letter-spacing:0.02em; }
+.reg-title-center .reg-date { font-size:0.78rem; opacity:0.8; margin-top:3px; }
+.reg-close { background:rgba(255,255,255,0.15); border:none; color:#fff; width:32px; height:32px; border-radius:8px; cursor:pointer; font-size:1.1rem; display:flex; align-items:center; justify-content:center; transition:background 0.13s; }
+.reg-close:hover { background:rgba(255,255,255,0.28); }
+.reg-body { padding:22px 28px; }
+.reg-section { margin-bottom:20px; }
+.reg-section-title { font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:#1d4ed8; padding:0 0 6px; margin-bottom:10px; border-bottom:2px solid #1d4ed8; display:flex; align-items:center; gap:7px; }
+.reg-cards { display:grid; gap:10px; margin-bottom:6px; }
+.reg-cards.cols3 { grid-template-columns:repeat(3,1fr); }
+.reg-cards.cols2 { grid-template-columns:repeat(2,1fr); }
+.reg-card { background:#fff; border-radius:10px; padding:13px 16px; border:1px solid #e2e8f0; box-shadow:0 1px 4px rgba(0,0,0,0.06); border-left:4px solid #1d4ed8; }
+.reg-card.green { border-left-color:#16a34a; }
+.reg-card.orange { border-left-color:#ea580c; }
+.reg-card.red { border-left-color:#dc2626; }
+.reg-card.yellow { border-left-color:#d97706; }
+.reg-card.cyan { border-left-color:#0284c7; }
+.reg-card .rc-label { font-size:0.64rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#94a3b8; margin-bottom:5px; }
+.reg-card .rc-val { font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:1.2rem; color:#0f172a; }
+.reg-card .rc-sub { font-size:0.68rem; color:#64748b; margin-top:3px; }
+.reg-table { width:100%; border-collapse:collapse; font-size:0.8rem; border-radius:8px; overflow:hidden; border:1px solid #e2e8f0; }
+.reg-table thead th { background:#1d4ed8; color:#fff; padding:8px 12px; text-align:left; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; }
+.reg-table th.r, .reg-table td.r { text-align:right; }
+.reg-table tbody tr { border-bottom:1px solid #f1f5f9; transition:background 0.1s; }
+.reg-table tbody tr:nth-child(even) { background:#f8fafc; }
+.reg-table tbody tr:hover { background:#eff6ff; }
+.reg-table td { padding:7px 12px; color:#1e293b; }
+.reg-table tfoot td { background:#f1f5f9; font-weight:700; border-top:2px solid #e2e8f0; padding:8px 12px; }
+.reg-footer { background:#f8fafc; border-top:1px solid #e2e8f0; border-radius:0 0 16px 16px; padding:12px 28px; display:flex; align-items:center; justify-content:space-between; font-size:0.72rem; color:#94a3b8; }
+.reg-print-btn { background:#1d4ed8; color:#fff; border:none; border-radius:8px; padding:9px 20px; font-size:0.82rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:6px; font-family:'IBM Plex Sans',sans-serif; transition:background 0.13s; }
+.reg-print-btn:hover { background:#1e40af; }
+
 @media print {
+  /* Hide everything except the print report */
+  body > *:not(#printReport) { display:none !important; }
+  #printReport { display:block !important; }
   .screen-only { display:none !important; }
-  .print-section { display:block !important; page-break-inside:avoid; margin-bottom:18px; }
-  .print-section h3 { font-family:sans-serif; font-size:10pt; font-weight:700; color:#1d4ed8; border-bottom:1px solid #1d4ed8; padding-bottom:4px; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em; }
-  .print-summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; }
-  .print-summary-card { border:1px solid #ddd; border-radius:6px; padding:10px 12px; }
-  .print-summary-card .ps-label { font-size:7.5pt; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:4px; }
-  .print-summary-card .ps-val { font-size:12pt; font-weight:700; color:#1d4ed8; font-family:sans-serif; }
-  .print-summary-card .ps-sub { font-size:7pt; color:#555; margin-top:2px; }
-  .print-table { width:100%; border-collapse:collapse; font-size:9pt; margin-bottom:4px; }
-  .print-table th { background:#1d4ed8 !important; color:#fff !important; padding:6px 8px; text-align:left; font-size:7.5pt; text-transform:uppercase; letter-spacing:0.07em; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  .print-table td { padding:6px 8px; border-bottom:1px solid #eee; }
-  .print-table tbody tr:nth-child(even) td { background:#f8faff !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  .print-table tfoot td { background:#f1f5f9 !important; font-weight:700; border-top:2px solid #1d4ed8; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  .print-two-col { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
+
+  /* A4 page setup */
+  @page { size:A4 portrait; margin:14mm 12mm 14mm 12mm; }
+
+  #printReport {
+    font-family:'Segoe UI',Arial,sans-serif;
+    font-size:9pt;
+    color:#111;
+    background:#fff;
+    width:100%;
+  }
+
+  /* Header */
+  .pr-header { display:flex !important; align-items:center; padding-bottom:10pt; border-bottom:2.5pt solid #1a2d6b; margin-bottom:12pt; }
+  .pr-header-logo { width:56pt; height:56pt; object-fit:cover; border-radius:6pt; margin-right:12pt; }
+  .pr-header-company h1 { font-size:14pt; font-weight:700; color:#1a2d6b; margin:0 0 2pt; }
+  .pr-header-company p { font-size:8pt; color:#555; margin:0; line-height:1.5; }
+  .pr-header-right { margin-left:auto; text-align:right; }
+  .pr-header-right .pr-report-title { font-size:13pt; font-weight:700; color:#1a2d6b; display:block; }
+  .pr-header-right .pr-report-date { font-size:8pt; color:#555; display:block; margin-top:2pt; }
+  .pr-header-right .pr-generated { font-size:7.5pt; color:#888; display:block; margin-top:2pt; }
+
+  /* Divider */
+  .pr-divider { height:1pt; background:#1a2d6b; margin:8pt 0; display:block !important; }
+
+  /* Section heading */
+  .print-section { display:block !important; page-break-inside:avoid; margin-bottom:14pt; }
+  .print-section h3 { font-size:9pt; font-weight:700; color:#fff; background:#1a2d6b !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; padding:5pt 8pt; border-radius:3pt; margin-bottom:6pt; text-transform:uppercase; letter-spacing:0.06em; display:flex; align-items:center; gap:4pt; }
+
+  /* Summary cards in print */
+  .print-summary-grid { display:grid !important; grid-template-columns:repeat(3,1fr); gap:6pt; margin-bottom:8pt; }
+  .print-summary-card { border:1pt solid #ddd; border-radius:4pt; padding:7pt 9pt; border-left:3pt solid #1d4ed8; }
+  .print-summary-card.orange { border-left-color:#ea580c; }
+  .print-summary-card.green { border-left-color:#16a34a; }
+  .print-summary-card .ps-label { font-size:6.5pt; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:3pt; }
+  .print-summary-card .ps-val { font-size:11pt; font-weight:700; color:#1a2d6b; }
+
+  /* Tables */
+  .print-table { width:100%; border-collapse:collapse; font-size:8pt; margin-bottom:4pt; }
+  .print-table th { background:#1a2d6b !important; color:#fff !important; padding:5pt 7pt; text-align:left; font-size:7pt; text-transform:uppercase; letter-spacing:0.06em; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .print-table td { padding:5pt 7pt; border-bottom:0.5pt solid #eee; }
+  .print-table tbody tr:nth-child(even) td { background:#f4f7ff !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .print-table tfoot td { background:#e8edf7 !important; font-weight:700; border-top:1.5pt solid #1a2d6b; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .print-two-col { display:grid !important; grid-template-columns:1fr 1fr; gap:10pt; margin-bottom:12pt; }
   .print-two-col .print-section { margin-bottom:0; }
   .text-right { text-align:right !important; }
-  .c-blue { color:#1d4ed8; font-weight:700; }
-  .c-green { color:#16a34a; font-weight:700; }
-  .c-red { color:#dc2626; font-weight:700; }
-  .c-orange { color:#ea580c; font-weight:700; }
+  .c-blue { color:#1a2d6b !important; font-weight:700; }
+  .c-green { color:#16a34a !important; font-weight:700; }
+  .c-red { color:#dc2626 !important; font-weight:700; }
+  .c-orange { color:#ea580c !important; font-weight:700; }
+
+  /* Footer */
+  .pr-footer { display:flex !important; justify-content:space-between; border-top:1pt solid #ccc; padding-top:6pt; margin-top:10pt; font-size:7pt; color:#888; }
 }
 /* Screen summary grid overrides */
 .dash-summary-group { margin-bottom:16px; }
@@ -619,8 +700,18 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="page-header">
     <div class="page-header-left"><h1>📊 Dashboard</h1><div class="page-date" id="pageDate"></div></div>
     <div class="page-header-right screen-only">
-      <button class="btn btn-secondary" onclick="loadAll()">↻ Refresh</button>
-      <button class="btn btn-primary" onclick="printReport()">🖨 Print Full Report</button>
+      <button class="btn btn-secondary" onclick="loadAll()">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Refresh
+      </button>
+      <button class="btn btn-warning" onclick="openRegister()">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        Register View
+      </button>
+      <button class="btn btn-primary" onclick="printReport()">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print Full Report
+      </button>
     </div>
   </div>
 
@@ -681,76 +772,194 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <!-- ══ END SCREEN VIEW ══ -->
 
-    <!-- ══════════════════════════════════════════════════════════
-         PRINT-ONLY SECTIONS — hidden on screen, full detail on print
-    ═══════════════════════════════════════════════════════════ -->
-
-    <!-- PRINT: SALES -->
-    <div class="print-section">
-      <h3>📈 Sales Summary</h3>
-      <div class="print-summary-grid" id="pr-sales-cards"></div>
-      <table class="print-table">
-        <thead><tr><th>Date</th><th class="text-right">Export Sales (LKR)</th><th class="text-right">Local Sales (LKR)</th><th class="text-right">Total (LKR)</th></tr></thead>
-        <tbody id="pr-sales-body"></tbody>
-        <tfoot>
-          <tr><td colspan="3" class="text-right">Export Sales Total:</td><td id="pr-exp-total" class="c-orange text-right">—</td></tr>
-          <tr><td colspan="3" class="text-right">Local Sales Total:</td><td id="pr-loc-total" class="c-blue text-right">—</td></tr>
-          <tr><td colspan="3" class="text-right">Grand Total (LKR):</td><td id="pr-sales-grand" class="c-green text-right">—</td></tr>
-        </tfoot>
-      </table>
-    </div>
-
-    <!-- PRINT: BANK -->
-    <div class="print-section" id="pr-bank-section">
-      <h3>🏦 Bank Balance</h3>
-      <div id="pr-bank-content"></div>
-    </div>
-
-    <!-- PRINT: CASH & PETTY -->
-    <div class="print-two-col">
-      <div class="print-section">
-        <h3>💵 Cash Details (Today)</h3>
-        <table class="print-table">
-          <thead><tr><th>Date</th><th class="text-right">Opening</th><th class="text-right">Cash In</th><th class="text-right">Cash Out</th><th class="text-right">Closing</th></tr></thead>
-          <tbody id="pr-cash-body"></tbody>
-        </table>
-      </div>
-      <div class="print-section">
-        <h3>🪙 Petty Cash (Recent)</h3>
-        <table class="print-table">
-          <thead><tr><th>Date</th><th>Type</th><th>Description</th><th class="text-right">Amount</th><th class="text-right">Balance</th></tr></thead>
-          <tbody id="pr-petty-body"></tbody>
-          <tfoot><tr><td colspan="4" class="text-right">Current Balance:</td><td id="pr-petty-bal" class="c-blue text-right">—</td></tr></tfoot>
-        </table>
-      </div>
-    </div>
-
-    <!-- PRINT: RECEIVABLES -->
-    <div class="print-section">
-      <h3>📥 Total Receivable — Customer Wise</h3>
-      <table class="print-table">
-        <thead><tr><th>Customer</th><th>Region</th><th>Invoice No</th><th>Due Date</th><th class="text-right">Total Amount</th><th class="text-right">Paid</th><th class="text-right">Outstanding</th><th>Status</th></tr></thead>
-        <tbody id="pr-rec-body"></tbody>
-        <tfoot>
-          <tr><td colspan="4" class="text-right">Grand Total Outstanding:</td><td id="pr-rec-total-amt" class="c-blue text-right">—</td><td id="pr-rec-paid-amt" class="c-green text-right">—</td><td id="pr-rec-out-amt" class="c-red text-right">—</td><td></td></tr>
-        </tfoot>
-      </table>
-    </div>
-
-    <!-- PRINT: PAYABLES -->
-    <div class="print-section">
-      <h3>📤 Total Payable — Supplier Wise</h3>
-      <table class="print-table">
-        <thead><tr><th>Supplier</th><th class="text-right">Outstanding</th><th class="text-right">Due Amount</th></tr></thead>
-        <tbody id="pr-pay-body"></tbody>
-        <tfoot>
-          <tr><td colspan="3" class="text-right">Grand Total Outstanding:</td><td id="pr-pay-total-amt" class="c-blue text-right">—</td><td id="pr-pay-paid-amt" class="c-green text-right">—</td><td id="pr-pay-out-amt" class="c-red text-right">—</td><td></td></tr>
-        </tfoot>
-      </table>
-    </div>
-
   </div><!-- /.content -->
 </div><!-- /.main -->
+
+<!-- ══════════════════════════════════════════════════════════
+     PROFESSIONAL PRINT REPORT — A4 (hidden on screen)
+═══════════════════════════════════════════════════════════ -->
+<div id="printReport" style="display:none">
+
+  <!-- Header -->
+  <div class="pr-header">
+    <img src="logo.jpg" alt="Logo" class="pr-header-logo" onerror="this.style.display='none'">
+    <div class="pr-header-company">
+      <h1>Bark Ornament Private Ltd</h1>
+      <p>No. 59 A Bekkegama, Panadura<br>Sri Lanka</p>
+    </div>
+    <div class="pr-header-right">
+      <span class="pr-report-title">Daily Finance Summary</span>
+      <span class="pr-report-date" id="pr-hdr-date"></span>
+      <span class="pr-generated" id="pr-hdr-generated"></span>
+    </div>
+  </div>
+  <div class="pr-divider"></div>
+
+  <!-- SALES -->
+  <div class="print-section">
+    <h3>Sales Summary</h3>
+    <div class="print-summary-grid">
+      <div class="print-summary-card orange"><div class="ps-label">Export Sales (Today)</div><div class="ps-val c-orange" id="pr-sc-exp">—</div></div>
+      <div class="print-summary-card"><div class="ps-label">Local Sales (Today)</div><div class="ps-val c-blue" id="pr-sc-loc">—</div></div>
+      <div class="print-summary-card green"><div class="ps-label">Total Sales (Today)</div><div class="ps-val c-green" id="pr-sc-total">—</div></div>
+      <div class="print-summary-card orange"><div class="ps-label">Export Sales (Month)</div><div class="ps-val c-orange" id="pr-sc-exp-m">—</div></div>
+      <div class="print-summary-card"><div class="ps-label">Local Sales (Month)</div><div class="ps-val c-blue" id="pr-sc-loc-m">—</div></div>
+      <div class="print-summary-card green"><div class="ps-label">Total Sales (Month)</div><div class="ps-val c-green" id="pr-sc-total-m">—</div></div>
+    </div>
+    <table class="print-table">
+      <thead><tr><th>Date</th><th class="text-right">Export Sales (LKR)</th><th class="text-right">Local Sales (LKR)</th><th class="text-right">Total (LKR)</th></tr></thead>
+      <tbody id="pr-sales-body"></tbody>
+      <tfoot>
+        <tr><td colspan="3" class="text-right">Export Sales Total (Today):</td><td id="pr-exp-total" class="c-orange text-right">—</td></tr>
+        <tr><td colspan="3" class="text-right">Local Sales Total (Today):</td><td id="pr-loc-total" class="c-blue text-right">—</td></tr>
+        <tr><td colspan="3" class="text-right">Grand Total (Today):</td><td id="pr-sales-grand" class="c-green text-right">—</td></tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- BANK -->
+  <div class="print-section" id="pr-bank-section">
+    <h3>Bank Balance</h3>
+    <div id="pr-bank-content"></div>
+  </div>
+
+  <!-- CASH & PETTY -->
+  <div class="print-two-col">
+    <div class="print-section">
+      <h3>Cash Details (Today)</h3>
+      <table class="print-table">
+        <thead><tr><th>Date</th><th class="text-right">Opening</th><th class="text-right">Cash In</th><th class="text-right">Cash Out</th><th class="text-right">Closing</th></tr></thead>
+        <tbody id="pr-cash-body"></tbody>
+      </table>
+    </div>
+    <div class="print-section">
+      <h3>Petty Cash (Recent)</h3>
+      <table class="print-table">
+        <thead><tr><th>Date</th><th>Type</th><th>Description</th><th class="text-right">Amount</th><th class="text-right">Balance</th></tr></thead>
+        <tbody id="pr-petty-body"></tbody>
+        <tfoot><tr><td colspan="4" class="text-right">Current Balance:</td><td id="pr-petty-bal" class="c-blue text-right">—</td></tr></tfoot>
+      </table>
+    </div>
+  </div>
+
+  <!-- RECEIVABLES -->
+  <div class="print-section">
+    <h3>Receivables — Customer Wise</h3>
+    <table class="print-table">
+      <thead><tr><th>Customer</th><th>Region</th><th>Invoice No</th><th>Due Date</th><th class="text-right">Total Amount</th><th class="text-right">Paid</th><th class="text-right">Outstanding</th><th>Status</th></tr></thead>
+      <tbody id="pr-rec-body"></tbody>
+      <tfoot>
+        <tr><td colspan="4" class="text-right">Totals:</td><td id="pr-rec-total-amt" class="c-blue text-right">—</td><td id="pr-rec-paid-amt" class="c-green text-right">—</td><td id="pr-rec-out-amt" class="c-red text-right">—</td><td></td></tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- PAYABLES -->
+  <div class="print-section">
+    <h3>Payables — Supplier Wise</h3>
+    <table class="print-table">
+      <thead><tr><th>Supplier</th><th class="text-right">Outstanding</th><th class="text-right">Due Amount</th></tr></thead>
+      <tbody id="pr-pay-body"></tbody>
+      <tfoot>
+        <tr><td class="text-right">Grand Total:</td><td id="pr-pay-total-amt" class="c-red text-right">—</td><td id="pr-pay-out-amt" class="c-orange text-right">—</td></tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div class="pr-footer">
+    <span>Bark Ornament Private Ltd — Confidential</span>
+    <span id="pr-footer-generated"></span>
+    <span>Daily Finance Summary</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     REGISTER VIEW MODAL
+═══════════════════════════════════════════════════════════ -->
+<div class="reg-overlay" id="regOverlay" onclick="if(event.target===this)closeRegister()">
+  <div class="reg-modal">
+    <div class="reg-header">
+      <div class="reg-header-left">
+        <img src="logo.jpg" alt="Logo" onerror="this.outerHTML='<div class='reg-header-logo-fallback'>BO</div>'">
+        <div class="reg-company">
+          <h2>Bark Ornament Private Ltd</h2>
+          <p>No. 59 A Bekkegama, Panadura</p>
+        </div>
+      </div>
+      <div class="reg-title-center">
+        <h1>Daily Finance Summary</h1>
+        <div class="reg-date" id="reg-hdr-date"></div>
+      </div>
+      <button class="reg-close" onclick="closeRegister()">✕</button>
+    </div>
+
+    <div class="reg-body">
+
+      <!-- Sales -->
+      <div class="reg-section">
+        <div class="reg-section-title">📈 Sales Summary</div>
+        <div class="reg-cards cols3">
+          <div class="reg-card orange"><div class="rc-label">Export Sales (Today)</div><div class="rc-val" id="reg-exp">—</div></div>
+          <div class="reg-card"><div class="rc-label">Local Sales (Today)</div><div class="rc-val" id="reg-loc">—</div></div>
+          <div class="reg-card green"><div class="rc-label">Total Sales (Today)</div><div class="rc-val" id="reg-total">—</div></div>
+          <div class="reg-card orange"><div class="rc-label">Export Sales (Month)</div><div class="rc-val" id="reg-exp-m">—</div></div>
+          <div class="reg-card"><div class="rc-label">Local Sales (Month)</div><div class="rc-val" id="reg-loc-m">—</div></div>
+          <div class="reg-card green"><div class="rc-label">Total Sales (Month)</div><div class="rc-val" id="reg-total-m">—</div></div>
+        </div>
+      </div>
+
+      <!-- Bank -->
+      <div class="reg-section">
+        <div class="reg-section-title">🏦 Bank Balance</div>
+        <div id="reg-bank-cards" class="reg-cards cols3"></div>
+      </div>
+
+      <!-- Cash -->
+      <div class="reg-section">
+        <div class="reg-section-title">💵 Cash &amp; Petty Cash</div>
+        <div class="reg-cards cols2">
+          <div class="reg-card orange"><div class="rc-label">Cash Balance (Today Closing)</div><div class="rc-val" id="reg-cash">—</div></div>
+          <div class="reg-card yellow"><div class="rc-label">Petty Cash Balance</div><div class="rc-val" id="reg-petty">—</div></div>
+        </div>
+      </div>
+
+      <!-- Receivables & Payables -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="reg-section">
+          <div class="reg-section-title">📥 Receivables</div>
+          <div class="reg-cards cols2" style="margin-bottom:10px">
+            <div class="reg-card cyan"><div class="rc-label">Total Outstanding</div><div class="rc-val" id="reg-rec">—</div><div class="rc-sub" id="reg-rec-c"></div></div>
+            <div class="reg-card red"><div class="rc-label">Overdue</div><div class="rc-val" id="reg-rec-over">—</div></div>
+          </div>
+          <table class="reg-table">
+            <thead><tr><th>Customer</th><th>Region</th><th class="r">Outstanding</th></tr></thead>
+            <tbody id="reg-rec-table"></tbody>
+            <tfoot><tr><td colspan="2" style="text-align:right">Total:</td><td class="r" id="reg-rec-total">—</td></tr></tfoot>
+          </table>
+        </div>
+        <div class="reg-section">
+          <div class="reg-section-title">📤 Payables</div>
+          <div class="reg-cards cols2" style="margin-bottom:10px">
+            <div class="reg-card yellow"><div class="rc-label">Total Outstanding</div><div class="rc-val" id="reg-pay">—</div><div class="rc-sub" id="reg-pay-c"></div></div>
+            <div class="reg-card orange"><div class="rc-label">Total Due</div><div class="rc-val" id="reg-pay-due">—</div></div>
+          </div>
+          <table class="reg-table">
+            <thead><tr><th>Supplier</th><th class="r">Outstanding</th><th class="r">Due Amt</th></tr></thead>
+            <tbody id="reg-pay-table"></tbody>
+            <tfoot><tr><td style="text-align:right">Total:</td><td class="r" id="reg-pay-total">—</td><td></td></tr></tfoot>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    <div class="reg-footer">
+      <span>Bark Ornament Pvt Ltd — Confidential</span>
+      <span id="reg-generated"></span>
+      <button class="reg-print-btn" onclick="printReport()">🖨 Print Full Report</button>
+    </div>
+  </div>
+</div>
 
 
 <script>
@@ -840,99 +1049,154 @@ function renderScreen() {
   document.getElementById('pay-total').textContent = fmtLKR(sum(pays,'Outstanding'));
 }
 
-function renderPrint() {
+// ── Shared data builder (used by both renderPrint & renderRegister) ──
+function buildReportData() {
   const {sales, accs, recs, pays, cash, petty} = _data;
   const sum = (arr,k) => arr.reduce((t,x)=>t+(parseFloat(x[k])||0),0);
   const today = new Date(); today.setHours(0,0,0,0);
   const m = today.getMonth(), y = today.getFullYear();
   const monSales = sales.filter(s=>{const d=new Date(s.Date);return d.getMonth()===m&&d.getFullYear()===y;});
-
-  // ── SALES ── (Sheet columns: Date, ExportSales, LocalSales)
-  const todayS = sales.filter(s=>{const d=new Date(s.Date);d.setHours(0,0,0,0);return+d===+today;});
-  const expToday = sum(todayS,'ExportSales');
-  const locToday = sum(todayS,'LocalSales');
-  const expMonth = sum(monSales,'ExportSales');
-  const locMonth = sum(monSales,'LocalSales');
-  document.getElementById('pr-sales-cards').innerHTML = `
-    <div class="print-summary-card"><div class="ps-label">Export Sales (Today)</div><div class="ps-val c-orange">${fmtLKR(expToday)}</div></div>
-    <div class="print-summary-card"><div class="ps-label">Local Sales (Today)</div><div class="ps-val c-blue">${fmtLKR(locToday)}</div></div>
-    <div class="print-summary-card"><div class="ps-label">Total Sales (Today)</div><div class="ps-val c-green">${fmtLKR(expToday+locToday)}</div></div>
-    <div class="print-summary-card"><div class="ps-label">Export Sales (Month)</div><div class="ps-val c-orange">${fmtLKR(expMonth)}</div></div>
-    <div class="print-summary-card"><div class="ps-label">Local Sales (Month)</div><div class="ps-val c-blue">${fmtLKR(locMonth)}</div></div>
-    <div class="print-summary-card"><div class="ps-label">Total Sales (Month)</div><div class="ps-val c-green">${fmtLKR(expMonth+locMonth)}</div></div>`;
+  const todayS   = sales.filter(s=>{const d=new Date(s.Date);d.setHours(0,0,0,0);return+d===+today;});
+  const expToday = sum(todayS,'ExportSales'), locToday = sum(todayS,'LocalSales');
+  const expMonth = sum(monSales,'ExportSales'), locMonth = sum(monSales,'LocalSales');
+  const lkrAccs  = accs.filter(a=>a.Currency==='LKR');
+  const usdAccs  = accs.filter(a=>a.Currency==='USD');
+  const todayCash= cash.filter(c=>{const d=new Date(c.Date);d.setHours(0,0,0,0);return+d===+today;});
+  const sortedPetty = [...petty].sort((a,b)=>new Date(a.Date)-new Date(b.Date));
+  const openRecs = recs.filter(r=>r.Status!=='Paid');
+  const overdueRecs = openRecs.filter(r=>isOverdue(r.DueDate));
   const sortedSales = [...todayS].sort((a,b)=>new Date(a.Date)-new Date(b.Date));
-  document.getElementById('pr-sales-body').innerHTML = sortedSales.length
-    ? sortedSales.map(s=>`<tr><td>${fmtDate(s.Date)}</td><td class="c-orange text-right">${fmtLKR(s.ExportSales||0)}</td><td class="c-blue text-right">${fmtLKR(s.LocalSales||0)}</td><td class="c-green text-right">${fmtLKR((parseFloat(s.ExportSales)||0)+(parseFloat(s.LocalSales)||0))}</td></tr>`).join('')
+  const sortedPettyDesc = [...petty].sort((a,b)=>new Date(b.Date)-new Date(a.Date)).slice(0,10);
+  const allRecs  = [...recs].sort((a,b)=>(a.CustomerName||'').localeCompare(b.CustomerName||''));
+  const allPays  = [...pays].sort((a,b)=>(a.SupplierName||'').localeCompare(b.SupplierName||''));
+  const dateStr  = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const genStr   = 'Generated: ' + new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) + ' ' + new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  return {sum,today,expToday,locToday,expMonth,locMonth,lkrAccs,usdAccs,todayCash,sortedPetty,openRecs,overdueRecs,sortedSales,sortedPettyDesc,allRecs,allPays,dateStr,genStr,pays};
+}
+
+function renderPrint() {
+  const d = buildReportData();
+  const {sum} = d;
+
+  // Header dates
+  document.getElementById('pr-hdr-date').textContent = d.dateStr;
+  document.getElementById('pr-hdr-generated').textContent = d.genStr;
+  document.getElementById('pr-footer-generated').textContent = d.genStr;
+
+  // Sales summary cards
+  document.getElementById('pr-sc-exp').textContent   = fmtLKR(d.expToday);
+  document.getElementById('pr-sc-loc').textContent   = fmtLKR(d.locToday);
+  document.getElementById('pr-sc-total').textContent = fmtLKR(d.expToday+d.locToday);
+  document.getElementById('pr-sc-exp-m').textContent   = fmtLKR(d.expMonth);
+  document.getElementById('pr-sc-loc-m').textContent   = fmtLKR(d.locMonth);
+  document.getElementById('pr-sc-total-m').textContent = fmtLKR(d.expMonth+d.locMonth);
+
+  // Sales table
+  document.getElementById('pr-sales-body').innerHTML = d.sortedSales.length
+    ? d.sortedSales.map(s=>`<tr><td>${fmtDate(s.Date)}</td><td class="c-orange text-right">${fmtLKR(s.ExportSales||0)}</td><td class="c-blue text-right">${fmtLKR(s.LocalSales||0)}</td><td class="c-green text-right">${fmtLKR((parseFloat(s.ExportSales)||0)+(parseFloat(s.LocalSales)||0))}</td></tr>`).join('')
     : '<tr><td colspan="4" style="text-align:center;color:#999">No sales today</td></tr>';
-  document.getElementById('pr-exp-total').textContent = fmtLKR(expToday);
-  document.getElementById('pr-loc-total').textContent = fmtLKR(locToday);
-  document.getElementById('pr-sales-grand').textContent = fmtLKR(expToday+locToday);
+  document.getElementById('pr-exp-total').textContent   = fmtLKR(d.expToday);
+  document.getElementById('pr-loc-total').textContent   = fmtLKR(d.locToday);
+  document.getElementById('pr-sales-grand').textContent = fmtLKR(d.expToday+d.locToday);
 
-  // ── BANK ──
-  const lkrAccs = accs.filter(a=>a.Currency==='LKR');
-  const usdAccs = accs.filter(a=>a.Currency==='USD');
-  const totalLKR = sum(lkrAccs,'Balance'), totalUSD = sum(usdAccs,'Balance');
+  // Bank
   let bankHTML = '';
-  if(lkrAccs.length) {
-    bankHTML += '<table class="print-table" style="margin-bottom:8px"><thead><tr><th>Account Name</th><th>Bank</th><th>Account No</th><th class="text-right">Balance (LKR)</th></tr></thead><tbody>';
-    bankHTML += lkrAccs.map(a=>`<tr><td><strong>${a.AccountName}</strong></td><td>${a.Bank}</td><td style="font-family:monospace">${a.AccountNo||'—'}</td><td class="c-blue text-right">${fmtLKR(a.Balance)}</td></tr>`).join('');
-    bankHTML += `</tbody><tfoot><tr><td colspan="3" class="text-right">Total LKR:</td><td class="c-blue text-right">${fmtLKR(totalLKR)}</td></tr></tfoot></table>`;
+  if(d.lkrAccs.length) {
+    bankHTML += '<table class="print-table" style="margin-bottom:8pt"><thead><tr><th>Account Name</th><th>Bank</th><th>Account No</th><th class="text-right">Balance (LKR)</th></tr></thead><tbody>';
+    bankHTML += d.lkrAccs.map(a=>`<tr><td><strong>${a.AccountName}</strong></td><td>${a.Bank}</td><td style="font-family:monospace">${a.AccountNo||'—'}</td><td class="c-blue text-right">${fmtLKR(a.Balance)}</td></tr>`).join('');
+    bankHTML += `</tbody><tfoot><tr><td colspan="3" class="text-right">Total LKR:</td><td class="c-blue text-right">${fmtLKR(sum(d.lkrAccs,'Balance'))}</td></tr></tfoot></table>`;
   }
-  if(usdAccs.length) {
+  if(d.usdAccs.length) {
     bankHTML += '<table class="print-table"><thead><tr><th>Account Name</th><th>Bank</th><th>Account No</th><th class="text-right">Balance (USD)</th></tr></thead><tbody>';
-    bankHTML += usdAccs.map(a=>`<tr><td><strong>${a.AccountName}</strong></td><td>${a.Bank}</td><td style="font-family:monospace">${a.AccountNo||'—'}</td><td class="c-green text-right">${fmtUSD(a.Balance)}</td></tr>`).join('');
-    bankHTML += `</tbody><tfoot><tr><td colspan="3" class="text-right">Total USD:</td><td class="c-green text-right">${fmtUSD(totalUSD)}</td></tr></tfoot></table>`;
+    bankHTML += d.usdAccs.map(a=>`<tr><td><strong>${a.AccountName}</strong></td><td>${a.Bank}</td><td style="font-family:monospace">${a.AccountNo||'—'}</td><td class="c-green text-right">${fmtUSD(a.Balance)}</td></tr>`).join('');
+    bankHTML += `</tbody><tfoot><tr><td colspan="3" class="text-right">Total USD:</td><td class="c-green text-right">${fmtUSD(sum(d.usdAccs,'Balance'))}</td></tr></tfoot></table>`;
   }
-  document.getElementById('pr-bank-content').innerHTML = bankHTML || '<p style="color:#999;font-size:9pt">No bank accounts added</p>';
+  document.getElementById('pr-bank-content').innerHTML = bankHTML || '<p style="color:#999">No bank accounts added</p>';
 
-  // ── CASH TODAY ──
-  const todayCash = cash.filter(c=>{const d=new Date(c.Date);d.setHours(0,0,0,0);return+d===+today;});
-  document.getElementById('pr-cash-body').innerHTML = todayCash.length
-    ? todayCash.map(c=>`<tr><td>${fmtDate(c.Date)}</td><td class="text-right">${fmtLKR(c.OpeningBalance||0)}</td><td class="c-green text-right">${fmtLKR(c.CashIn||0)}</td><td class="c-red text-right">${fmtLKR(c.CashOut||0)}</td><td class="c-blue text-right">${fmtLKR(c.ClosingBalance||0)}</td></tr>`).join('')
+  // Cash
+  document.getElementById('pr-cash-body').innerHTML = d.todayCash.length
+    ? d.todayCash.map(c=>`<tr><td>${fmtDate(c.Date)}</td><td class="text-right">${fmtLKR(c.OpeningBalance||0)}</td><td class="c-green text-right">${fmtLKR(c.CashIn||0)}</td><td class="c-red text-right">${fmtLKR(c.CashOut||0)}</td><td class="c-blue text-right">${fmtLKR(c.ClosingBalance||0)}</td></tr>`).join('')
     : '<tr><td colspan="5" style="text-align:center;color:#999">No cash entry today</td></tr>';
 
-  // ── PETTY CASH (last 10) ──
-  const sortedPetty = [...petty].sort((a,b)=>new Date(b.Date)-new Date(a.Date)).slice(0,10);
-  const lastBal = petty.sort((a,b)=>new Date(a.Date)-new Date(b.Date));
-  document.getElementById('pr-petty-body').innerHTML = sortedPetty.length
-    ? sortedPetty.map(p=>`<tr><td>${fmtDate(p.Date)}</td><td>${p.EntryType}</td><td>${p.Description||'—'}</td><td class="${p.EntryType==='Receipt'?'c-green':'c-red'} text-right">${fmtLKR(p.Amount||0)}</td><td class="c-blue text-right">${fmtLKR(p.Balance||0)}</td></tr>`).join('')
+  // Petty
+  document.getElementById('pr-petty-body').innerHTML = d.sortedPettyDesc.length
+    ? d.sortedPettyDesc.map(p=>`<tr><td>${fmtDate(p.Date)}</td><td>${p.EntryType}</td><td>${p.Description||'—'}</td><td class="${p.EntryType==='Receipt'?'c-green':'c-red'} text-right">${fmtLKR(p.Amount||0)}</td><td class="c-blue text-right">${fmtLKR(p.Balance||0)}</td></tr>`).join('')
     : '<tr><td colspan="5" style="text-align:center;color:#999">No petty cash entries</td></tr>';
-  document.getElementById('pr-petty-bal').textContent = lastBal.length ? fmtLKR(lastBal[lastBal.length-1].Balance||0) : '—';
+  document.getElementById('pr-petty-bal').textContent = d.sortedPetty.length ? fmtLKR(d.sortedPetty[d.sortedPetty.length-1].Balance||0) : '—';
 
-  // ── RECEIVABLES ──
-  const allRecs = [...recs].sort((a,b)=>(a.CustomerName||'').localeCompare(b.CustomerName||''));
-  document.getElementById('pr-rec-body').innerHTML = allRecs.length
-    ? allRecs.map(r=>`<tr>
-        <td><strong>${r.CustomerName||'—'}</strong></td>
-        <td>${r.Region||'—'}</td>
-        <td>${r.InvoiceNo||'—'}</td>
-        <td class="${isOverdue(r.DueDate)&&r.Status!=='Paid'?'c-red':''}">${fmtDate(r.DueDate)}</td>
-        <td class="text-right">${fmtMoney(r.TotalAmount,r.Currency)}</td>
-        <td class="c-green text-right">${fmtMoney(r.PaidAmount,r.Currency)}</td>
-        <td class="${parseFloat(r.Outstanding)>0?'c-red':'c-green'} text-right">${fmtMoney(r.Outstanding,r.Currency)}</td>
-        <td>${r.Status||'—'}</td>
-      </tr>`).join('')
+  // Receivables
+  document.getElementById('pr-rec-body').innerHTML = d.allRecs.length
+    ? d.allRecs.map(r=>`<tr><td><strong>${r.CustomerName||'—'}</strong></td><td>${r.Region||'—'}</td><td>${r.InvoiceNo||'—'}</td><td class="${isOverdue(r.DueDate)&&r.Status!=='Paid'?'c-red':''}">${fmtDate(r.DueDate)}</td><td class="text-right">${fmtMoney(r.TotalAmount,r.Currency)}</td><td class="c-green text-right">${fmtMoney(r.PaidAmount,r.Currency)}</td><td class="${parseFloat(r.Outstanding)>0?'c-red':'c-green'} text-right">${fmtMoney(r.Outstanding,r.Currency)}</td><td>${r.Status||'—'}</td></tr>`).join('')
     : '<tr><td colspan="8" style="text-align:center;color:#999">No receivables</td></tr>';
-  document.getElementById('pr-rec-total-amt').textContent = fmtLKR(sum(allRecs,'TotalAmount'));
-  document.getElementById('pr-rec-paid-amt').textContent = fmtLKR(sum(allRecs,'PaidAmount'));
-  document.getElementById('pr-rec-out-amt').textContent = fmtLKR(sum(allRecs,'Outstanding'));
+  document.getElementById('pr-rec-total-amt').textContent = fmtLKR(sum(d.allRecs,'TotalAmount'));
+  document.getElementById('pr-rec-paid-amt').textContent  = fmtLKR(sum(d.allRecs,'PaidAmount'));
+  document.getElementById('pr-rec-out-amt').textContent   = fmtLKR(sum(d.allRecs,'Outstanding'));
 
-  // ── PAYABLES ── (Sheet columns: SupplierName, Outstanding, DueAmount)
-  const allPays = [...pays].sort((a,b)=>(a.SupplierName||'').localeCompare(b.SupplierName||''));
-  document.getElementById('pr-pay-body').innerHTML = allPays.length
-    ? allPays.map(p=>`<tr>
-        <td><strong>${p.SupplierName||'—'}</strong></td>
-        <td class="${parseFloat(p.Outstanding)>0?'c-red':'c-green'} text-right">${fmtLKR(p.Outstanding||0)}</td>
-        <td class="c-orange text-right">${fmtLKR(p.DueAmount||0)}</td>
-      </tr>`).join('')
+  // Payables
+  document.getElementById('pr-pay-body').innerHTML = d.allPays.length
+    ? d.allPays.map(p=>`<tr><td><strong>${p.SupplierName||'—'}</strong></td><td class="${parseFloat(p.Outstanding)>0?'c-red':'c-green'} text-right">${fmtLKR(p.Outstanding||0)}</td><td class="c-orange text-right">${fmtLKR(p.DueAmount||0)}</td></tr>`).join('')
     : '<tr><td colspan="3" style="text-align:center;color:#999">No payables</td></tr>';
-  document.getElementById('pr-pay-total-amt').textContent = fmtLKR(sum(allPays,'Outstanding'));
-  document.getElementById('pr-pay-paid-amt').textContent = '—';
-  document.getElementById('pr-pay-out-amt').textContent = fmtLKR(sum(allPays,'DueAmount'));
+  document.getElementById('pr-pay-total-amt').textContent = fmtLKR(sum(d.allPays,'Outstanding'));
+  document.getElementById('pr-pay-out-amt').textContent   = fmtLKR(sum(d.allPays,'DueAmount'));
+}
+
+function renderRegister() {
+  const d = buildReportData();
+  const {sum} = d;
+
+  // Dates
+  document.getElementById('reg-hdr-date').textContent  = d.dateStr;
+  document.getElementById('reg-generated').textContent = d.genStr;
+
+  // Sales
+  document.getElementById('reg-exp').textContent     = fmtLKR(d.expToday);
+  document.getElementById('reg-loc').textContent     = fmtLKR(d.locToday);
+  document.getElementById('reg-total').textContent   = fmtLKR(d.expToday+d.locToday);
+  document.getElementById('reg-exp-m').textContent   = fmtLKR(d.expMonth);
+  document.getElementById('reg-loc-m').textContent   = fmtLKR(d.locMonth);
+  document.getElementById('reg-total-m').textContent = fmtLKR(d.expMonth+d.locMonth);
+
+  // Bank
+  let bHTML = '';
+  d.lkrAccs.forEach(a=>{ bHTML += `<div class="reg-card cyan"><div class="rc-label">🏦 ${a.AccountName}</div><div class="rc-val">${fmtLKR(a.Balance)}</div><div class="rc-sub">${a.Bank} · LKR</div></div>`; });
+  if(d.lkrAccs.length>1) bHTML += `<div class="reg-card cyan"><div class="rc-label">Total LKR</div><div class="rc-val">${fmtLKR(sum(d.lkrAccs,'Balance'))}</div></div>`;
+  d.usdAccs.forEach(a=>{ bHTML += `<div class="reg-card green"><div class="rc-label">🏦 ${a.AccountName}</div><div class="rc-val">${fmtUSD(a.Balance)}</div><div class="rc-sub">${a.Bank} · USD</div></div>`; });
+  if(d.usdAccs.length>1) bHTML += `<div class="reg-card green"><div class="rc-label">Total USD</div><div class="rc-val">${fmtUSD(sum(d.usdAccs,'Balance'))}</div></div>`;
+  document.getElementById('reg-bank-cards').innerHTML = bHTML || '<div style="color:#94a3b8;font-size:0.8rem">No bank accounts</div>';
+
+  // Cash
+  document.getElementById('reg-cash').textContent  = d.todayCash.length ? fmtLKR(d.todayCash[d.todayCash.length-1].ClosingBalance||0) : '—';
+  document.getElementById('reg-petty').textContent = d.sortedPetty.length ? fmtLKR(d.sortedPetty[d.sortedPetty.length-1].Balance||0) : '—';
+
+  // Receivables
+  document.getElementById('reg-rec').textContent      = fmtLKR(sum(d.openRecs,'Outstanding'));
+  document.getElementById('reg-rec-c').textContent    = d.openRecs.length+' customers';
+  document.getElementById('reg-rec-over').textContent = fmtLKR(sum(d.overdueRecs,'Outstanding'));
+  document.getElementById('reg-rec-table').innerHTML  = d.openRecs.length
+    ? d.openRecs.map(r=>`<tr><td><strong>${r.CustomerName||'—'}</strong></td><td>${r.Region||'—'}</td><td class="r ${parseFloat(r.Outstanding)>0?'':'text-success'}" style="${parseFloat(r.Outstanding)>0?'color:#dc2626':''}">${fmtMoney(r.Outstanding,r.Currency)}</td></tr>`).join('')
+    : '<tr><td colspan="3" style="text-align:center;padding:10px;color:#16a34a">✓ All cleared</td></tr>';
+  document.getElementById('reg-rec-total').textContent = fmtLKR(sum(d.openRecs,'Outstanding'));
+
+  // Payables
+  document.getElementById('reg-pay').textContent      = fmtLKR(sum(d.pays,'Outstanding'));
+  document.getElementById('reg-pay-c').textContent    = d.pays.length+' suppliers';
+  document.getElementById('reg-pay-due').textContent  = fmtLKR(sum(d.pays,'DueAmount'));
+  document.getElementById('reg-pay-table').innerHTML  = d.allPays.length
+    ? d.allPays.map(p=>`<tr><td><strong>${p.SupplierName||'—'}</strong></td><td class="r" style="color:#dc2626">${fmtLKR(p.Outstanding||0)}</td><td class="r" style="color:#ea580c">${fmtLKR(p.DueAmount||0)}</td></tr>`).join('')
+    : '<tr><td colspan="3" style="text-align:center;padding:10px;color:#16a34a">✓ No payables</td></tr>';
+  document.getElementById('reg-pay-total').textContent = fmtLKR(sum(d.pays,'Outstanding'));
+}
+
+function openRegister() {
+  if(!_data.sales) { showToast('Data not loaded yet — please wait','warning'); return; }
+  renderRegister();
+  document.getElementById('regOverlay').classList.add('open');
+}
+function closeRegister() {
+  document.getElementById('regOverlay').classList.remove('open');
 }
 
 async function printReport() {
-  // Ensure data is fresh before printing
   showLoading(true);
   try {
     const [sales, accs, recs, pays, cash, petty] = await Promise.all([
@@ -946,11 +1210,20 @@ async function printReport() {
     _data = {sales,accs,recs,pays,cash,petty};
     renderScreen();
     renderPrint();
+    closeRegister();
   } catch(e) { showToast(e.message,'error'); showLoading(false); return; }
   showLoading(false);
-  // Small delay to let DOM render fully, then print
-  setTimeout(() => doPrint('Full Report'), 300);
+  setTimeout(() => {
+    const orig = document.title;
+    document.title = `Daily Finance Summary — Bark Ornament Pvt Ltd — ${new Date().toLocaleDateString('en-GB')}`;
+    window.print();
+    document.title = orig;
+  }, 300);
 }
+
+document.addEventListener('keydown', e => {
+  if(e.key==='Escape') closeRegister();
+});
 
 window.addEventListener('load', loadAll);
 </script>
