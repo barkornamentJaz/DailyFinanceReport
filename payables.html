@@ -182,14 +182,10 @@ const sumF=(arr,k)=>arr.reduce((t,r)=>t+(parseFloat(r[k])||0),0);
 // ── Render ─────────────────────────────────────────────────────
 function render(){
   const local=allRecs.filter(r=>r.Region==='Local');
-  const sey  =allRecs.filter(r=>r.Region==='Seychelles');
-  const mal  =allRecs.filter(r=>r.Region==='Maldives');
   const lCur=local[0]?.Currency||'LKR';
-  const sCur=sey[0]?.Currency||'USD';
-  const mCur=mal[0]?.Currency||'USD';
-  setCard('local',local,lCur);setCard('sey',sey,sCur);setCard('mal',mal,mCur);
-  renderTable('tb-local',local);renderTable('tb-sey',sey);renderTable('tb-mal',mal);
-  setFoot('tf-local',local,lCur);setFoot('tf-sey',sey,sCur);setFoot('tf-mal',mal,mCur);
+  setCard('local',local,lCur);
+  renderTable('tb-local',local);
+  setFoot('tf-local',local,lCur);
   updateChangeBar();
 }
 
