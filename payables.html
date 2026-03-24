@@ -1,252 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bark Ornament — Payables</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Payables — Bark Ornament</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
-
-:root {
-  --bg-page:    #eef2f7;
-  --bg-card:    #ffffff;
-  --bg-card2:   #f8fafc;
-  --bg-input:   #f1f5f9;
-
-  --sidebar-bg:     #0f2167;
-  --sidebar-border: rgba(255,255,255,0.08);
-  --sidebar-text:   rgba(255,255,255,0.62);
-  --sidebar-active-bg: rgba(255,255,255,0.12);
-  --sidebar-accent: #f97316;
-
-  --accent:      #1d4ed8;
-  --accent-hov:  #1e40af;
-  --accent-light:#3b82f6;
-  --accent-soft: rgba(29,78,216,0.07);
-
-  --border:      #e2e8f0;
-  --border-dark: #cbd5e1;
-
-  --text-primary:   #0f172a;
-  --text-secondary: #475569;
-  --text-muted:     #94a3b8;
-
-  --success:   #16a34a; --success-bg: rgba(22,163,74,0.09);
-  --warning:   #d97706; --warning-bg: rgba(217,119,6,0.09);
-  --danger:    #dc2626; --danger-bg:  rgba(220,38,38,0.09);
-  --info:      #0284c7; --info-bg:    rgba(2,132,199,0.09);
-  --orange:    #ea580c; --orange-bg:  rgba(234,88,12,0.09);
-
-  --sidebar-w: 240px;
-  --hdr-h: 64px;
-  --radius: 12px; --radius-sm: 7px;
-  --shadow: 0 4px 24px rgba(15,23,42,0.10);
-  --shadow-sm: 0 1px 6px rgba(15,23,42,0.07);
-  --shadow-card: 0 2px 12px rgba(15,23,42,0.06);
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:14.5px}
-body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(--text-primary);min-height:100vh;display:flex;overflow-x:hidden}
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--bg-page)}
-::-webkit-scrollbar-thumb{background:var(--border-dark);border-radius:3px}
-
-/* SIDEBAR */
-.sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--sidebar-bg);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:4px 0 20px rgba(0,0,0,0.14)}
-
-.sidebar-logo img{width:52px;height:52px;object-fit:contain;border-radius:8px;background:#fff;padding:3px;margin-bottom:9px}
-.sidebar-logo .company{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.86rem;color:#fff;line-height:1.3}
-.sidebar-logo .subtitle{font-size:0.68rem;color:var(--sidebar-text);margin-top:3px;line-height:1.4}
-
-
-
-
-
-
-
-
-
-/* MAIN */
-.main{margin-left:220px;flex:1;min-height:100vh;display:flex;flex-direction:column}
-.page-header{background:var(--bg-card);border-bottom:1px solid var(--border);padding:0 26px;height:var(--hdr-h);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm)}
-.page-header-left h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1.15rem;color:var(--text-primary)}
-.page-header-left .page-date{font-size:0.74rem;color:var(--text-muted);margin-top:2px}
-.page-header-right{display:flex;gap:8px;align-items:center}
-.content{padding:20px 26px;flex:1}
-
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 15px;border-radius:var(--radius-sm);font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:all 0.15s;white-space:nowrap}
-.btn svg{width:14px;height:14px}
-.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.btn-primary:hover{background:var(--accent-hov);transform:translateY(-1px);box-shadow:0 4px 12px rgba(29,78,216,0.28)}
-.btn-success{background:var(--success);color:#fff}
-.btn-success:hover{filter:brightness(1.08)}
-.btn-secondary{background:#fff;color:var(--text-secondary);border-color:var(--border-dark)}
-.btn-secondary:hover{background:var(--bg-card2);color:var(--text-primary)}
-.btn-danger{background:var(--danger-bg);color:var(--danger);border-color:rgba(220,38,38,0.2)}
-.btn-danger:hover{background:var(--danger);color:#fff}
-.btn-warning{background:var(--warning-bg);color:var(--warning);border-color:rgba(217,119,6,0.2)}
-.btn-warning:hover{background:var(--warning);color:#fff}
-.btn-orange{background:var(--orange-bg);color:var(--orange);border-color:rgba(234,88,12,0.2)}
-.btn-orange:hover{background:var(--orange);color:#fff}
-.btn-icon{padding:6px 8px}
-.btn-sm{padding:5px 10px;font-size:0.77rem}
-
-/* CARDS */
-.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow-card)}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.card-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.9rem;color:var(--text-primary)}
-
-/* SUMMARY CARDS */
-.summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:13px;margin-bottom:20px}
-.summary-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow-card);position:relative;overflow:hidden;transition:transform 0.16s,box-shadow 0.16s}
-.summary-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-.summary-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
-.summary-card.green::before{background:var(--success)}
-.summary-card.yellow::before{background:var(--warning)}
-.summary-card.red::before{background:var(--danger)}
-.summary-card.cyan::before{background:var(--info)}
-.summary-card.orange::before{background:var(--orange)}
-.sc-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text-muted);margin-bottom:7px}
-.sc-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.38rem;color:var(--text-primary);line-height:1.1}
-.sc-value.small{font-size:1.05rem}
-.sc-sub{font-size:0.71rem;color:var(--text-secondary);margin-top:4px}
-
-/* TOOLBAR/FILTER */
-.toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:13px}
-.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:13px;align-items:center}
-.filter-bar label{font-size:0.74rem;color:var(--text-muted);font-weight:600}
-.filter-bar select,.filter-bar input[type="date"],.filter-bar input[type="text"]{background:var(--bg-card);border:1px solid var(--border-dark);border-radius:var(--radius-sm);padding:6px 10px;color:var(--text-primary);font-size:0.81rem;outline:none;font-family:'IBM Plex Sans',sans-serif;transition:border-color 0.14s}
-.filter-bar select:focus,.filter-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(29,78,216,0.08)}
-.search-box{position:relative}
-.search-box input{background:var(--bg-card);border:1px solid var(--border-dark);border-radius:var(--radius-sm);padding:6px 10px 6px 32px;color:var(--text-primary);font-size:0.81rem;width:200px;outline:none;font-family:'IBM Plex Sans',sans-serif;transition:border-color 0.14s}
-.search-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(29,78,216,0.08)}
-.search-box svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text-muted)}
-
-/* TABS */
-.tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:16px}
-.tab{padding:8px 18px;font-size:0.83rem;font-weight:600;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.15s}
-.tab:hover{color:var(--text-primary)}
-.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
-
-/* SECTION HEADER */
-.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
-.section-hdr h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.93rem;color:var(--text-primary);display:flex;align-items:center;gap:7px}
-.section-hdr h2 .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block}
-.section-hdr h2 .dot.green{background:var(--success)}
-.section-hdr h2 .dot.yellow{background:var(--warning)}
-.section-hdr h2 .dot.orange{background:var(--orange)}
-.section-hdr h2 .dot.red{background:var(--danger)}
-
-/* TABLE */
-.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
-.data-table{width:100%;border-collapse:collapse;font-size:0.83rem}
-.data-table thead th{background:#f1f5f9;padding:9px 12px;text-align:left;font-weight:700;font-size:0.69rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);border-bottom:2px solid var(--border);white-space:nowrap}
-.data-table tbody tr{border-bottom:1px solid var(--border);transition:background 0.11s}
-.data-table tbody tr:hover{background:var(--accent-soft)}
-.data-table tbody tr:last-child{border-bottom:none}
-.data-table td{padding:9px 12px;color:var(--text-primary);vertical-align:middle}
-.data-table td.muted{color:var(--text-muted)}
-.data-table tfoot td{background:#f8fafc;font-weight:700;padding:9px 12px;border-top:2px solid var(--border);font-size:0.85rem}
-.actions{display:flex;gap:4px;align-items:center}
-
-/* BADGES */
-.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:0.69rem;font-weight:700}
-.badge-success{background:var(--success-bg);color:var(--success)}
-.badge-warning{background:var(--warning-bg);color:var(--warning)}
-.badge-danger{background:var(--danger-bg);color:var(--danger)}
-.badge-info{background:var(--info-bg);color:var(--info)}
-.badge-orange{background:var(--orange-bg);color:var(--orange)}
-.badge-secondary{background:#f1f5f9;color:var(--text-secondary)}
-.region-local{background:rgba(29,78,216,0.08);color:var(--accent)}
-.region-seychelles{background:var(--success-bg);color:var(--success)}
-.region-maldives{background:var(--warning-bg);color:var(--warning)}
-.cur-lkr{background:var(--info-bg);color:var(--info);font-size:0.67rem}
-.cur-usd{background:var(--success-bg);color:var(--success);font-size:0.67rem}
-.type-export{background:var(--orange-bg);color:var(--orange)}
-.type-local{background:var(--accent-soft);color:var(--accent)}
-
-/* ACCOUNT CARDS */
-.acc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:13px;margin-bottom:18px}
-.acc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow-card);position:relative;transition:box-shadow 0.16s}
-.acc-card:hover{box-shadow:var(--shadow)}
-.acc-card .acc-currency{position:absolute;top:12px;right:12px}
-.acc-bank{font-size:0.7rem;color:var(--text-muted);margin-bottom:3px}
-.acc-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.93rem;color:var(--text-primary)}
-.acc-no{font-size:0.71rem;color:var(--text-secondary);font-family:monospace;margin-top:2px}
-.acc-balance{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.25rem;color:var(--accent);margin-top:10px}
-.acc-balance.usd{color:var(--success)}
-.acc-actions{display:flex;gap:6px;margin-top:11px}
-
-/* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.4);backdrop-filter:blur(3px);z-index:1000;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.open{display:flex}
-.modal{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 20px 60px rgba(15,23,42,0.16);width:100%;max-width:520px;max-height:90vh;display:flex;flex-direction:column;animation:slideUp 0.18s ease}
-.modal.modal-lg{max-width:680px}
-@keyframes slideUp{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
-.modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 13px;border-bottom:1px solid var(--border)}
-.modal-header h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.98rem;color:var(--text-primary)}
-.modal-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1.25rem;line-height:1;padding:0 4px;transition:color 0.13s;border-radius:4px}
-.modal-close:hover{color:var(--danger);background:var(--danger-bg)}
-.modal-body{padding:16px 20px;overflow-y:auto;flex:1}
-.modal-footer{padding:13px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
-
-/* FORM */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-grid.single{grid-template-columns:1fr}
-.form-group{display:flex;flex-direction:column;gap:5px}
-.form-group.span2{grid-column:span 2}
-.form-group label{font-size:0.72rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em}
-.form-control{background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 10px;color:var(--text-primary);font-size:0.85rem;outline:none;font-family:'IBM Plex Sans',sans-serif;transition:border-color 0.14s,box-shadow 0.14s}
-.form-control:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(29,78,216,0.09);background:#fff}
-.form-control option{background:#fff}
-textarea.form-control{resize:vertical;min-height:62px}
-
-/* MISC */
-.divider{height:1px;background:var(--border);margin:18px 0}
-.text-success{color:var(--success)}.text-danger{color:var(--danger)}.text-warning{color:var(--warning)}.text-info{color:var(--info)}.text-muted{color:var(--text-muted)}.text-orange{color:var(--orange)}
-.fw700{font-weight:700;font-family:'Plus Jakarta Sans',sans-serif}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
-@media(max-width:900px){.two-col{grid-template-columns:1fr}}
-
-/* LOADING */
-#loading{display:none;position:fixed;inset:0;background:rgba(255,255,255,0.72);backdrop-filter:blur(2px);z-index:2000;align-items:center;justify-content:center;flex-direction:column;gap:12px}
-.spinner{width:36px;height:36px;border-radius:50%;border:3px solid var(--border-dark);border-top-color:var(--accent);animation:spin 0.68s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-size:0.82rem;color:var(--text-secondary);font-weight:600}
-
-/* TOAST */
-.toast{position:fixed;bottom:20px;right:20px;z-index:9999;background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:11px 17px;font-size:0.84rem;color:var(--text-primary);box-shadow:var(--shadow);max-width:310px;transform:translateY(14px);opacity:0;transition:all 0.26s}
-.toast.show{transform:none;opacity:1}
-.toast-success{border-left:4px solid var(--success)}
-.toast-error{border-left:4px solid var(--danger)}
-.toast-warning{border-left:4px solid var(--warning)}
-.toast-info{border-left:4px solid var(--info)}
-
-/* EMPTY STATE */
-.empty-state{text-align:center;padding:34px 20px;color:var(--text-muted)}
-.empty-state p{font-size:0.86rem}
-
-/* PRINT */
-.print-company-header{display:none}
-@media print{
-  body{background:#fff!important;color:#000!important}
-  .sidebar,.page-header-right,.toolbar,.filter-bar,.btn,.actions,.modal-overlay,#loading,.toast,.tabs{display:none!important}
-  .main{margin-left:220px;align-items:center;gap:13px;padding-bottom:11px;border-bottom:2px solid #1d4ed8;margin-bottom:14px}
-  .print-company-header img{width:54px;height:54px;object-fit:contain}
-  .print-company-header .pch-name{font-size:13pt;font-weight:700;color:#1d4ed8}
-  .print-company-header .pch-addr{font-size:8.5pt;color:#555;margin-top:2px}
-  .print-company-header .pch-right{margin-left:auto;text-align:right;font-size:8.5pt;color:#555}
-  .summary-card{border:1px solid #ddd!important;box-shadow:none!important;page-break-inside:avoid}
-  .summary-card::before{display:none}
-  .sc-value{color:#1d4ed8!important}
-  .card,.table-wrap{border:1px solid #ddd!important;box-shadow:none!important}
-  .data-table thead th{background:#1d4ed8!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .data-table tbody tr:nth-child(even) td{background:#f8faff!important}
-  .data-table td{border-bottom:1px solid #eee!important}
-  @page{margin:14mm 12mm}
-}
+html{font-size:14px}
+body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh;color:#1e293b;display:flex}
 
 /* ── SIDEBAR ── */
 .sidebar{width:220px;min-height:100vh;background:#1a2d6b;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:3px 0 16px rgba(0,0,0,0.18)}
@@ -262,330 +25,433 @@ textarea.form-control{resize:vertical;min-height:62px}
 .sb-link svg{width:15px;height:15px;flex-shrink:0;opacity:0.65}
 .sb-link.active svg{opacity:1}
 .sb-footer{padding:11px 16px;border-top:1px solid rgba(255,255,255,0.07);font-size:0.62rem;color:rgba(255,255,255,0.22);line-height:1.6}
+
+/* ── MAIN ── */
+.main{margin-left:220px;flex:1;min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:#fff;border-bottom:1px solid #e2e8f0;padding:0 26px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 6px rgba(0,0,0,0.05)}
+.tb-title h1{font-weight:700;font-size:1.05rem;color:#0f172a;display:flex;align-items:center;gap:7px}
+.tb-title h1 svg{width:17px;height:17px;color:#ef4444}
+.tb-date{font-size:0.71rem;color:#94a3b8;margin-top:1px}
+.tb-right{display:flex;gap:8px;align-items:center}
+
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:0.77rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:all 0.13s;white-space:nowrap;font-family:'Inter',sans-serif}
+.btn svg{width:14px;height:14px}
+.btn-primary{background:#1d4ed8;color:#fff}
+.btn-primary:hover{background:#1e40af}
+.btn-success{background:#16a34a;color:#fff}
+.btn-success:hover{background:#15803d}
+.btn-ghost{background:#f1f5f9;color:#475569;border-color:#e2e8f0}
+.btn-ghost:hover{background:#e2e8f0}
+.btn-danger-soft{background:#fef2f2;color:#dc2626;border-color:#fecaca}
+.btn-danger-soft:hover{background:#dc2626;color:#fff}
+
+.btn-success.has-changes{animation:pulse-green 1.4s ease infinite}
+@keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(22,163,74,0.5)}50%{box-shadow:0 0 0 6px rgba(22,163,74,0)}}
+
+.content{padding:22px 26px;flex:1}
+
+/* ── SUMMARY ── */
+.summary-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.sum-card{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 6px rgba(0,0,0,0.07);border-top:3px solid #e2e8f0}
+.sum-card.local{border-top-color:#ef4444}
+.sum-card.sey{border-top-color:#16a34a}
+.sum-card.mal{border-top-color:#d97706}
+.sum-flag{font-size:1.25rem;margin-bottom:5px}
+.sum-region{font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:#64748b;margin-bottom:3px}
+.sum-out{font-size:1.35rem;font-weight:800;color:#0f172a;line-height:1.1}
+.sum-due{font-size:0.72rem;color:#ef4444;font-weight:600;margin-top:4px}
+.sum-due .lbl{color:#94a3b8;font-weight:400}
+.sum-cnt{font-size:0.67rem;color:#94a3b8;margin-top:5px}
+
+/* ── SECTION ── */
+.section{background:#fff;border-radius:12px;box-shadow:0 1px 8px rgba(0,0,0,0.07);margin-bottom:18px;overflow:hidden}
+.sec-head{padding:13px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f1f5f9}
+.sec-head-left{display:flex;align-items:center;gap:8px}
+.dot{width:9px;height:9px;border-radius:50%;background:#ef4444}
+.dot.g{background:#16a34a}
+.dot.y{background:#d97706}
+.sec-name{font-weight:700;font-size:0.89rem;color:#0f172a}
+
+/* ── TABLE ── */
+table{width:100%;border-collapse:collapse;font-size:0.83rem}
+thead th{padding:9px 14px;text-align:left;font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#94a3b8;background:#fafbfc;border-bottom:1px solid #f1f5f9}
+th.r,td.r{text-align:right}
+th.c,td.c{text-align:center}
+tbody tr{border-bottom:1px solid #f8fafc;transition:background 0.1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#fff8f8}
+tbody tr.dirty{background:#fffbf0}
+td{padding:8px 14px;vertical-align:middle}
+
+.cname{font-weight:600;color:#0f172a}
+.cbadge{font-size:0.63rem;padding:1px 6px;border-radius:20px;font-weight:700;background:#e0f2fe;color:#0284c7;margin-left:6px}
+.cbadge.usd{background:#dcfce7;color:#16a34a}
+
+/* ── INLINE EDITABLE CELL ── */
+.cell-val{
+  display:block;width:100%;padding:6px 10px;border-radius:7px;border:1.5px solid transparent;
+  background:transparent;font-family:'Inter',sans-serif;font-size:0.83rem;font-weight:700;
+  color:#dc2626;text-align:right;cursor:text;transition:all 0.15s;outline:none;min-width:120px;
+}
+.cell-val::placeholder{color:#cbd5e1;font-weight:400}
+.cell-val:hover{background:#f1f5f9;border-color:#e2e8f0}
+.cell-val:focus{background:#fff;border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,0.1);color:#0f172a}
+.cell-val.zero{color:#94a3b8;font-weight:400}
+.cell-val.changed{background:#fefce8;border-color:#fbbf24;color:#92400e}
+.cell-val.changed:focus{border-color:#f59e0b;box-shadow:0 0 0 3px rgba(251,191,36,0.15)}
+
+.dirty-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#f59e0b;margin-left:6px;opacity:0;transition:opacity 0.2s}
+.dirty .dirty-dot{opacity:1}
+
+.status-cell{width:70px;text-align:center;white-space:nowrap}
+.row-status{font-size:1rem;opacity:0;transition:opacity 0.3s}
+.row-status.show{opacity:1}
+.btn-del{background:none;border:none;cursor:pointer;color:#cbd5e1;font-size:1rem;padding:4px 6px;border-radius:6px;transition:all 0.12s;line-height:1;margin-left:4px}
+.btn-del:hover{background:#fef2f2;color:#dc2626}
+
+tfoot td{background:#f8fafc;padding:9px 14px;font-weight:700;font-size:0.83rem;border-top:2px solid #e2e8f0}
+
+/* ── CHANGE BAR ── */
+.change-bar{
+  display:none;position:sticky;bottom:16px;margin:0 0 4px;
+  background:#1e293b;color:#fff;border-radius:12px;padding:12px 20px;
+  align-items:center;justify-content:space-between;
+  box-shadow:0 8px 32px rgba(0,0,0,0.22);z-index:80;animation:slideUp 0.2s ease;
+}
+.change-bar.visible{display:flex}
+@keyframes slideUp{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+.change-bar-left{display:flex;align-items:center;gap:10px;font-size:0.83rem}
+.change-bar-left svg{width:16px;height:16px;color:#fbbf24}
+.change-count{font-weight:700;color:#fbbf24}
+.change-bar-right{display:flex;gap:8px}
+
+/* ── MODAL ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.42);backdrop-filter:blur(4px);z-index:999;align-items:center;justify-content:center;padding:20px}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:14px;box-shadow:0 20px 60px rgba(15,23,42,0.18);width:100%;max-width:400px;animation:up 0.17s ease}
+@keyframes up{from{transform:translateY(12px);opacity:0}}
+.mhdr{padding:17px 20px 14px;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:flex-start}
+.mhdr h3{font-weight:700;font-size:0.97rem;color:#0f172a}
+.mclose{background:none;border:none;font-size:1.3rem;color:#94a3b8;cursor:pointer}
+.mclose:hover{color:#ef4444}
+.mbody{padding:18px 20px}
+.mftr{padding:13px 20px;border-top:1px solid #f1f5f9;display:flex;gap:8px;justify-content:flex-end}
+.field{margin-bottom:13px}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:0.66rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#64748b;margin-bottom:5px}
+.field input,.field select{width:100%;padding:9px 12px;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;font-size:0.88rem;color:#0f172a;outline:none;font-family:'Inter',sans-serif;transition:border-color 0.13s,box-shadow 0.13s}
+.field input:focus,.field select:focus{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,0.1);background:#fff}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bcancel{background:#f1f5f9;color:#475569;border:none;border-radius:8px;padding:9px 18px;font-size:0.82rem;font-weight:600;cursor:pointer}
+.bcancel:hover{background:#e2e8f0}
+.bsave{background:#1d4ed8;color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:0.82rem;font-weight:700;cursor:pointer}
+.bsave:hover{background:#1e40af}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:22px;right:22px;z-index:9999;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:11px 18px;font-size:0.82rem;color:#0f172a;box-shadow:0 4px 20px rgba(0,0,0,0.12);max-width:300px;transform:translateY(10px);opacity:0;transition:all 0.24s}
+.toast.show{transform:none;opacity:1}
+.toast.success{border-left:4px solid #16a34a}
+.toast.error{border-left:4px solid #dc2626}
+.toast.warning{border-left:4px solid #d97706}
+
+/* ── LOADING ── */
+#loading{display:none;position:fixed;inset:0;background:rgba(255,255,255,0.65);z-index:2000;align-items:center;justify-content:center}
+.spinner{width:32px;height:32px;border:3px solid #e2e8f0;border-top-color:#ef4444;border-radius:50%;animation:spin 0.65s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:580px){.sidebar{display:none}.main{margin-left:0}.summary-row{grid-template-columns:1fr}}
+@media print{.sidebar,.tb-right,.change-bar,.overlay,#loading,.toast{display:none!important}.main{margin-left:0}}
 </style>
+
 <script>
-// ============================================================
-// config.js — Bark Ornament Daily Report System
-// ============================================================
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4HSqqDmnhU5y49DDHaBzI7YbsXTFkUHZzKFRUBFmICh_fTPoFvyADgTboPgqcxTXr/exec';
+let allRecs = [];
+let pendingChanges = {};
 
-const CONFIG = {
-  SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw4HSqqDmnhU5y49DDHaBzI7YbsXTFkUHZzKFRUBFmICh_fTPoFvyADgTboPgqcxTXr/exec',
-  COMPANY_NAME:    'Bark Ornament Private Ltd',
-  COMPANY_ADDRESS: 'No. 59 A Bekkegama, Panadura',
-};
+async function apiGet(p)  { const r=await fetch(SCRIPT_URL+'?'+new URLSearchParams(p));const j=await r.json();if(j.error)throw new Error(j.error);return j.data??j; }
+async function apiPost(b) { const r=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(b)});const j=await r.json();if(j.error)throw new Error(j.error);return j; }
+function showLoading(v)   { document.getElementById('loading').style.display=v?'flex':'none'; }
+function toast(msg,type='success'){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.className='toast '+type+' show';
+  setTimeout(()=>el.classList.remove('show'),3200);
+}
+const fmtNum=(n,cur)=>{const v=parseFloat(n)||0;return cur+' '+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2,useGrouping:true})};
+const sumF=(arr,k)=>arr.reduce((t,r)=>t+(parseFloat(r[k])||0),0);
 
-// ============================================================
-// common.js — Bark Ornament Daily Report System
-// Shared utilities, API helpers, formatters
-// ============================================================
-
-/* ─────────────────────────────────────────────────────────────
-   CONFIG VALIDATION
-───────────────────────────────────────────────────────────── */
-function isConfigured() {
-  return CONFIG.SCRIPT_URL &&
-         CONFIG.SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL' &&
-         CONFIG.SCRIPT_URL.startsWith('https://script.google.com');
+// ── Render ─────────────────────────────────────────────────────
+function render(){
+  const local=allRecs.filter(r=>r.Region==='Local');
+  const sey  =allRecs.filter(r=>r.Region==='Seychelles');
+  const mal  =allRecs.filter(r=>r.Region==='Maldives');
+  const lCur=local[0]?.Currency||'LKR';
+  const sCur=sey[0]?.Currency||'USD';
+  const mCur=mal[0]?.Currency||'USD';
+  setCard('local',local,lCur);setCard('sey',sey,sCur);setCard('mal',mal,mCur);
+  renderTable('tb-local',local);renderTable('tb-sey',sey);renderTable('tb-mal',mal);
+  setFoot('tf-local',local,lCur);setFoot('tf-sey',sey,sCur);setFoot('tf-mal',mal,mCur);
+  updateChangeBar();
 }
 
-function showConfigBanner() {
-  if (document.getElementById('__configBanner')) return;
-  const b = document.createElement('div');
-  b.id = '__configBanner';
-  b.style.cssText = [
-    'position:fixed;top:0;left:0;right:0;z-index:99999',
-    'background:#fef3c7;border-bottom:2px solid #d97706',
-    'padding:11px 20px;display:flex;align-items:center;gap:10px',
-    "font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;color:#92400e",
-    'box-shadow:0 2px 8px rgba(0,0,0,0.1)'
-  ].join(';');
-  b.innerHTML = `
-    <span style="font-size:1.2rem">⚙️</span>
-    <div>
-      <strong>Setup needed:</strong>
-      Open <code style="background:#fde68a;padding:1px 5px;border-radius:3px">config.js</code>
-      on GitHub and replace <code style="background:#fde68a;padding:1px 5px;border-radius:3px">YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL</code>
-      with your deployed Apps Script URL.
-    </div>
-    <button onclick="this.parentElement.remove()"
-      style="margin-left:auto;background:none;border:none;font-size:1.3rem;cursor:pointer;color:#92400e;line-height:1">✕</button>
-  `;
-  document.body.prepend(b);
-  const main = document.querySelector('.main');
-  if (main) main.style.marginTop = '50px';
+function setCard(id,arr,cur){
+  const out=sumF(arr,'Outstanding'),due=sumF(arr,'DueAmount');
+  document.getElementById('s-'+id+'-o').textContent=out?fmtNum(out,cur):'—';
+  document.getElementById('s-'+id+'-d').textContent=due?fmtNum(due,cur):'—';
+  document.getElementById('s-'+id+'-c').textContent=arr.length+' supplier'+(arr.length!==1?'s':'');
 }
 
-/* ─────────────────────────────────────────────────────────────
-   API HELPERS
-   Uses Google Apps Script Web App URL.
-   GitHub Pages → Apps Script works via redirect:follow + JSON.
-───────────────────────────────────────────────────────────── */
-async function apiGet(params) {
-  if (!isConfigured()) {
-    showConfigBanner();
-    throw new Error('Apps Script URL not configured in config.js');
+function renderTable(tbodyId,rows){
+  const tb=document.getElementById(tbodyId);
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="4" style="text-align:center;padding:22px;color:#94a3b8;font-size:0.79rem">No suppliers</td></tr>`;return;}
+  tb.innerHTML=rows.map(r=>{
+    const cur=r.Currency||'LKR';
+    const out=parseFloat(r.Outstanding)||0;
+    const due=parseFloat(r.DueAmount)||0;
+    return `<tr id="row-${r.ID}" data-id="${r.ID}" data-cur="${cur}">
+      <td>
+        <span class="cname">${r.SupplierName||'—'}</span>
+        <span class="cbadge${cur==='USD'?' usd':''}">${cur}</span>
+        <span class="dirty-dot" id="ddot-${r.ID}"></span>
+      </td>
+      <td class="r">
+        <input class="cell-val${out===0?' zero':''}" id="out-${r.ID}"
+          type="number" step="0.01" min="0"
+          value="${out||''}" placeholder="0.00"
+          data-original="${out}"
+          onchange="markChanged('${r.ID}','out',this)"
+          oninput="markChanged('${r.ID}','out',this)"
+          onkeydown="handleKey(event,'${r.ID}','out')"
+          title="Click to edit outstanding">
+      </td>
+      <td class="r">
+        <input class="cell-val${due===0?' zero':''}" id="due-${r.ID}"
+          type="number" step="0.01" min="0"
+          value="${due||''}" placeholder="0.00"
+          data-original="${due}"
+          onchange="markChanged('${r.ID}','due',this)"
+          oninput="markChanged('${r.ID}','due',this)"
+          onkeydown="handleKey(event,'${r.ID}','due')"
+          title="Click to edit due amount">
+      </td>
+      <td class="status-cell">
+        <span class="row-status" id="rst-${r.ID}"></span>
+        <button class="btn-del" onclick="deleteSupplier('${r.ID}')" title="Remove supplier">🗑</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function setFoot(id,arr,cur){
+  const out=sumF(arr,'Outstanding'),due=sumF(arr,'DueAmount');
+  document.getElementById(id).innerHTML=`
+    <td style="color:#64748b;font-weight:400">${arr.length} supplier${arr.length!==1?'s':''}</td>
+    <td class="r" style="color:#dc2626">${out?fmtNum(out,cur):'—'}</td>
+    <td class="r" style="color:#ef4444">${due?fmtNum(due,cur):'—'}</td>
+    <td></td>`;
+}
+
+// ── Cell editing ──────────────────────────────────────────────
+function markChanged(id, field, input){
+  const orig = parseFloat(input.dataset.original)||0;
+  const now  = parseFloat(input.value)||0;
+  const isDiff = now !== orig;
+
+  if(!pendingChanges[id]) pendingChanges[id]={};
+  pendingChanges[id][field] = input.value;
+
+  input.classList.toggle('changed', isDiff);
+  input.classList.remove('zero');
+
+  const outEl = document.getElementById('out-'+id);
+  const dueEl = document.getElementById('due-'+id);
+  const rowDirty = (parseFloat(outEl.value)||0)!==(parseFloat(outEl.dataset.original)||0)
+                || (parseFloat(dueEl.value)||0)!==(parseFloat(dueEl.dataset.original)||0);
+
+  document.getElementById('row-'+id).classList.toggle('dirty', rowDirty);
+  document.getElementById('ddot-'+id).style.opacity = rowDirty?'1':'0';
+  updateChangeBar();
+}
+
+function handleKey(e, id, field){
+  if(e.key==='Enter'){ e.preventDefault(); moveNext(id, field); }
+  if(e.key==='Escape'){
+    const input = document.getElementById((field==='out'?'out':'due')+'-'+id);
+    input.value = input.dataset.original||'';
+    input.classList.remove('changed');
+    recalcRowDirty(id);
+    updateChangeBar();
+    input.blur();
   }
+}
 
-  // Build URL with query params
-  const base = CONFIG.SCRIPT_URL;
-  const qs   = Object.entries(params)
-    .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v))
-    .join('&');
-  const fullUrl = base + (base.includes('?') ? '&' : '?') + qs;
-
-  let res;
-  try {
-    res = await fetch(fullUrl, {
-      method:   'GET',
-      redirect: 'follow',   // IMPORTANT — Apps Script issues a redirect
-      cache:    'no-cache',
-    });
-  } catch (networkErr) {
-    throw new Error('Network error — check your internet connection.\n' + networkErr.message);
+function moveNext(id, field){
+  if(field==='out'){
+    document.getElementById('due-'+id)?.focus();
+  } else {
+    const idx = allRecs.findIndex(r=>r.ID===id);
+    if(idx>=0 && idx<allRecs.length-1) document.getElementById('out-'+allRecs[idx+1].ID)?.focus();
   }
-
-  if (!res.ok) throw new Error('Server error: HTTP ' + res.status);
-
-  let json;
-  try { json = await res.json(); }
-  catch (e) { throw new Error('Invalid response from Apps Script. Re-deploy and try again.'); }
-
-  if (!json.success) throw new Error(json.error || 'Unknown server error');
-  return json.data;
 }
 
-async function apiPost(body) {
-  if (!isConfigured()) {
-    showConfigBanner();
-    throw new Error('Apps Script URL not configured in config.js');
-  }
-
-  let res;
-  try {
-    res = await fetch(CONFIG.SCRIPT_URL, {
-      method:   'POST',
-      redirect: 'follow',   // IMPORTANT — Apps Script issues a redirect on POST too
-      // Note: no 'Content-Type' header — Apps Script handles plain text body better
-      // from cross-origin requests
-      body: JSON.stringify(body),
-    });
-  } catch (networkErr) {
-    throw new Error('Network error — check your internet connection.\n' + networkErr.message);
-  }
-
-  if (!res.ok) throw new Error('Server error: HTTP ' + res.status);
-
-  let json;
-  try { json = await res.json(); }
-  catch (e) { throw new Error('Invalid response from Apps Script. Re-deploy and try again.'); }
-
-  if (!json.success) throw new Error(json.error || 'Unknown server error');
-  return json.data;
+function recalcRowDirty(id){
+  const outEl=document.getElementById('out-'+id);
+  const dueEl=document.getElementById('due-'+id);
+  if(!outEl||!dueEl) return;
+  const dirty=(parseFloat(outEl.value)||0)!==(parseFloat(outEl.dataset.original)||0)
+           || (parseFloat(dueEl.value)||0)!==(parseFloat(dueEl.dataset.original)||0);
+  document.getElementById('row-'+id)?.classList.toggle('dirty',dirty);
+  document.getElementById('ddot-'+id).style.opacity=dirty?'1':'0';
 }
 
-/* ─────────────────────────────────────────────────────────────
-   FORMATTERS
-───────────────────────────────────────────────────────────── */
-function fmtLKR(n) {
-  return 'Rs\u00A0' + parseFloat(n || 0)
-    .toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
-function fmtUSD(n) {
-  return '$\u00A0' + parseFloat(n || 0)
-    .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
-function fmtMoney(n, cur) { return cur === 'USD' ? fmtUSD(n) : fmtLKR(n); }
-
-function fmtDate(d) {
-  if (!d) return '—';
-  const dt = new Date(d);
-  if (isNaN(dt)) return String(d);
-  return dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-}
-function fmtDateInput(d) {
-  if (!d) return '';
-  const dt = new Date(d);
-  if (isNaN(dt)) return '';
-  return dt.toISOString().split('T')[0];
-}
-function todayISO() { return new Date().toISOString().split('T')[0]; }
-
-function isOverdue(dueDate) {
-  if (!dueDate) return false;
-  const due = new Date(dueDate); due.setHours(0, 0, 0, 0);
-  const now = new Date();         now.setHours(0, 0, 0, 0);
-  return due < now;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   BADGES
-───────────────────────────────────────────────────────────── */
-function statusBadge(s) {
-  const m = { Paid:'badge-success', Partial:'badge-warning', Pending:'badge-info', Overdue:'badge-danger' };
-  return `<span class="badge ${m[s]||'badge-secondary'}">${s||'—'}</span>`;
-}
-function regionBadge(r) {
-  const m = { Local:'region-local', Seychelles:'region-seychelles', Maldives:'region-maldives' };
-  return `<span class="badge ${m[r]||'badge-secondary'}">${r||'—'}</span>`;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   UI HELPERS
-───────────────────────────────────────────────────────────── */
-function showLoading(v) {
-  const el = document.getElementById('loading');
-  if (el) el.style.display = v ? 'flex' : 'none';
-}
-
-let _toastTimer;
-function showToast(msg, type = 'success') {
-  const old = document.getElementById('__toast');
-  if (old) old.remove();
-  clearTimeout(_toastTimer);
-  const t = document.createElement('div');
-  t.id = '__toast';
-  t.className = `toast toast-${type}`;
-  t.textContent = msg;
-  document.body.appendChild(t);
-  requestAnimationFrame(() => t.classList.add('show'));
-  _toastTimer = setTimeout(() => {
-    t.classList.remove('show');
-    setTimeout(() => t.remove(), 320);
-  }, 3500);
-}
-
-function openModal(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.style.display = 'flex';
-  el.classList.add('open');
-}
-function closeModal(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.style.display = 'none';
-  el.classList.remove('open');
-}
-document.addEventListener('click', e => {
-  if (e.target.classList.contains('modal-overlay')) {
-    e.target.style.display = 'none';
-    e.target.classList.remove('open');
-  }
-});
-
-async function confirmDel(msg = 'Delete this record? This cannot be undone.') {
-  return window.confirm(msg);
-}
-
-function doPrint(title) {
-  const orig = document.title;
-  document.title = `${title} — ${CONFIG.COMPANY_NAME} — ${fmtDate(new Date())}`;
-  window.print();
-  document.title = orig;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   PAGE INIT
-───────────────────────────────────────────────────────────── */
-function setPageDate() {
-  const s = new Date().toLocaleDateString('en-GB', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+// ── Change bar ────────────────────────────────────────────────
+function updateChangeBar(){
+  let count=0;
+  allRecs.forEach(r=>{
+    const outEl=document.getElementById('out-'+r.ID);
+    const dueEl=document.getElementById('due-'+r.ID);
+    if(!outEl||!dueEl) return;
+    if((parseFloat(outEl.value)||0)!==(parseFloat(outEl.dataset.original)||0)
+    || (parseFloat(dueEl.value)||0)!==(parseFloat(dueEl.dataset.original)||0)) count++;
   });
-  const el = document.getElementById('pageDate');
-  if (el) el.textContent = s;
-  const ph = document.getElementById('printDateHdr');
-  if (ph) ph.innerHTML = 'Report Date:<br><strong>' + s + '</strong>';
+  const bar=document.getElementById('change-bar');
+  const saveBtn=document.getElementById('save-all-btn');
+  if(count>0){
+    bar.classList.add('visible');
+    document.getElementById('change-count').textContent=count+' row'+(count!==1?'s':'')+' changed';
+    saveBtn?.classList.add('has-changes');
+  } else {
+    bar.classList.remove('visible');
+    saveBtn?.classList.remove('has-changes');
+  }
 }
 
-function setActiveNav() {
-  const page = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll(');
+// ── Save All ──────────────────────────────────────────────────
+async function saveAll(){
+  const toSave=[];
+  allRecs.forEach(r=>{
+    const outEl=document.getElementById('out-'+r.ID);
+    const dueEl=document.getElementById('due-'+r.ID);
+    if(!outEl||!dueEl) return;
+    if((parseFloat(outEl.value)||0)!==(parseFloat(outEl.dataset.original)||0)
+    || (parseFloat(dueEl.value)||0)!==(parseFloat(dueEl.dataset.original)||0)){
+      toSave.push({id:r.ID, outstanding:outEl.value, due:dueEl.value});
+    }
+  });
+  if(!toSave.length){ toast('Nothing to save','warning'); return; }
+  showLoading(true);
+  let saved=0, failed=0;
+  for(const s of toSave){
+    try{
+      await apiPost({action:'update',sheet:'Payables',id:s.id,data:{Outstanding:parseFloat(s.outstanding)||0,DueAmount:parseFloat(s.due)||0}});
+      saved++;
+      const el=document.getElementById('rst-'+s.id);
+      if(el){el.textContent='✓';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2000);}
+    }catch(e){ failed++; toast('Error: '+e.message,'error'); }
+  }
+  showLoading(false);
+  if(failed===0) toast('✓ '+saved+' supplier'+(saved>1?'s':'')+' saved successfully!');
+  pendingChanges={};
+  await loadData();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  setPageDate();
-  setActiveNav();
-  const yr = document.getElementById('yr');
-  if (yr) yr.textContent = new Date().getFullYear();
-  if (!isConfigured()) showConfigBanner();
+// ── Discard ───────────────────────────────────────────────────
+function discardAll(){
+  allRecs.forEach(r=>{
+    const outEl=document.getElementById('out-'+r.ID);
+    const dueEl=document.getElementById('due-'+r.ID);
+    if(outEl){outEl.value=outEl.dataset.original||'';outEl.classList.remove('changed');}
+    if(dueEl){dueEl.value=dueEl.dataset.original||'';dueEl.classList.remove('changed');}
+    document.getElementById('row-'+r.ID)?.classList.remove('dirty');
+    document.getElementById('ddot-'+r.ID).style.opacity='0';
+  });
+  pendingChanges={};
+  updateChangeBar();
+  toast('Changes discarded','warning');
+}
+
+// ── Delete Supplier ───────────────────────────────────────────
+async function deleteSupplier(id){
+  const r=allRecs.find(x=>x.ID===id);
+  if(!r) return;
+  if(!confirm('Remove "'+r.SupplierName+'" from payables?')) return;
+  showLoading(true);
+  try{
+    await apiPost({action:'delete',sheet:'Payables',id});
+    toast(r.SupplierName+' removed','warning');
+    await loadData();
+  }catch(e){toast(e.message,'error');}
+  showLoading(false);
+}
+
+// ── Load ──────────────────────────────────────────────────────
+async function loadData(){
+  showLoading(true);
+  try{allRecs=await apiGet({action:'getAll',sheet:'Payables'});pendingChanges={};render();}
+  catch(e){toast(e.message,'error');}
+  showLoading(false);
+}
+
+// ── Add Supplier ──────────────────────────────────────────────
+function openAdd(){
+  document.getElementById('m-name').value='';
+  document.getElementById('m-region').value='Local';
+  document.getElementById('m-cur').value='LKR';
+  document.getElementById('overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('m-name').focus(),120);
+}
+function closeModal(){document.getElementById('overlay').classList.remove('open');}
+async function addSupplier(){
+  const name=document.getElementById('m-name').value.trim();
+  if(!name){toast('Supplier name required','warning');return;}
+  const data={SupplierName:name,Region:document.getElementById('m-region').value,
+    Currency:document.getElementById('m-cur').value,Outstanding:0,DueAmount:0};
+  showLoading(true);
+  try{await apiPost({action:'add',sheet:'Payables',data});toast('Supplier added ✓');closeModal();await loadData();}
+  catch(e){toast(e.message,'error');}
+  showLoading(false);
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&document.getElementById('overlay').classList.contains('open')) closeModal();
+  if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveAll();}
 });
-
+window.addEventListener('load',loadData);
 </script>
 
 <!-- ── SMART CACHE ── -->
 <script>
 (function(){
-  const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
-
-  // Wrap fetch to use cache
-  window.__cache = {
-    get: function(key) {
-      try {
-        const raw = sessionStorage.getItem('bork_cache_' + key);
-        if (!raw) return null;
-        const obj = JSON.parse(raw);
-        if (Date.now() - obj.ts > CACHE_TTL) { sessionStorage.removeItem('bork_cache_' + key); return null; }
-        return obj.data;
-      } catch(e) { return null; }
-    },
-    set: function(key, data) {
-      try { sessionStorage.setItem('bork_cache_' + key, JSON.stringify({ts: Date.now(), data})); } catch(e) {}
-    },
-    clear: function() {
-      try {
-        Object.keys(sessionStorage).filter(k => k.startsWith('bork_cache_')).forEach(k => sessionStorage.removeItem(k));
-      } catch(e) {}
-    }
+  const CACHE_TTL=5*60*1000;
+  window.__cache={
+    get:function(k){try{const r=sessionStorage.getItem('bork_pay_'+k);if(!r)return null;const o=JSON.parse(r);if(Date.now()-o.ts>CACHE_TTL){sessionStorage.removeItem('bork_pay_'+k);return null;}return o.data;}catch(e){return null;}},
+    set:function(k,d){try{sessionStorage.setItem('bork_pay_'+k,JSON.stringify({ts:Date.now(),data:d}));}catch(e){}},
+    clear:function(){try{Object.keys(sessionStorage).filter(k=>k.startsWith('bork_pay_')).forEach(k=>sessionStorage.removeItem(k));}catch(e){}}
   };
-
-  // Patch fetch to cache GET requests to the Apps Script
-  const _origFetch = window.fetch;
-  window.fetch = async function(url, opts) {
-    const isGet = !opts || !opts.method || opts.method === 'GET';
-    const isScript = typeof url === 'string' && url.includes('script.google.com');
-
-    if (isGet && isScript) {
-      const cacheKey = url.toString().replace(/.*\?/, '');
-      const cached = window.__cache.get(cacheKey);
-
-      if (cached) {
-        // Return cached instantly
-        const blob = new Blob([JSON.stringify(cached)], {type:'application/json'});
-        const resp = new Response(blob, {status:200, headers:{'Content-Type':'application/json'}});
-
-        // Silently refresh in background
-        setTimeout(() => {
-          _origFetch(url, opts).then(r => r.json()).then(fresh => {
-            window.__cache.set(cacheKey, fresh);
-          }).catch(() => {});
-        }, 200);
-
-        return resp;
-      } else {
-        // No cache — fetch normally and cache the result
-        const resp = await _origFetch(url, opts);
-        const clone = resp.clone();
-        clone.json().then(data => window.__cache.set(cacheKey, data)).catch(() => {});
+  const _orig=window.fetch;
+  window.fetch=async function(url,opts){
+    const isGet=!opts||!opts.method||opts.method==='GET';
+    const isScript=typeof url==='string'&&url.includes('script.google.com');
+    if(isGet&&isScript){
+      const ck=url.toString().replace(/.*\?/,'');
+      const cached=window.__cache.get(ck);
+      if(cached){
+        const blob=new Blob([JSON.stringify(cached)],{type:'application/json'});
+        const resp=new Response(blob,{status:200,headers:{'Content-Type':'application/json'}});
+        setTimeout(()=>{_orig(url,opts).then(r=>r.json()).then(f=>window.__cache.set(ck,f)).catch(()=>{});},200);
         return resp;
       }
+      const resp=await _orig(url,opts);
+      resp.clone().json().then(d=>window.__cache.set(ck,d)).catch(()=>{});
+      return resp;
     }
-
-    // POST (save/delete) — clear cache so next load is fresh
-    if (!isGet && isScript) {
-      window.__cache.clear();
-    }
-
-    return _origFetch(url, opts);
+    if(!isGet&&isScript) window.__cache.clear();
+    return _orig(url,opts);
   };
 })();
 </script>
 
 </head>
 <body>
-
-
-
-<!-- SIDEBAR -->
 
 <!-- SIDEBAR -->
 <div class="sidebar">
@@ -631,450 +497,176 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <!-- MAIN -->
-<!-- MAIN -->
-
-
 <div class="main">
-  <div class="page-header">
-    <div class="page-header-left">
-      <h1>📤 Total Payable</h1>
-      <div class="page-date" id="pageDate"></div>
+
+  <div class="topbar">
+    <div class="tb-title">
+      <h1>
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Payables
+      </h1>
+      <div class="tb-date" id="topdate"></div>
     </div>
-    <div class="page-header-right">
-      <button class="btn btn-secondary" onclick="loadData()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><polyline points="23 4 23 10 17 10"/><path d="M20.5 15a9 9 0 1 1-2.7-7.3L23 10"/></svg>Refresh</button>
-      <button class="btn btn-secondary" onclick="doPrint('Total Payable')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Print</button>
-      <button class="btn btn-success" onclick="openAddSupplier()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Supplier</button>
-      <button class="btn btn-primary" onclick="openAdd()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Payable</button>
+    <div class="tb-right">
+      <button class="btn btn-ghost" onclick="loadData()">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Refresh
+      </button>
+      <button class="btn btn-success" id="save-all-btn" onclick="saveAll()">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save All
+      </button>
+      <button class="btn btn-primary" onclick="openAdd()">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Supplier
+      </button>
     </div>
   </div>
 
   <div class="content">
-  <!-- PRINT HEADER (hidden on screen, visible on print) -->
-  <div class="print-company-header"><img src="logo.jpg" alt="Logo"><div><div class="pch-name">Bark Ornament Private Ltd</div><div class="pch-addr">No. 59 A Bekkegama, Panadura</div></div><div class="pch-right" id="printDateHdr"></div></div>
 
-    <!-- Supplier quick list -->
-    <div class="section-hdr">
-      <h2><span class="dot yellow"></span> Suppliers</h2>
-      <button class="btn btn-secondary btn-sm" onclick="toggleSupplierList()">Toggle List</button>
-    </div>
-    <div id="supplierSection" style="margin-bottom:20px">
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead><tr><th>#</th><th>Supplier Name</th><th>Contact</th><th>Email</th><th>Outstanding</th><th>Actions</th></tr></thead>
-          <tbody id="supplierBody"></tbody>
-        </table>
+    <!-- Summary Cards -->
+    <div class="summary-row">
+      <div class="sum-card local">
+        <div class="sum-flag">🇱🇰</div>
+        <div class="sum-region">Local</div>
+        <div class="sum-out" id="s-local-o">—</div>
+        <div class="sum-due"><span class="lbl">Due: </span><span id="s-local-d">—</span></div>
+        <div class="sum-cnt" id="s-local-c"></div>
+      </div>
+      <div class="sum-card sey">
+        <div class="sum-flag">🇸🇨</div>
+        <div class="sum-region">Seychelles</div>
+        <div class="sum-out" id="s-sey-o">—</div>
+        <div class="sum-due"><span class="lbl">Due: </span><span id="s-sey-d">—</span></div>
+        <div class="sum-cnt" id="s-sey-c"></div>
+      </div>
+      <div class="sum-card mal">
+        <div class="sum-flag">🇲🇻</div>
+        <div class="sum-region">Maldives</div>
+        <div class="sum-out" id="s-mal-o">—</div>
+        <div class="sum-due"><span class="lbl">Due: </span><span id="s-mal-d">—</span></div>
+        <div class="sum-cnt" id="s-mal-c"></div>
       </div>
     </div>
 
-    <div class="divider"></div>
-    <div class="section-hdr"><h2><span class="dot red"></span> Payable Invoices</h2></div>
-
-    <!-- Filters -->
-    <div class="filter-bar">
-      <select id="f-supplier" onchange="applyFilter()">
-        <option value="">All Suppliers</option>
-      </select>
-      <select id="f-status" onchange="applyFilter()">
-        <option value="">All Status</option>
-        <option value="Pending">Pending</option>
-        <option value="Partial">Partial</option>
-        <option value="Paid">Paid</option>
-        <option value="Overdue">Overdue</option>
-      </select>
-      <div class="search-box">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="f-search" placeholder="Search supplier…" oninput="applyFilter()">
+    <!-- Local Suppliers -->
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="dot"></div>
+          <span style="font-size:1.1rem">🇱🇰</span>
+          <span class="sec-name">Local Suppliers</span>
+        </div>
       </div>
-      <button class="btn btn-secondary btn-sm" onclick="clearFilters()">Clear</button>
-    </div>
-
-    <!-- Payables table -->
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>#</th><th>Supplier</th><th>Invoice No</th>
-            <th>Invoice Date</th><th>Due Date</th><th>Currency</th>
-            <th>Total</th><th>Paid</th><th>Outstanding</th><th>Status</th><th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="payBody"></tbody>
-        <tfoot>
-          <tr>
-            <td colspan="6" style="text-align:right">Shown Total:</td>
-            <td id="ft-total" class="fw700">—</td>
-            <td id="ft-paid" class="fw700 text-success">—</td>
-            <td id="ft-outstanding" class="fw700 text-danger">—</td>
-            <td colspan="2"></td>
-          </tr>
-        </tfoot>
+      <table>
+        <thead><tr>
+          <th>Supplier</th>
+          <th class="r">Outstanding Amount</th>
+          <th class="r">Due Amount</th>
+          <th class="c"></th>
+        </tr></thead>
+        <tbody id="tb-local"></tbody>
+        <tfoot><tr id="tf-local"></tr></tfoot>
       </table>
     </div>
 
-  </div>
-</div>
+    <!-- Seychelles Suppliers -->
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="dot g"></div>
+          <span style="font-size:1.1rem">🇸🇨</span>
+          <span class="sec-name">Seychelles Suppliers</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Supplier</th>
+          <th class="r">Outstanding Amount</th>
+          <th class="r">Due Amount</th>
+          <th class="c"></th>
+        </tr></thead>
+        <tbody id="tb-sey"></tbody>
+        <tfoot><tr id="tf-sey"></tr></tfoot>
+      </table>
+    </div>
+
+    <!-- Maldives Suppliers -->
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="dot y"></div>
+          <span style="font-size:1.1rem">🇲🇻</span>
+          <span class="sec-name">Maldives Suppliers</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Supplier</th>
+          <th class="r">Outstanding Amount</th>
+          <th class="r">Due Amount</th>
+          <th class="c"></th>
+        </tr></thead>
+        <tbody id="tb-mal"></tbody>
+        <tfoot><tr id="tf-mal"></tr></tfoot>
+      </table>
+    </div>
+
+    <!-- Sticky change bar -->
+    <div class="change-bar" id="change-bar">
+      <div class="change-bar-left">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="change-count" class="change-count">0 rows changed</span>
+        <span style="color:rgba(255,255,255,0.45);font-size:0.78rem">— unsaved changes</span>
+      </div>
+      <div class="change-bar-right">
+        <button class="btn btn-danger-soft" onclick="discardAll()">✕ Discard</button>
+        <button class="btn btn-success" onclick="saveAll()">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+          Save All Changes
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
 
 <!-- ADD SUPPLIER MODAL -->
-<div class="modal-overlay" id="supplierModal">
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <div class="modal-header">
-      <h3 id="suppModalTitle">Add Supplier</h3>
-      <button class="modal-close" onclick="closeModal('supplierModal')">&times;</button>
+    <div class="mhdr">
+      <h3>Add Supplier</h3>
+      <button class="mclose" onclick="closeModal()">×</button>
     </div>
-    <div class="modal-body">
-      <input type="hidden" id="sup-id">
-      <div class="form-grid">
-        <div class="form-group span2">
-          <label>Supplier Name *</label>
-          <input type="text" id="sup-name" class="form-control" placeholder="Supplier company name">
+    <div class="mbody">
+      <div class="field"><label>Supplier Name *</label><input type="text" id="m-name" placeholder="Enter supplier name"></div>
+      <div class="twocol">
+        <div class="field"><label>Region</label>
+          <select id="m-region">
+            <option value="Local">🇱🇰 Local</option>
+            <option value="Seychelles">🇸🇨 Seychelles</option>
+            <option value="Maldives">🇲🇻 Maldives</option>
+          </select>
         </div>
-        <div class="form-group">
-          <label>Contact</label>
-          <input type="text" id="sup-contact" class="form-control" placeholder="+94 77 xxx xxxx">
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="sup-email" class="form-control" placeholder="supplier@email.com">
+        <div class="field"><label>Currency</label>
+          <select id="m-cur"><option value="LKR">LKR</option><option value="USD">USD</option></select>
         </div>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeModal('supplierModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveSupplier()">💾 Save Supplier</button>
+    <div class="mftr">
+      <button class="bcancel" onclick="closeModal()">Cancel</button>
+      <button class="bsave" onclick="addSupplier()">+ Add</button>
     </div>
   </div>
 </div>
 
-<!-- ADD/EDIT PAYABLE MODAL -->
-<div class="modal-overlay" id="payModal">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h3 id="payModalTitle">Add Payable</h3>
-      <button class="modal-close" onclick="closeModal('payModal')">&times;</button>
-    </div>
-    <div class="modal-body">
-      <input type="hidden" id="p-id">
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Supplier *</label>
-          <select id="p-supplier" class="form-control">
-            <option value="">— Select Supplier —</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Or type supplier name</label>
-          <input type="text" id="p-supname" class="form-control" placeholder="Supplier name">
-        </div>
-        <div class="form-group">
-          <label>Invoice No</label>
-          <input type="text" id="p-inv" class="form-control" placeholder="INV-001">
-        </div>
-        <div class="form-group">
-          <label>Currency</label>
-          <select id="p-cur" class="form-control">
-            <option value="LKR">LKR</option>
-            <option value="USD">USD</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Invoice Date</label>
-          <input type="date" id="p-idate" class="form-control">
-        </div>
-        <div class="form-group">
-          <label>Due Date</label>
-          <input type="date" id="p-ddate" class="form-control">
-        </div>
-        <div class="form-group">
-          <label>Total Amount *</label>
-          <input type="number" id="p-total" class="form-control" placeholder="0.00" step="0.01" oninput="calcPayOutstanding()">
-        </div>
-        <div class="form-group">
-          <label>Amount Paid</label>
-          <input type="number" id="p-paid" class="form-control" placeholder="0.00" step="0.01" value="0" oninput="calcPayOutstanding()">
-        </div>
-        <div class="form-group">
-          <label>Outstanding (auto)</label>
-          <input type="number" id="p-outstanding" class="form-control" readonly style="opacity:0.7">
-        </div>
-        <div class="form-group">
-          <label>Status</label>
-          <select id="p-status" class="form-control">
-            <option value="Pending">Pending</option>
-            <option value="Partial">Partial</option>
-            <option value="Paid">Paid</option>
-            <option value="Overdue">Overdue</option>
-          </select>
-        </div>
-        <div class="form-group span2">
-          <label>Notes</label>
-          <textarea id="p-notes" class="form-control"></textarea>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeModal('payModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="savePay()">💾 Save</button>
-    </div>
-  </div>
-</div>
-
-
+<div id="loading"><div class="spinner"></div></div>
+<div class="toast" id="toast"></div>
 
 <script>
-document.getElementById('yr').textContent = new Date().getFullYear();
-let allPays = [], allSuppliers = [], editPayId = null, editSupId = null;
-let showSuppliers = true;
-
-function toggleSupplierList() {
-  showSuppliers = !showSuppliers;
-  document.getElementById('supplierSection').style.display = showSuppliers ? 'block' : 'none';
-}
-
-function calcPayOutstanding() {
-  const t = parseFloat(document.getElementById('p-total').value)||0;
-  const p = parseFloat(document.getElementById('p-paid').value)||0;
-  document.getElementById('p-outstanding').value = Math.max(0,t-p).toFixed(2);
-}
-
-async function loadData() {
-  showLoading(true);
-  try {
-    [allPays, allSuppliers] = await Promise.all([
-      apiGet({ action:'getAll', sheet:'Payables' }),
-      apiGet({ action:'getAll', sheet:'Suppliers' })
-    ]);
-    updateSummary();
-    renderSupplierTable();
-    populateSupplierDropdowns();
-    applyFilter();
-  } catch(e) { showToast(e.message,'error'); }
-  showLoading(false);
-}
-
-function updateSummary() {
-  const sum = (arr,k)=>arr.reduce((t,x)=>t+(parseFloat(x[k])||0),0);
-  const paid   = allPays.filter(p=>p.Status==='Paid');
-  const overdue= allPays.filter(p=>isOverdue(p.DueDate)&&p.Status!=='Paid');
-  const uniqueSup = [...new Set(allPays.map(p=>p.SupplierName).filter(Boolean))];
-
-  document.getElementById('s-total').textContent = fmtLKR(sum(allPays,'Outstanding'));
-  document.getElementById('s-count').textContent = allPays.length+' invoices';
-  document.getElementById('s-overdue').textContent = fmtLKR(sum(overdue,'Outstanding'));
-  document.getElementById('s-overdue-c').textContent = overdue.length+' overdue';
-  document.getElementById('s-paid').textContent = fmtLKR(sum(paid,'TotalAmount'));
-  document.getElementById('s-paid-c').textContent = paid.length+' fully paid';
-  document.getElementById('s-suppliers').textContent = allSuppliers.length||uniqueSup.length;
-}
-
-function renderSupplierTable() {
-  const tb = document.getElementById('supplierBody');
-  if (!allSuppliers.length) {
-    tb.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>No suppliers added</p></div></td></tr>';
-    return;
-  }
-  tb.innerHTML = allSuppliers.map((s,i)=>{
-    const outstanding = allPays
-      .filter(p=>p.SupplierName===s.Name&&p.Status!=='Paid')
-      .reduce((t,p)=>t+(parseFloat(p.Outstanding)||0),0);
-    return `<tr>
-      <td class="muted">${i+1}</td>
-      <td><strong>${s.Name||'—'}</strong></td>
-      <td>${s.Contact||'—'}</td>
-      <td>${s.Email||'—'}</td>
-      <td class="fw700 ${outstanding>0?'text-danger':'text-success'}">${outstanding>0?fmtLKR(outstanding):'✓ Nil'}</td>
-      <td>
-        <div class="actions">
-          <button class="btn btn-secondary btn-icon btn-sm" onclick="openEditSupplier('${s.ID}')" title="Edit">✏️</button>
-          <button class="btn btn-danger btn-icon btn-sm" onclick="deleteSupplier('${s.ID}')" title="Delete">🗑️</button>
-        </div>
-      </td>
-    </tr>`;
-  }).join('');
-}
-
-function populateSupplierDropdowns() {
-  const opts = allSuppliers.map(s=>`<option value="${s.Name}">${s.Name}</option>`).join('');
-  const fSup = document.getElementById('f-supplier');
-  const pSup = document.getElementById('p-supplier');
-  const curF = fSup.value, curP = pSup.value;
-  fSup.innerHTML = '<option value="">All Suppliers</option>' + opts;
-  pSup.innerHTML = '<option value="">— Select Supplier —</option>' + opts;
-  fSup.value = curF; pSup.value = curP;
-}
-
-function applyFilter() {
-  const sup    = document.getElementById('f-supplier').value;
-  const status = document.getElementById('f-status').value;
-  const search = document.getElementById('f-search').value.toLowerCase();
-  const rows = allPays.filter(p=>{
-    if (sup    && p.SupplierName !== sup) return false;
-    if (status && p.Status !== status) return false;
-    if (search && !(p.SupplierName||'').toLowerCase().includes(search)) return false;
-    return true;
-  });
-  renderPayTable(rows);
-}
-
-function clearFilters() {
-  ['f-supplier','f-status'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('f-search').value='';
-  applyFilter();
-}
-
-function renderPayTable(rows) {
-  const sum = k=>rows.reduce((t,r)=>t+(parseFloat(r[k])||0),0);
-  document.getElementById('ft-total').textContent = fmtLKR(sum('TotalAmount'));
-  document.getElementById('ft-paid').textContent = fmtLKR(sum('PaidAmount'));
-  document.getElementById('ft-outstanding').textContent = fmtLKR(sum('Outstanding'));
-
-  const tb = document.getElementById('payBody');
-  if (!rows.length) {
-    tb.innerHTML = '<tr><td colspan="11"><div class="empty-state"><p>No payables found</p></div></td></tr>';
-    return;
-  }
-  tb.innerHTML = rows.map((p,i)=>{
-    const over = isOverdue(p.DueDate)&&p.Status!=='Paid';
-    return `<tr ${over?'style="background:rgba(239,68,68,0.04)"':''}>
-      <td class="muted">${i+1}</td>
-      <td><strong>${p.SupplierName||'—'}</strong></td>
-      <td class="muted">${p.InvoiceNo||'—'}</td>
-      <td>${fmtDate(p.InvoiceDate)}</td>
-      <td class="${over?'text-danger':''}">${fmtDate(p.DueDate)}${over?' ⚠️':''}</td>
-      <td><span class="badge ${p.Currency==='USD'?'cur-usd':'cur-lkr'}">${p.Currency}</span></td>
-      <td>${fmtMoney(p.TotalAmount,p.Currency)}</td>
-      <td class="text-success">${fmtMoney(p.PaidAmount,p.Currency)}</td>
-      <td class="fw700 ${parseFloat(p.Outstanding)>0?'text-danger':'text-success'}">${fmtMoney(p.Outstanding,p.Currency)}</td>
-      <td>${statusBadge(p.Status)}</td>
-      <td>
-        <div class="actions">
-          <button class="btn btn-secondary btn-icon btn-sm" onclick="openEditPay('${p.ID}')" title="Edit">✏️</button>
-          <button class="btn btn-danger btn-icon btn-sm" onclick="deletePay('${p.ID}')" title="Delete">🗑️</button>
-        </div>
-      </td>
-    </tr>`;
-  }).join('');
-}
-
-// SUPPLIER CRUD
-function openAddSupplier() {
-  editSupId = null;
-  document.getElementById('suppModalTitle').textContent = 'Add Supplier';
-  ['sup-id','sup-name','sup-contact','sup-email'].forEach(id=>document.getElementById(id).value='');
-  openModal('supplierModal');
-}
-function openEditSupplier(id) {
-  const s = allSuppliers.find(x=>x.ID===id); if(!s) return;
-  editSupId = id;
-  document.getElementById('suppModalTitle').textContent = 'Edit Supplier';
-  document.getElementById('sup-id').value=id;
-  document.getElementById('sup-name').value=s.Name||'';
-  document.getElementById('sup-contact').value=s.Contact||'';
-  document.getElementById('sup-email').value=s.Email||'';
-  openModal('supplierModal');
-}
-async function saveSupplier() {
-  const data = {
-    Name:    document.getElementById('sup-name').value.trim(),
-    Contact: document.getElementById('sup-contact').value.trim(),
-    Email:   document.getElementById('sup-email').value.trim(),
-  };
-  if (!data.Name) { showToast('Supplier name required','warning'); return; }
-  showLoading(true);
-  try {
-    const id = document.getElementById('sup-id').value;
-    if (id) { await apiPost({ action:'update', sheet:'Suppliers', id, data }); showToast('Supplier updated'); }
-    else    { await apiPost({ action:'add',    sheet:'Suppliers', data });     showToast('Supplier added'); }
-    closeModal('supplierModal');
-    await loadData();
-  } catch(e) { showToast(e.message,'error'); }
-  showLoading(false);
-}
-async function deleteSupplier(id) {
-  if (!await confirmDel('Delete this supplier?')) return;
-  showLoading(true);
-  try { await apiPost({ action:'delete', sheet:'Suppliers', id }); showToast('Supplier deleted'); await loadData(); }
-  catch(e) { showToast(e.message,'error'); }
-  showLoading(false);
-}
-
-// PAYABLE CRUD
-function openAdd() {
-  editPayId = null;
-  document.getElementById('payModalTitle').textContent = 'Add Payable';
-  document.getElementById('p-id').value='';
-  ['p-inv','p-supname','p-notes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('p-supplier').value='';
-  document.getElementById('p-cur').value='LKR';
-  document.getElementById('p-idate').value=todayISO();
-  document.getElementById('p-ddate').value='';
-  document.getElementById('p-total').value='';
-  document.getElementById('p-paid').value='0';
-  document.getElementById('p-outstanding').value='';
-  document.getElementById('p-status').value='Pending';
-  openModal('payModal');
-}
-function openEditPay(id) {
-  const p = allPays.find(x=>x.ID===id); if(!p) return;
-  editPayId = id;
-  document.getElementById('payModalTitle').textContent = 'Edit Payable';
-  document.getElementById('p-id').value=id;
-  document.getElementById('p-supname').value=p.SupplierName||'';
-  document.getElementById('p-supplier').value=p.SupplierName||'';
-  document.getElementById('p-inv').value=p.InvoiceNo||'';
-  document.getElementById('p-cur').value=p.Currency||'LKR';
-  document.getElementById('p-idate').value=fmtDateInput(p.InvoiceDate);
-  document.getElementById('p-ddate').value=fmtDateInput(p.DueDate);
-  document.getElementById('p-total').value=p.TotalAmount||'';
-  document.getElementById('p-paid').value=p.PaidAmount||'0';
-  document.getElementById('p-outstanding').value=p.Outstanding||'';
-  document.getElementById('p-status').value=p.Status||'Pending';
-  document.getElementById('p-notes').value=p.Notes||'';
-  openModal('payModal');
-}
-async function savePay() {
-  const total = parseFloat(document.getElementById('p-total').value)||0;
-  const paid  = parseFloat(document.getElementById('p-paid').value)||0;
-  const supSel = document.getElementById('p-supplier').value;
-  const supName = supSel || document.getElementById('p-supname').value.trim();
-  const data = {
-    SupplierName: supName,
-    InvoiceNo:    document.getElementById('p-inv').value.trim(),
-    Currency:     document.getElementById('p-cur').value,
-    InvoiceDate:  document.getElementById('p-idate').value,
-    DueDate:      document.getElementById('p-ddate').value,
-    TotalAmount:  total,
-    PaidAmount:   paid,
-    Outstanding:  Math.max(0,total-paid),
-    Status:       document.getElementById('p-status').value,
-    Notes:        document.getElementById('p-notes').value,
-  };
-  if (!data.SupplierName) { showToast('Supplier name required','warning'); return; }
-  showLoading(true);
-  try {
-    const id = document.getElementById('p-id').value;
-    if (id) { await apiPost({ action:'update', sheet:'Payables', id, data }); showToast('Payable updated'); }
-    else    { await apiPost({ action:'add',    sheet:'Payables', data });     showToast('Payable added'); }
-    closeModal('payModal');
-    await loadData();
-  } catch(e) { showToast(e.message,'error'); }
-  showLoading(false);
-}
-async function deletePay(id) {
-  if (!await confirmDel('Delete this payable record?')) return;
-  showLoading(true);
-  try { await apiPost({ action:'delete', sheet:'Payables', id }); showToast('Payable deleted'); await loadData(); }
-  catch(e) { showToast(e.message,'error'); }
-  showLoading(false);
-}
-
-// Auto-fill supplier name from dropdown
-document.addEventListener('DOMContentLoaded', ()=>{
-  document.getElementById('p-supplier').addEventListener('change', function(){
-    if (this.value) document.getElementById('p-supname').value = this.value;
-  });
-});
-
-window.addEventListener('load', loadData);
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.getElementById('topdate').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 </script>
 </body>
 </html>
