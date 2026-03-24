@@ -150,8 +150,31 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg-page);color:var(
 .acc-bank{font-size:0.7rem;color:var(--text-muted);margin-bottom:3px}
 .acc-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.93rem;color:var(--text-primary)}
 .acc-no{font-size:0.71rem;color:var(--text-secondary);font-family:monospace;margin-top:2px}
-.acc-balance{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.25rem;color:var(--accent);margin-top:10px}
-.acc-balance.usd{color:var(--success)}
+/* ── EXCEL TABLE ── */
+.excel-wrap{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-card);margin-bottom:24px}
+.excel-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.excel-table thead th{background:#1a2d6b;color:#fff;padding:10px 14px;text-align:left;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
+.excel-table tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
+.excel-table tbody tr:hover{background:#f8fafc}
+.excel-table tbody tr:last-child{border-bottom:none}
+.excel-table td{padding:10px 14px;color:var(--text-primary);vertical-align:middle}
+.excel-table tfoot td{background:#f1f5f9;font-weight:700;padding:10px 14px;border-top:2px solid var(--border)}
+.ex-num{color:var(--text-muted);font-size:.75rem;width:32px}
+.ex-bank{color:var(--text-muted);font-size:.78rem}
+.ex-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700}
+.ex-accno{font-family:monospace;font-size:.78rem;color:var(--text-muted)}
+.ex-bal-cell{width:180px;padding:4px 8px !important}
+.ex-bal-display{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;padding:6px 8px;border-radius:6px;cursor:cell;border:2px solid transparent;transition:border-color .13s,background .13s;display:block}
+.ex-bal-display:hover{border-color:#1d4ed8;background:#eff6ff}
+.ex-bal-display.lkr{color:#0284c7}
+.ex-bal-display.usd{color:#16a34a}
+.ex-bal-display.active{border-color:#1d4ed8;background:#eff6ff}
+.ex-bal-display.saved{border-color:#16a34a;background:#f0fdf4;color:#16a34a}
+.ex-input{display:none;width:100%;background:#fff;border:2px solid #1d4ed8;border-radius:6px;padding:6px 8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;color:#0f172a;outline:none;text-align:right;-moz-appearance:textfield;box-shadow:0 0 0 3px rgba(29,78,216,.1)}
+.ex-input::-webkit-inner-spin-button,.ex-input::-webkit-outer-spin-button{-webkit-appearance:none}
+.ex-hint{font-size:.65rem;color:#94a3b8;text-align:center;padding:8px;border-top:1px solid #f1f5f9}
+.acc-saved-flash{animation:rowFlash .6s ease}
+@keyframes rowFlash{0%{background:#dcfce7}100%{background:transparent}}
 .acc-actions{display:flex;gap:6px;margin-top:11px}
 
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.4);backdrop-filter:blur(3px);z-index:1000;align-items:center;justify-content:center;padding:20px}
@@ -428,19 +451,30 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="summary-card cyan" style="padding:20px 24px"><div class="sc-label">🇱🇰 Total LKR Balance</div><div class="sc-value" id="totalLKR">—</div><div class="sc-sub" id="lkrCount"></div></div>
       <div class="summary-card green" style="padding:20px 24px"><div class="sc-label">🇺🇸 Total USD Balance</div><div class="sc-value" id="totalUSD">—</div><div class="sc-sub" id="usdCount"></div></div>
     </div>
-    <!-- Account Cards -->
-    <div class="section-hdr"><h2><span class="dot"></span> Bank Accounts</h2></div>
-    <div class="acc-grid" id="accCards"></div>
-    <!-- Accounts Table -->
-    <div class="table-wrap" style="margin-bottom:24px">
-      <table class="data-table">
-        <thead><tr><th>#</th><th>Account Name</th><th>Bank</th><th>Account No</th><th>Currency</th><th>Current Balance</th><th>Actions</th></tr></thead>
-        <tbody id="accTable"></tbody>
+    <!-- Account Cards (hidden, replaced by excel table) -->
+    <div id="accCards" style="display:none"></div>
+
+    <!-- EXCEL-STYLE BALANCE TABLE -->
+    <div class="section-hdr"><h2><span class="dot"></span> Bank Accounts — Click balance to edit</h2></div>
+    <div class="excel-wrap">
+      <table class="excel-table">
+        <thead>
+          <tr>
+            <th class="ex-num">#</th>
+            <th>Bank</th>
+            <th>Account Name</th>
+            <th>Account No</th>
+            <th>Currency</th>
+            <th>Balance — click to update</th>
+          </tr>
+        </thead>
+        <tbody id="exBody"></tbody>
         <tfoot>
-          <tr><td colspan="5" style="text-align:right">LKR Total:</td><td id="lkrTotal" class="fw700">—</td><td></td></tr>
-          <tr><td colspan="5" style="text-align:right">USD Total:</td><td id="usdTotal" class="fw700 text-success">—</td><td></td></tr>
+          <tr><td colspan="5" style="text-align:right">LKR Total</td><td id="lkrTotal" class="fw700 text-info">—</td></tr>
+          <tr><td colspan="5" style="text-align:right">USD Total</td><td id="usdTotal" class="fw700 text-success">—</td></tr>
         </tfoot>
       </table>
+      <div class="ex-hint">💡 Click any balance to edit · Enter to save · Tab to next account</div>
     </div>
     <div class="divider"></div>
     <!-- Daily Balance Log -->
@@ -527,34 +561,112 @@ function renderAccounts(){
   document.getElementById('usdCount').textContent=usd.length+' account(s)';
   document.getElementById('lkrTotal').textContent=fmtLKR(sumLKR);
   document.getElementById('usdTotal').textContent=fmtUSD(sumUSD);
-  const cards=document.getElementById('accCards');
+
+  const tb=document.getElementById('exBody');
   if(!accounts.length){
-    cards.innerHTML='<div class="empty-state"><p>No accounts added yet. Click <strong>Add Account</strong>.</p></div>';
-  } else {
-    cards.innerHTML=accounts.map(a=>`<div class="acc-card">
-      <div class="acc-currency"><span class="badge ${a.Currency==='USD'?'cur-usd':'cur-lkr'}">${a.Currency}</span></div>
-      <div class="acc-bank">${a.Bank||''}</div>
-      <div class="acc-name">${a.AccountName||'—'}</div>
-      <div class="acc-no">${a.AccountNo||'—'}</div>
-      <div class="acc-balance ${a.Currency==='USD'?'usd':''}">${fmtMoney(a.Balance,a.Currency)}</div>
-      <div class="acc-actions">
-        <button class="btn btn-primary btn-sm" onclick="openDailyBalanceFor('${a.ID}','${a.AccountName}')">💰 Update</button>
-        <button class="btn btn-secondary btn-sm" onclick="openEditAccount('${a.ID}')">✏️</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteAccount('${a.ID}')">🗑️</button>
-      </div></div>`).join('');
+    tb.innerHTML='<tr><td colspan="6" style="text-align:center;padding:30px;color:#94a3b8">No accounts yet. Click + Add Account.</td></tr>';
+    return;
   }
-  const tb=document.getElementById('accTable');
-  tb.innerHTML=accounts.length?accounts.map((a,i)=>`<tr>
-    <td class="muted">${i+1}</td><td><strong>${a.AccountName||'—'}</strong></td><td>${a.Bank||'—'}</td>
-    <td class="muted" style="font-family:monospace">${a.AccountNo||'—'}</td>
-    <td><span class="badge ${a.Currency==='USD'?'cur-usd':'cur-lkr'}">${a.Currency}</span></td>
-    <td class="fw700 ${a.Currency==='USD'?'text-success':'text-info'}">${fmtMoney(a.Balance,a.Currency)}</td>
-    <td><div class="actions">
-      <button class="btn btn-primary btn-icon btn-sm" onclick="openDailyBalanceFor('${a.ID}','${a.AccountName}')" title="Update Balance">💰</button>
-      <button class="btn btn-warning btn-icon btn-sm" onclick="openEditAccount('${a.ID}')" title="Edit">✏️</button>
-      <button class="btn btn-danger btn-icon btn-sm" onclick="deleteAccount('${a.ID}')" title="Delete">🗑️</button>
-    </div></td></tr>`).join(''):'<tr><td colspan="7"><div class="empty-state"><p>No accounts</p></div></td></tr>';
+  tb.innerHTML=accounts.map((a,i)=>`
+    <tr id="exrow-${a.ID}">
+      <td class="ex-num">${i+1}</td>
+      <td class="ex-bank">${a.Bank||'—'}</td>
+      <td class="ex-name">${a.AccountName||'—'}</td>
+      <td class="ex-accno">${a.AccountNo||'—'}</td>
+      <td><span class="badge ${a.Currency==='USD'?'cur-usd':'cur-lkr'}">${a.Currency}</span></td>
+      <td class="ex-bal-cell">
+        <div class="ex-bal-display ${a.Currency==='USD'?'usd':'lkr'}" id="exd-${a.ID}"
+          onclick="exStartEdit('${a.ID}')" tabindex="0"
+          onkeydown="if(event.key==='Enter'||event.key===' ')exStartEdit('${a.ID}')">
+          ${fmtMoney(a.Balance,a.Currency)}
+        </div>
+        <input class="ex-input" id="exi-${a.ID}" type="number" step="0.01" inputmode="decimal"
+          onkeydown="exKey(event,'${a.ID}')"
+          onblur="exBlur('${a.ID}')">
+      </td>
+    </tr>`).join('');
 }
+
+// ── EXCEL INLINE EDIT ────────────────────────────────────────
+let _activeId = null;
+
+function exStartEdit(id){
+  // close any previously open
+  if(_activeId && _activeId!==id) exClose(_activeId, false);
+  _activeId = id;
+  const disp = document.getElementById('exd-'+id);
+  const inp  = document.getElementById('exi-'+id);
+  disp.style.display = 'none';
+  inp.style.display  = 'block';
+  const acc = accounts.find(a=>a.ID===id);
+  inp.value = parseFloat(acc?.Balance||0).toFixed(2);
+  inp.focus();
+  inp.select();
+}
+
+function exClose(id, save){
+  const disp = document.getElementById('exd-'+id);
+  const inp  = document.getElementById('exi-'+id);
+  if(!disp||!inp) return;
+  inp.style.display  = 'none';
+  disp.style.display = '';
+  _activeId = null;
+  if(!save) return;
+  const val = parseFloat(inp.value);
+  if(isNaN(val)) return;
+  exSave(id, val);
+}
+
+function exBlur(id){
+  // delay so Tab/Enter can fire first
+  setTimeout(()=>{ if(_activeId===id) exClose(id, true); }, 120);
+}
+
+function exKey(e, id){
+  if(e.key==='Escape'){ exClose(id, false); return; }
+  if(e.key==='Enter'){
+    e.preventDefault();
+    exClose(id, true);
+    // move to next row
+    const ids = accounts.map(a=>a.ID);
+    const next = ids[ids.indexOf(id)+1];
+    if(next) setTimeout(()=>exStartEdit(next), 80);
+  }
+  if(e.key==='Tab'){
+    e.preventDefault();
+    exClose(id, true);
+    const ids = accounts.map(a=>a.ID);
+    const next = e.shiftKey ? ids[ids.indexOf(id)-1] : ids[ids.indexOf(id)+1];
+    if(next) setTimeout(()=>exStartEdit(next), 80);
+  }
+}
+
+async function exSave(id, val){
+  const acc  = accounts.find(a=>a.ID===id); if(!acc) return;
+  const disp = document.getElementById('exd-'+id);
+  const row  = document.getElementById('exrow-'+id);
+  disp.classList.add('saved');
+  disp.textContent = fmtMoney(val, acc.Currency);
+  const data = { Date:todayISO(), AccountID:acc.ID, AccountName:acc.AccountName, Currency:acc.Currency, Balance:val, Notes:'' };
+  try{
+    await apiPost({action:'add',    sheet:'BankDailyLog',   data});
+    await apiPost({action:'update', sheet:'BankAccounts', id:acc.ID, data:{Balance:val}});
+    acc.Balance = val;
+    row.classList.add('acc-saved-flash');
+    setTimeout(()=>{ disp.classList.remove('saved'); row.classList.remove('acc-saved-flash'); }, 1500);
+    // refresh totals
+    const lkr=accounts.filter(a=>a.Currency==='LKR'),usd=accounts.filter(a=>a.Currency==='USD');
+    document.getElementById('totalLKR').textContent=fmtLKR(lkr.reduce((t,a)=>t+(parseFloat(a.Balance)||0),0));
+    document.getElementById('totalUSD').textContent=fmtUSD(usd.reduce((t,a)=>t+(parseFloat(a.Balance)||0),0));
+    document.getElementById('lkrTotal').textContent=document.getElementById('totalLKR').textContent;
+    document.getElementById('usdTotal').textContent=document.getElementById('totalUSD').textContent;
+    showToast(acc.AccountName+' saved');
+  } catch(err){
+    showToast(err.message,'error');
+    disp.classList.remove('saved');
+  }
+}
+// ─────────────────────────────────────────────────────────────
 
 function populateAccDropdowns(){
   const opts=accounts.map(a=>`<option value="${a.ID}">${a.AccountName} (${a.Currency})</option>`).join('');
