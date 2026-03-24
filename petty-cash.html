@@ -16,12 +16,9 @@
   --radius:14px;--radius-sm:8px;
   --shadow:0 4px 24px rgba(15,23,42,0.10);
   --shadow-sm:0 1px 6px rgba(15,23,42,0.07);
-  --sidebar:#0f2167;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
-
-/* ── SIDEBAR ── */
 .sidebar{width:220px;min-height:100vh;background:#1a2d6b;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:3px 0 16px rgba(0,0,0,0.18)}
 .sb-logo{padding:18px 14px 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px}
 .sb-logo-img{width:44px;height:44px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.78rem;color:#1a2d6b;flex-shrink:0}
@@ -35,11 +32,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--tex
 .sb-link svg{width:15px;height:15px;flex-shrink:0;opacity:0.65}
 .sb-link.active svg{opacity:1}
 .sb-footer{padding:11px 16px;border-top:1px solid rgba(255,255,255,0.07);font-size:0.62rem;color:rgba(255,255,255,0.22);line-height:1.6}
-
-/* ── MAIN ── */
 .main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh}
-
-/* ── TOP BAR ── */
 .topbar{background:var(--card);border-bottom:1px solid var(--border);padding:0 28px;height:62px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm)}
 .topbar-left{display:flex;align-items:center;gap:10px}
 .page-icon{font-size:1.25rem}
@@ -51,11 +44,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--tex
 .btn-topbar:hover{background:var(--bg);color:var(--text)}
 .btn-topbar.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
 .btn-topbar.primary:hover{background:var(--accent-hov)}
-
-/* ── CONTENT ── */
 .content{padding:28px;flex:1}
-
-/* ── SUMMARY CARDS ── */
 .summary-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
 .sum-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;box-shadow:var(--shadow-sm)}
 .sum-label{font-size:0.69rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:6px}
@@ -64,16 +53,12 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--tex
 .sum-val{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.55rem;color:var(--accent)}
 .sum-val.loading{color:var(--muted);font-size:0.9rem;font-weight:400}
 .sum-hint{font-size:0.71rem;color:var(--muted);margin-top:4px}
-
-/* ── ENTRY PANEL ── */
 .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);margin-bottom:24px;overflow:hidden}
 .panel-head{background:#0f2167;padding:15px 22px 13px}
 .panel-head h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:0.93rem;color:#fff;display:flex;align-items:center;gap:8px}
 .panel-head h2 .dot{width:7px;height:7px;border-radius:50%;background:#f97316;flex-shrink:0}
 .panel-head p{font-size:0.71rem;color:rgba(255,255,255,0.45);margin-top:3px}
 .panel-body{padding:20px 22px}
-
-/* ── FORM ── */
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:0}
 .field-group{display:flex;flex-direction:column;gap:5px}
 .field-group.full{grid-column:span 2}
@@ -88,7 +73,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--tex
 .field-group textarea{background:var(--input);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px 13px;color:var(--text);font-size:0.85rem;font-family:'IBM Plex Sans',sans-serif;outline:none;resize:none;height:58px;width:100%;transition:border-color 0.15s,box-shadow 0.15s}
 .field-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(29,78,216,0.1);background:#fff}
 .field-group textarea::placeholder{color:var(--muted)}
-
 .btn-row{display:flex;gap:10px;margin-top:16px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:var(--radius-sm);padding:10px 20px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.15s;white-space:nowrap}
 .btn-primary{background:var(--accent);color:#fff;flex:1}
@@ -96,14 +80,11 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--tex
 .btn-secondary{background:#f1f5f9;color:var(--secondary);border:1px solid var(--border)}
 .btn-secondary:hover{background:#e2e8f0;color:var(--text)}
 .btn:disabled{opacity:0.6;cursor:not-allowed;transform:none!important;box-shadow:none!important}
-
 .status{display:none;align-items:center;gap:8px;padding:10px 14px;border-radius:var(--radius-sm);font-size:0.82rem;font-weight:600;margin-top:12px}
 .status.show{display:flex}
 .status.ok{background:var(--success-bg);color:var(--success);border:1px solid rgba(22,163,74,0.2)}
 .status.err{background:var(--danger-bg);color:var(--danger);border:1px solid rgba(220,38,38,0.2)}
 .status.warn{background:var(--warning-bg);color:var(--warning);border:1px solid rgba(217,119,6,0.2)}
-
-/* ── TABLE SECTION ── */
 .section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .section-hdr h3{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.93rem;color:var(--text);display:flex;align-items:center;gap:7px}
 .table-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
@@ -125,8 +106,6 @@ td.note{color:var(--secondary);font-size:0.8rem;max-width:160px;white-space:nowr
 .btn-del:hover{background:var(--danger);color:#fff}
 tfoot td{background:#f8fafc;font-weight:700;padding:9px 14px;border-top:2px solid var(--border);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.85rem;color:var(--accent)}
 .empty{text-align:center;padding:32px;color:var(--muted);font-size:0.85rem}
-
-/* ── MODAL ── */
 .overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.4);backdrop-filter:blur(3px);z-index:1000;align-items:center;justify-content:center;padding:20px}
 .overlay.open{display:flex}
 .modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 20px 60px rgba(15,23,42,0.16);width:100%;max-width:420px;animation:slideUp 0.18s ease}
@@ -141,86 +120,12 @@ tfoot td{background:#f8fafc;font-weight:700;padding:9px 14px;border-top:2px soli
 .confirm-box{padding:22px 20px;text-align:center}
 .confirm-box p{font-size:0.88rem;color:var(--secondary);margin-bottom:16px}
 .confirm-box .warn-icon{font-size:2rem;margin-bottom:8px}
-
-/* ── SPINNER ── */
 .spin{display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;animation:rot 0.6s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
-
-/* ── RESPONSIVE ── */
-@media(max-width:700px){
-  .sidebar{width:60px}
-  
-  .main{margin-left:220px; // 5 minutes
-
-  // Wrap fetch to use cache
-  window.__cache = {
-    get: function(key) {
-      try {
-        const raw = sessionStorage.getItem('bork_cache_' + key);
-        if (!raw) return null;
-        const obj = JSON.parse(raw);
-        if (Date.now() - obj.ts > CACHE_TTL) { sessionStorage.removeItem('bork_cache_' + key); return null; }
-        return obj.data;
-      } catch(e) { return null; }
-    },
-    set: function(key, data) {
-      try { sessionStorage.setItem('bork_cache_' + key, JSON.stringify({ts: Date.now(), data})); } catch(e) {}
-    },
-    clear: function() {
-      try {
-        Object.keys(sessionStorage).filter(k => k.startsWith('bork_cache_')).forEach(k => sessionStorage.removeItem(k));
-      } catch(e) {}
-    }
-  };
-
-  // Patch fetch to cache GET requests to the Apps Script
-  const _origFetch = window.fetch;
-  window.fetch = async function(url, opts) {
-    const isGet = !opts || !opts.method || opts.method === 'GET';
-    const isScript = typeof url === 'string' && url.includes('script.google.com');
-
-    if (isGet && isScript) {
-      const cacheKey = url.toString().replace(/.*\?/, '');
-      const cached = window.__cache.get(cacheKey);
-
-      if (cached) {
-        // Return cached instantly
-        const blob = new Blob([JSON.stringify(cached)], {type:'application/json'});
-        const resp = new Response(blob, {status:200, headers:{'Content-Type':'application/json'}});
-
-        // Silently refresh in background
-        setTimeout(() => {
-          _origFetch(url, opts).then(r => r.json()).then(fresh => {
-            window.__cache.set(cacheKey, fresh);
-          }).catch(() => {});
-        }, 200);
-
-        return resp;
-      } else {
-        // No cache — fetch normally and cache the result
-        const resp = await _origFetch(url, opts);
-        const clone = resp.clone();
-        clone.json().then(data => window.__cache.set(cacheKey, data)).catch(() => {});
-        return resp;
-      }
-    }
-
-    // POST (save/delete) — clear cache so next load is fresh
-    if (!isGet && isScript) {
-      window.__cache.clear();
-    }
-
-    return _origFetch(url, opts);
-  };
-})();
-</script>
-
+</style>
 </head>
 <body>
 
-<!-- ════════════ SIDEBAR ════════════ -->
-
-<!-- SIDEBAR -->
 <div class="sidebar">
   <div class="sb-logo">
     <div class="sb-logo-img"><img src="logo.jpg" alt="Bark Ornament" style="width:44px;height:44px;object-fit:cover;border-radius:10px;"></div>
@@ -231,45 +136,18 @@ tfoot td{background:#f8fafc;font-weight:700;padding:9px 14px;border-top:2px soli
   </div>
   <nav class="sb-nav">
     <div class="sb-lbl">Navigation</div>
-    <a class="sb-link" href="index.html">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Dashboard
-    </a>
-    <a class="sb-link" href="sales.html">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      Sales Details
-    </a>
-    <a class="sb-link" href="bank.html">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-      Bank
-    </a>
-    <a class="sb-link" href="cash.html">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-      Cash Details
-    </a>
-    <a class="sb-link active" href="petty-cash.html">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 9V7a5 5 0 0 0-10 0v2"/><rect x="3" y="9" width="18" height="13" rx="2"/></svg>
-      Petty Cash
-    </a>
-    <a class="sb-link" href="receivables.html">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      Receivables
-    </a>
-    <a class="sb-link" href="payables.html">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      Payables
-    </a>
+    <a class="sb-link" href="index.html"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
+    <a class="sb-link" href="sales.html"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Sales Details</a>
+    <a class="sb-link" href="bank.html"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Bank</a>
+    <a class="sb-link" href="cash.html"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Cash Details</a>
+    <a class="sb-link active" href="petty-cash.html"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 9V7a5 5 0 0 0-10 0v2"/><rect x="3" y="9" width="18" height="13" rx="2"/></svg>Petty Cash</a>
+    <a class="sb-link" href="receivables.html"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Receivables</a>
+    <a class="sb-link" href="payables.html"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Payables</a>
   </nav>
   <div class="sb-footer">Bark Ornament Pvt Ltd &copy; <span id="yr"></span></div>
 </div>
 
-<!-- MAIN -->
-
-
-<!-- ════════════ MAIN ════════════ -->
 <div class="main">
-
-  <!-- TOP BAR -->
   <div class="topbar">
     <div class="topbar-left">
       <span class="page-icon">🪙</span>
@@ -286,10 +164,7 @@ tfoot td{background:#f8fafc;font-weight:700;padding:9px 14px;border-top:2px soli
     </div>
   </div>
 
-  <!-- CONTENT -->
   <div class="content">
-
-    <!-- SUMMARY CARDS -->
     <div class="summary-row">
       <div class="sum-card">
         <div class="sum-label"><span class="dot"></span> Petty Cash Balance</div>
@@ -303,7 +178,6 @@ tfoot td{background:#f8fafc;font-weight:700;padding:9px 14px;border-top:2px soli
       </div>
     </div>
 
-    <!-- ENTRY PANEL -->
     <div class="panel">
       <div class="panel-head">
         <h2><span class="dot"></span> Update Petty Cash Closing Balance</h2>
@@ -334,79 +208,40 @@ tfoot td{background:#f8fafc;font-weight:700;padding:9px 14px;border-top:2px soli
       </div>
     </div>
 
-    <!-- PETTY CASH ENTRIES TABLE -->
-    <div class="section-hdr">
-      <h3>📋 Petty Cash Entries</h3>
-    </div>
-
+    <div class="section-hdr"><h3>📋 Petty Cash Entries</h3></div>
     <div class="table-panel">
       <div class="tbl-wrap">
         <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Date</th>
-              <th>Closing Balance</th>
-              <th>Notes</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="tBody">
-            <tr><td colspan="5"><div class="empty">Loading entries…</div></td></tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="2" style="text-align:right;color:var(--secondary);font-size:0.78rem;font-weight:600">Latest Closing Balance:</td>
-              <td id="ft-latest">—</td>
-              <td colspan="2"></td>
-            </tr>
-          </tfoot>
+          <thead><tr><th>#</th><th>Date</th><th>Closing Balance</th><th>Notes</th><th>Actions</th></tr></thead>
+          <tbody id="tBody"><tr><td colspan="5"><div class="empty">Loading entries…</div></td></tr></tbody>
+          <tfoot><tr>
+            <td colspan="2" style="text-align:right;color:var(--secondary);font-size:0.78rem;font-weight:600">Latest Closing Balance:</td>
+            <td id="ft-latest">—</td><td colspan="2"></td>
+          </tr></tfoot>
         </table>
       </div>
-    </div>
-
-  </div><!-- /content -->
-</div><!-- /main -->
-
-<!-- EDIT MODAL -->
-<div class="overlay" id="editOverlay">
-  <div class="modal">
-    <div class="modal-hdr">
-      <h3>✏️ Edit Entry</h3>
-      <button class="modal-close" onclick="closeModal()">×</button>
-    </div>
-    <div class="modal-body">
-      <input type="hidden" id="e-id">
-      <div class="field-group">
-        <label>Date</label>
-        <input type="date" id="e-date" style="background:var(--input);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 13px;font-size:0.88rem;font-family:'IBM Plex Sans',sans-serif;outline:none;width:100%;color:var(--text)">
-      </div>
-      <div class="field-group">
-        <label>Closing Balance (LKR)</label>
-        <div class="amount-wrap">
-          <span class="prefix">Rs</span>
-          <input type="number" class="amount-input" id="e-close" placeholder="0.00" step="0.01" style="font-size:1.15rem;padding:10px 13px 10px 46px">
-        </div>
-      </div>
-      <div class="field-group" style="margin-bottom:0">
-        <label>Notes</label>
-        <textarea id="e-notes" placeholder="Any remarks…" style="background:var(--input);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px 13px;font-size:0.85rem;font-family:'IBM Plex Sans',sans-serif;outline:none;resize:none;height:58px;width:100%"></textarea>
-      </div>
-    </div>
-    <div class="modal-foot">
-      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" id="updateBtn" onclick="updateEntry()">💾 Update</button>
     </div>
   </div>
 </div>
 
-<!-- CONFIRM DELETE MODAL -->
+<!-- EDIT MODAL -->
+<div class="overlay" id="editOverlay">
+  <div class="modal">
+    <div class="modal-hdr"><h3>✏️ Edit Entry</h3><button class="modal-close" onclick="closeModal()">×</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="e-id">
+      <div class="field-group"><label>Date</label><input type="date" id="e-date" style="background:var(--input);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 13px;font-size:0.88rem;font-family:'IBM Plex Sans',sans-serif;outline:none;width:100%;color:var(--text)"></div>
+      <div class="field-group"><label>Closing Balance (LKR)</label><div class="amount-wrap"><span class="prefix">Rs</span><input type="number" class="amount-input" id="e-close" placeholder="0.00" step="0.01" style="font-size:1.15rem;padding:10px 13px 10px 46px"></div></div>
+      <div class="field-group" style="margin-bottom:0"><label>Notes</label><textarea id="e-notes" placeholder="Any remarks…" style="background:var(--input);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px 13px;font-size:0.85rem;font-family:'IBM Plex Sans',sans-serif;outline:none;resize:none;height:58px;width:100%"></textarea></div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" id="updateBtn" onclick="updateEntry()">💾 Update</button></div>
+  </div>
+</div>
+
+<!-- DELETE MODAL -->
 <div class="overlay" id="delOverlay">
   <div class="modal">
-    <div class="modal-hdr">
-      <h3>Delete Entry</h3>
-      <button class="modal-close" onclick="closeDelModal()">×</button>
-    </div>
+    <div class="modal-hdr"><h3>Delete Entry</h3><button class="modal-close" onclick="closeDelModal()">×</button></div>
     <div class="confirm-box">
       <div class="warn-icon">🗑️</div>
       <p>Are you sure you want to delete this entry?<br>This cannot be undone.</p>
@@ -421,202 +256,102 @@ tfoot td{background:#f8fafc;font-weight:700;padding:9px 14px;border-top:2px soli
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4HSqqDmnhU5y49DDHaBzI7YbsXTFkUHZzKFRUBFmICh_fTPoFvyADgTboPgqcxTXr/exec';
 const SHEET = 'PettyCash';
+let allRows = [], deleteId = null;
 
-let allRows = [];
-let deleteId = null;
+window.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+  const now = new Date();
+  document.getElementById('todayLabel').textContent = now.toLocaleDateString('en-GB',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+  document.getElementById('dateChip').textContent   = now.toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+  loadAll();
+});
 
-// ── INIT ─────────────────────────────────────────────────
-document.getElementById('yr2').textContent = new Date().getFullYear();
-document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
-
-const now = new Date();
-document.getElementById('todayLabel').textContent = now.toLocaleDateString('en-GB', { weekday:'long', day:'2-digit', month:'long', year:'numeric' });
-document.getElementById('dateChip').textContent   = now.toLocaleDateString('en-GB', { weekday:'short', day:'2-digit', month:'short', year:'numeric' });
-
-loadAll();
-
-// ── LOAD ALL ─────────────────────────────────────────────
 async function loadAll() {
   try {
-    const rows = await apiGet({ action:'getAll', sheet:SHEET });
-    allRows = (rows || []).sort((a,b) => new Date(b.Date) - new Date(a.Date));
-    renderTable();
-    updateSummary();
+    const rows = await apiGet({action:'getAll', sheet:SHEET});
+    allRows = (rows||[]).sort((a,b)=>new Date(b.Date)-new Date(a.Date));
+    renderTable(); updateSummary();
   } catch(e) {
-    document.getElementById('tBody').innerHTML = `<tr><td colspan="5"><div class="empty">Could not load entries.</div></td></tr>`;
+    document.getElementById('tBody').innerHTML = '<tr><td colspan="5"><div class="empty">Could not load entries. Check connection.</div></td></tr>';
     document.getElementById('totalBal').textContent = '—';
     document.getElementById('prevClose').textContent = '—';
-    document.getElementById('totalBal').classList.remove('loading');
-    document.getElementById('prevClose').classList.remove('loading');
+    ['totalBal','prevClose'].forEach(id=>document.getElementById(id).classList.remove('loading'));
   }
 }
 
 function updateSummary() {
-  const t = document.getElementById('totalBal');
-  const p = document.getElementById('prevClose');
-  if (!allRows.length) {
-    t.textContent = 'Rs 0.00'; t.classList.remove('loading');
-    p.textContent = 'Rs 0.00'; p.classList.remove('loading');
-    return;
-  }
-  t.textContent = fmtLKR(parseFloat(allRows[0].ClosingBalance) || 0);
-  t.classList.remove('loading');
-  p.textContent = allRows[1] ? fmtLKR(parseFloat(allRows[1].ClosingBalance) || 0) : '—';
-  p.classList.remove('loading');
+  const t=document.getElementById('totalBal'), p=document.getElementById('prevClose');
+  if(!allRows.length){t.textContent='Rs 0.00';p.textContent='Rs 0.00';}
+  else{t.textContent=fmtLKR(parseFloat(allRows[0].ClosingBalance)||0);p.textContent=allRows[1]?fmtLKR(parseFloat(allRows[1].ClosingBalance)||0):'—';}
+  t.classList.remove('loading');p.classList.remove('loading');
 }
 
 function renderTable() {
-  const tb = document.getElementById('tBody');
-  const ft = document.getElementById('ft-latest');
-  if (!allRows.length) {
-    tb.innerHTML = `<tr><td colspan="5"><div class="empty">No entries yet.</div></td></tr>`;
-    ft.textContent = '—';
-    return;
-  }
-  ft.textContent = fmtLKR(parseFloat(allRows[0].ClosingBalance) || 0);
-  tb.innerHTML = allRows.map((r, i) => `
-    <tr>
-      <td class="muted">${i+1}</td>
-      <td><strong>${fmtDate(r.Date)}</strong></td>
-      <td class="amt">${fmtLKR(parseFloat(r.ClosingBalance)||0)}</td>
-      <td class="note">${r.Notes || '—'}</td>
-      <td><div class="actions">
-        <button class="btn-icon btn-edit" onclick="openEdit('${r.ID}')">✏️ Edit</button>
-        <button class="btn-icon btn-del" onclick="openDelete('${r.ID}')">🗑️</button>
-      </div></td>
-    </tr>`).join('');
+  const tb=document.getElementById('tBody'), ft=document.getElementById('ft-latest');
+  if(!allRows.length){tb.innerHTML='<tr><td colspan="5"><div class="empty">No entries yet.</div></td></tr>';ft.textContent='—';return;}
+  ft.textContent=fmtLKR(parseFloat(allRows[0].ClosingBalance)||0);
+  tb.innerHTML=allRows.map((r,i)=>`<tr><td class="muted">${i+1}</td><td><strong>${fmtDate(r.Date)}</strong></td><td class="amt">${fmtLKR(parseFloat(r.ClosingBalance)||0)}</td><td class="note">${r.Notes||'—'}</td><td><div class="actions"><button class="btn-icon btn-edit" onclick="openEdit('${r.ID}')">✏️ Edit</button><button class="btn-icon btn-del" onclick="openDelete('${r.ID}')">🗑️</button></div></td></tr>`).join('');
 }
 
-// ── SAVE NEW ─────────────────────────────────────────────
 async function save() {
   hideStatus();
-  const date  = document.getElementById('f-date').value;
-  const close = parseFloat(document.getElementById('f-close').value);
-  const notes = document.getElementById('f-notes').value.trim();
-
-  if (!date)        { showStatus('Please select a date.', 'warn'); return; }
-  if (isNaN(close)) { showStatus('Please enter the closing balance.', 'warn'); return; }
-
-  const btn = document.getElementById('saveBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spin"></span> Saving…';
-
-  try {
-    await apiPost({ action:'add', sheet:SHEET, data:{
-      Date:''+date, ClosingBalance:close, Notes:notes
-    }});
-    showStatus('✅ Saved! Closing balance: ' + fmtLKR(close), 'ok');
-    document.getElementById('f-close').value = '';
-    document.getElementById('f-notes').value = '';
+  const date=document.getElementById('f-date').value;
+  const close=parseFloat(document.getElementById('f-close').value);
+  const notes=document.getElementById('f-notes').value.trim();
+  if(!date){showStatus('Please select a date.','warn');return;}
+  if(isNaN(close)){showStatus('Please enter the closing balance.','warn');return;}
+  const btn=document.getElementById('saveBtn');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span> Saving…';
+  try{
+    await apiPost({action:'add',sheet:SHEET,data:{Date:''+date,ClosingBalance:close,Notes:notes}});
+    showStatus('✅ Saved! Closing balance: '+fmtLKR(close),'ok');
+    document.getElementById('f-close').value='';document.getElementById('f-notes').value='';
     await loadAll();
-  } catch(e) {
-    showStatus('❌ ' + e.message, 'err');
-  }
-  btn.disabled = false;
-  btn.innerHTML = '💾 Save to Google Sheets';
+  }catch(e){showStatus('❌ '+e.message,'err');}
+  btn.disabled=false;btn.innerHTML='💾 Save to Google Sheets';
 }
 
-// ── EDIT ─────────────────────────────────────────────────
-function openEdit(id) {
-  const r = allRows.find(x => x.ID === id);
-  if (!r) return;
-  document.getElementById('e-id').value    = id;
-  document.getElementById('e-date').value  = fmtDateInput(r.Date);
-  document.getElementById('e-close').value = parseFloat(r.ClosingBalance) || 0;
-  document.getElementById('e-notes').value = r.Notes || '';
+function openEdit(id){
+  const r=allRows.find(x=>x.ID===id);if(!r)return;
+  document.getElementById('e-id').value=id;
+  document.getElementById('e-date').value=fmtDateInput(r.Date);
+  document.getElementById('e-close').value=parseFloat(r.ClosingBalance)||0;
+  document.getElementById('e-notes').value=r.Notes||'';
   document.getElementById('editOverlay').classList.add('open');
 }
-
-async function updateEntry() {
-  const id    = document.getElementById('e-id').value;
-  const date  = document.getElementById('e-date').value;
-  const close = parseFloat(document.getElementById('e-close').value);
-  const notes = document.getElementById('e-notes').value.trim();
-  if (!date || isNaN(close)) return;
-
-  const btn = document.getElementById('updateBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spin"></span> Saving…';
-
-  try {
-    await apiPost({ action:'update', sheet:SHEET, id, data:{
-      Date:''+date, ClosingBalance:close, Notes:notes
-    }});
-    closeModal();
-    await loadAll();
-  } catch(e) {
-    alert('Error: ' + e.message);
-  }
-  btn.disabled = false;
-  btn.innerHTML = '💾 Update';
+async function updateEntry(){
+  const id=document.getElementById('e-id').value;
+  const date=document.getElementById('e-date').value;
+  const close=parseFloat(document.getElementById('e-close').value);
+  const notes=document.getElementById('e-notes').value.trim();
+  if(!date||isNaN(close))return;
+  const btn=document.getElementById('updateBtn');btn.disabled=true;btn.innerHTML='<span class="spin"></span> Saving…';
+  try{await apiPost({action:'update',sheet:SHEET,id,data:{Date:''+date,ClosingBalance:close,Notes:notes}});closeModal();await loadAll();}
+  catch(e){alert('Error: '+e.message);}
+  btn.disabled=false;btn.innerHTML='💾 Update';
 }
+function closeModal(){document.getElementById('editOverlay').classList.remove('open');}
 
-function closeModal() { document.getElementById('editOverlay').classList.remove('open'); }
+function openDelete(id){deleteId=id;document.getElementById('delOverlay').classList.add('open');}
+async function confirmDelete(){
+  if(!deleteId)return;
+  const btn=document.getElementById('confirmDelBtn');btn.disabled=true;btn.innerHTML='<span class="spin" style="border-top-color:#fff"></span>';
+  try{await apiPost({action:'delete',sheet:SHEET,id:deleteId});closeDelModal();await loadAll();}
+  catch(e){alert('Error: '+e.message);closeDelModal();}
+  btn.disabled=false;btn.innerHTML='Delete';
+}
+function closeDelModal(){deleteId=null;document.getElementById('delOverlay').classList.remove('open');}
 
-// ── DELETE ────────────────────────────────────────────────
-function openDelete(id) {
-  deleteId = id;
-  document.getElementById('delOverlay').classList.add('open');
-}
+function showStatus(msg,type){const s=document.getElementById('statusBox');s.className='status show '+type;document.getElementById('statusMsg').textContent=msg;}
+function hideStatus(){document.getElementById('statusBox').className='status';}
 
-async function confirmDelete() {
-  if (!deleteId) return;
-  const btn = document.getElementById('confirmDelBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spin" style="border-top-color:#fff"></span>';
-  try {
-    await apiPost({ action:'delete', sheet:SHEET, id:deleteId });
-    closeDelModal();
-    await loadAll();
-  } catch(e) {
-    alert('Error: ' + e.message);
-    closeDelModal();
-  }
-  btn.disabled = false;
-  btn.innerHTML = 'Delete';
-}
+async function apiGet(params){const qs=new URLSearchParams(params).toString();const res=await fetch(SCRIPT_URL+'?'+qs);const j=await res.json();if(j.error)throw new Error(j.error);return j.data??j;}
+async function apiPost(body){const res=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(body)});const j=await res.json();if(j.error)throw new Error(j.error);return j;}
 
-function closeDelModal() { deleteId = null; document.getElementById('delOverlay').classList.remove('open'); }
-
-// ── STATUS ────────────────────────────────────────────────
-function showStatus(msg, type) {
-  const s = document.getElementById('statusBox');
-  s.className = 'status show ' + type;
-  document.getElementById('statusMsg').textContent = msg;
-}
-function hideStatus() { document.getElementById('statusBox').className = 'status'; }
-
-// ── API ───────────────────────────────────────────────────
-async function apiGet(params) {
-  const qs  = new URLSearchParams(params).toString();
-  const res = await fetch(SCRIPT_URL + '?' + qs);
-  const j   = await res.json();
-  if (j.error) throw new Error(j.error);
-  return j.data ?? j;
-}
-async function apiPost(body) {
-  const res = await fetch(SCRIPT_URL, {method:'POST', body:JSON.stringify(body)});
-  const j   = await res.json();
-  if (j.error) throw new Error(j.error);
-  return j;
-}
-
-// ── FORMAT ────────────────────────────────────────────────
-function fmtLKR(n) {
-  return 'Rs\u00A0'+parseFloat(n||0).toLocaleString('en-LK',{minimumFractionDigits:2,maximumFractionDigits:2});
-}
-function fmtDate(d) {
-  if (!d) return '—';
-  const dt = new Date(d);
-  return isNaN(dt) ? String(d) : dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-}
-function fmtDateInput(d) {
-  if (!d) return '';
-  const dt = new Date(d);
-  return isNaN(dt) ? '' : dt.toISOString().split('T')[0];
-}
-
-window.addEventListener('load', loadAll);
+function fmtLKR(n){return 'Rs '+parseFloat(n||0).toLocaleString('en-LK',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtDate(d){if(!d)return '—';const dt=new Date(d);return isNaN(dt)?String(d):dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}
+function fmtDateInput(d){if(!d)return '';const dt=new Date(d);return isNaN(dt)?'':dt.toISOString().split('T')[0];}
 </script>
 </body>
 </html>
