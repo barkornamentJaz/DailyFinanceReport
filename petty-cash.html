@@ -617,6 +617,8 @@ function fmtDateInput(d) {
   const dt = new Date(d);
   return isNaN(dt) ? '' : dt.toISOString().split('T')[0];
 }
+
+window.addEventListener('load', loadAll);
 </script>
 </body>
 </html>
